@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E2B74AB2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
+		9E2B74AC2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
+		9E2B74AD2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
 		9EC42AD42A5C3D0F00E2F248 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */; };
 		9EC42AD62A5C3D0F00E2F248 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EC42AD52A5C3D0F00E2F248 /* Assets.xcassets */; };
 		9EC42AD92A5C3D0F00E2F248 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EC42AD82A5C3D0F00E2F248 /* Preview Assets.xcassets */; };
@@ -16,9 +19,6 @@
 		9EC42B012A5DDB0100E2F248 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9EC42B002A5DDB0100E2F248 /* FirebaseAnalytics */; };
 		9EC42B032A5DDB0100E2F248 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 9EC42B022A5DDB0100E2F248 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		9EC42B052A5DDB0100E2F248 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9EC42B042A5DDB0100E2F248 /* FirebaseAuth */; };
-		9EC42B072A5DE48B00E2F248 /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC42B062A5DE48B00E2F248 /* socialmediaApp.swift */; };
-		9EC42B082A5DE48B00E2F248 /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC42B062A5DE48B00E2F248 /* socialmediaApp.swift */; };
-		9EC42B092A5DE48B00E2F248 /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC42B062A5DE48B00E2F248 /* socialmediaApp.swift */; };
 		9EDE5CDB2A5DE8C00060E816 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9EDE5CDA2A5DE8C00060E816 /* GoogleService-Info.plist */; };
 		9EDE5CDC2A5DE8C00060E816 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9EDE5CDA2A5DE8C00060E816 /* GoogleService-Info.plist */; };
 		9EDE5CDD2A5DE8C00060E816 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9EDE5CDA2A5DE8C00060E816 /* GoogleService-Info.plist */; };
@@ -44,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socialmediaApp.swift; sourceTree = "<group>"; };
 		9EC42ACE2A5C3D0F00E2F248 /* socialmedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socialmedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9EC42AD52A5C3D0F00E2F248 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		9EC42AE82A5C3D1000E2F248 /* socialmediaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = socialmediaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EC42AEC2A5C3D1000E2F248 /* socialmediaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socialmediaUITests.swift; sourceTree = "<group>"; };
 		9EC42AEE2A5C3D1000E2F248 /* socialmediaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socialmediaUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		9EC42B062A5DE48B00E2F248 /* socialmediaApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = socialmediaApp.swift; path = ../../../../.Trash/socialmediaApp.swift; sourceTree = "<group>"; };
 		9EDE5CDA2A5DE8C00060E816 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9EDE5CE32A5E01030060E816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,7 +114,7 @@
 			children = (
 				9EDE5CE32A5E01030060E816 /* Info.plist */,
 				9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */,
-				9EC42B062A5DE48B00E2F248 /* socialmediaApp.swift */,
+				9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */,
 				9EC42AD52A5C3D0F00E2F248 /* Assets.xcassets */,
 				9EC42AD72A5C3D0F00E2F248 /* Preview Content */,
 			);
@@ -298,7 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EC42AD42A5C3D0F00E2F248 /* ContentView.swift in Sources */,
-				9EC42B072A5DE48B00E2F248 /* socialmediaApp.swift in Sources */,
+				9E2B74AB2A60A1B500F4B33D /* socialmediaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EC42AE32A5C3D1000E2F248 /* socialmediaTests.swift in Sources */,
-				9EC42B082A5DE48B00E2F248 /* socialmediaApp.swift in Sources */,
+				9E2B74AC2A60A1B500F4B33D /* socialmediaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,7 +317,7 @@
 			files = (
 				9EC42AEF2A5C3D1000E2F248 /* socialmediaUITestsLaunchTests.swift in Sources */,
 				9EC42AED2A5C3D1000E2F248 /* socialmediaUITests.swift in Sources */,
-				9EC42B092A5DE48B00E2F248 /* socialmediaApp.swift in Sources */,
+				9E2B74AD2A60A1B500F4B33D /* socialmediaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
