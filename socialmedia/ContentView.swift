@@ -1,6 +1,5 @@
 import SwiftUI
 import Firebase
-import FirebaseCore
 
 enum AccountType: String {
     case personal
@@ -21,13 +20,6 @@ enum LeftSwipe {
     case originals
     case daily
     case genres
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-        return true
-    }
 }
 
 struct LoginView: View {
