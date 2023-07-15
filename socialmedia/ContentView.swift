@@ -71,6 +71,18 @@ struct LoginView: View {
                     .cornerRadius(10)
                     .padding(.top, 5)
             }
+            
+            HStack {
+                Text("Don't have an account?")
+                
+                Button {
+                    //signup
+                } label: {
+                    Text("Sign up")
+                }
+            }
+            .padding(.top, 45)
+            
         }
         .fullScreenCover(isPresented: $isHomePageShown) {
             HomePageView()
