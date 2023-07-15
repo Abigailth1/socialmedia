@@ -8,6 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		2F1682122A60A55F00ACFBF2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F1682112A60A55F00ACFBF2 /* GoogleService-Info.plist */; };
+		2F8311592A632F13002C7E77 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311582A632F13002C7E77 /* CreateAccountView.swift */; };
+		2F83115B2A632F5F002C7E77 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83115A2A632F5F002C7E77 /* VerificationView.swift */; };
+		2F83115D2A632F89002C7E77 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83115C2A632F89002C7E77 /* HomePageView.swift */; };
+		2F83115F2A632FB3002C7E77 /* PersonalFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83115E2A632FB3002C7E77 /* PersonalFeedView.swift */; };
+		2F8311632A632FFB002C7E77 /* BusinessFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311622A632FFB002C7E77 /* BusinessFeedView.swift */; };
+		2F8311652A633080002C7E77 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311642A633080002C7E77 /* ProfileHeaderView.swift */; };
+		2F8311672A6330AD002C7E77 /* ProfileStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311662A6330AD002C7E77 /* ProfileStatView.swift */; };
+		2F8311692A6330E6002C7E77 /* BusinessProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311682A6330E6002C7E77 /* BusinessProfileView.swift */; };
+		2F83116B2A633116002C7E77 /* PersonalProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83116A2A633116002C7E77 /* PersonalProfileView.swift */; };
+		2F83116D2A633137002C7E77 /* leftSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83116C2A633137002C7E77 /* leftSwipeView.swift */; };
+		2F83116F2A633151002C7E77 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83116E2A633151002C7E77 /* FeedView.swift */; };
+		2F8311712A63316A002C7E77 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311702A63316A002C7E77 /* ExploreView.swift */; };
+		2F8311732A633181002C7E77 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311722A633181002C7E77 /* NotificationsView.swift */; };
+		2F8311752A633196002C7E77 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311742A633196002C7E77 /* MessagesView.swift */; };
+		2F8311772A6331AB002C7E77 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311762A6331AB002C7E77 /* ProfileView.swift */; };
+		2F8311792A6331C2002C7E77 /* AIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311782A6331C2002C7E77 /* AIView.swift */; };
+		2F83117B2A6331DB002C7E77 /* WorldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83117A2A6331DB002C7E77 /* WorldView.swift */; };
+		2F83117D2A6331F0002C7E77 /* OriginalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83117C2A6331F0002C7E77 /* OriginalsView.swift */; };
+		2F83117F2A633205002C7E77 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F83117E2A633205002C7E77 /* DailyView.swift */; };
+		2F8311812A63322B002C7E77 /* GenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311802A63322B002C7E77 /* GenresView.swift */; };
+		2F8311832A633266002C7E77 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311822A633266002C7E77 /* LoginView.swift */; };
+		2F8311852A633A2C002C7E77 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8311842A633A2C002C7E77 /* AuthViewModel.swift */; };
 		9E2B74AB2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
 		9E2B74AC2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
 		9E2B74AD2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
@@ -43,6 +65,28 @@
 
 /* Begin PBXFileReference section */
 		2F1682112A60A55F00ACFBF2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2F8311582A632F13002C7E77 /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = SOURCE_ROOT; };
+		2F83115A2A632F5F002C7E77 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
+		2F83115C2A632F89002C7E77 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
+		2F83115E2A632FB3002C7E77 /* PersonalFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalFeedView.swift; sourceTree = "<group>"; };
+		2F8311622A632FFB002C7E77 /* BusinessFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessFeedView.swift; sourceTree = "<group>"; };
+		2F8311642A633080002C7E77 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		2F8311662A6330AD002C7E77 /* ProfileStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStatView.swift; sourceTree = "<group>"; };
+		2F8311682A6330E6002C7E77 /* BusinessProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileView.swift; sourceTree = "<group>"; };
+		2F83116A2A633116002C7E77 /* PersonalProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalProfileView.swift; sourceTree = "<group>"; };
+		2F83116C2A633137002C7E77 /* leftSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = leftSwipeView.swift; sourceTree = "<group>"; };
+		2F83116E2A633151002C7E77 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		2F8311702A63316A002C7E77 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		2F8311722A633181002C7E77 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		2F8311742A633196002C7E77 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		2F8311762A6331AB002C7E77 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		2F8311782A6331C2002C7E77 /* AIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIView.swift; sourceTree = "<group>"; };
+		2F83117A2A6331DB002C7E77 /* WorldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldView.swift; sourceTree = "<group>"; };
+		2F83117C2A6331F0002C7E77 /* OriginalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalsView.swift; sourceTree = "<group>"; };
+		2F83117E2A633205002C7E77 /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
+		2F8311802A63322B002C7E77 /* GenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresView.swift; sourceTree = "<group>"; };
+		2F8311822A633266002C7E77 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		2F8311842A633A2C002C7E77 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewModel.swift; path = Views/AuthViewModel.swift; sourceTree = "<group>"; };
 		9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socialmediaApp.swift; sourceTree = "<group>"; };
 		9EC42ACE2A5C3D0F00E2F248 /* socialmedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socialmedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,6 +130,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F8311572A632EC1002C7E77 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */,
+				2F8311822A633266002C7E77 /* LoginView.swift */,
+				2F8311582A632F13002C7E77 /* CreateAccountView.swift */,
+				2F8311802A63322B002C7E77 /* GenresView.swift */,
+				2F83117E2A633205002C7E77 /* DailyView.swift */,
+				2F83117C2A6331F0002C7E77 /* OriginalsView.swift */,
+				2F83117A2A6331DB002C7E77 /* WorldView.swift */,
+				2F8311782A6331C2002C7E77 /* AIView.swift */,
+				2F8311762A6331AB002C7E77 /* ProfileView.swift */,
+				2F8311742A633196002C7E77 /* MessagesView.swift */,
+				2F8311722A633181002C7E77 /* NotificationsView.swift */,
+				2F8311702A63316A002C7E77 /* ExploreView.swift */,
+				2F83116E2A633151002C7E77 /* FeedView.swift */,
+				2F83116C2A633137002C7E77 /* leftSwipeView.swift */,
+				2F83116A2A633116002C7E77 /* PersonalProfileView.swift */,
+				2F8311682A6330E6002C7E77 /* BusinessProfileView.swift */,
+				2F8311662A6330AD002C7E77 /* ProfileStatView.swift */,
+				2F8311642A633080002C7E77 /* ProfileHeaderView.swift */,
+				2F8311622A632FFB002C7E77 /* BusinessFeedView.swift */,
+				2F83115E2A632FB3002C7E77 /* PersonalFeedView.swift */,
+				2F83115C2A632F89002C7E77 /* HomePageView.swift */,
+				2F83115A2A632F5F002C7E77 /* VerificationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9EC42AC52A5C3D0F00E2F248 = {
 			isa = PBXGroup;
 			children = (
@@ -111,9 +184,10 @@
 		9EC42AD02A5C3D0F00E2F248 /* socialmedia */ = {
 			isa = PBXGroup;
 			children = (
-				9EDE5CE32A5E01030060E816 /* Info.plist */,
-				9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */,
+				2F8311842A633A2C002C7E77 /* AuthViewModel.swift */,
 				9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */,
+				2F8311572A632EC1002C7E77 /* Views */,
+				9EDE5CE32A5E01030060E816 /* Info.plist */,
 				9EC42AD52A5C3D0F00E2F248 /* Assets.xcassets */,
 				9EC42AD72A5C3D0F00E2F248 /* Preview Content */,
 			);
@@ -293,8 +367,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F8311752A633196002C7E77 /* MessagesView.swift in Sources */,
+				2F8311712A63316A002C7E77 /* ExploreView.swift in Sources */,
+				2F83116D2A633137002C7E77 /* leftSwipeView.swift in Sources */,
+				2F83115F2A632FB3002C7E77 /* PersonalFeedView.swift in Sources */,
+				2F8311832A633266002C7E77 /* LoginView.swift in Sources */,
+				2F8311672A6330AD002C7E77 /* ProfileStatView.swift in Sources */,
+				2F83117D2A6331F0002C7E77 /* OriginalsView.swift in Sources */,
+				2F8311812A63322B002C7E77 /* GenresView.swift in Sources */,
+				2F8311692A6330E6002C7E77 /* BusinessProfileView.swift in Sources */,
+				2F8311592A632F13002C7E77 /* CreateAccountView.swift in Sources */,
 				9EC42AD42A5C3D0F00E2F248 /* ContentView.swift in Sources */,
+				2F8311632A632FFB002C7E77 /* BusinessFeedView.swift in Sources */,
+				2F83117B2A6331DB002C7E77 /* WorldView.swift in Sources */,
+				2F8311772A6331AB002C7E77 /* ProfileView.swift in Sources */,
+				2F8311792A6331C2002C7E77 /* AIView.swift in Sources */,
 				9E2B74AB2A60A1B500F4B33D /* socialmediaApp.swift in Sources */,
+				2F83115B2A632F5F002C7E77 /* VerificationView.swift in Sources */,
+				2F83116B2A633116002C7E77 /* PersonalProfileView.swift in Sources */,
+				2F8311732A633181002C7E77 /* NotificationsView.swift in Sources */,
+				2F83116F2A633151002C7E77 /* FeedView.swift in Sources */,
+				2F8311852A633A2C002C7E77 /* AuthViewModel.swift in Sources */,
+				2F83117F2A633205002C7E77 /* DailyView.swift in Sources */,
+				2F83115D2A632F89002C7E77 /* HomePageView.swift in Sources */,
+				2F8311652A633080002C7E77 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,8 +557,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -490,8 +586,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
