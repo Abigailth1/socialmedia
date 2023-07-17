@@ -88,58 +88,58 @@ struct LoginView: View {
             HomePageView()
         }
         
-                Divider()
-                    .padding(.vertical, 20)
-        
-        HStack {
-            Button(action: {
-                // handle google login
-                print("Google button tapped")
-            }) {
-                Image("google_logo")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .background(Color.black)
-                    .cornerRadius(10)
-            }
-            
-            Button(action: {
-                // handle facebook login
-                print("Facebook button tapped")
-            }) {
-                Image("facebook_logo")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .background(Color.black)
-                    .cornerRadius(10)
-            }
-            
-            Button(action: {
-                // handle pinterest login
-                print("Pinterest button tapped")
-            }) {
-                Image("pinterest_logo")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .background(Color.black)
-                    .cornerRadius(10)
-            }
-        }
-        
-        Button(action: {
-            isCreateAnAccountShown = true
-        }) {
-            Text("Create An Account")
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding()
-                .frame(width: 200, height: 50)
-                .background(Color.black)
-                .cornerRadius(10)
-        }
-        .fullScreenCover(isPresented: $isCreateAnAccountShown) {
-            CreateAccountView()
-        }
+//                Divider()
+//                    .padding(.vertical, 20)
+//
+//        HStack {
+//            Button(action: {
+//                // handle google login
+//                print("Google button tapped")
+//            }) {
+//                Image("google_logo")
+//                    .resizable()
+//                    .frame(width: 60, height: 60)
+//                    .background(Color.black)
+//                    .cornerRadius(10)
+//            }
+//
+//            Button(action: {
+//                // handle facebook login
+//                print("Facebook button tapped")
+//            }) {
+//                Image("facebook_logo")
+//                    .resizable()
+//                    .frame(width: 60, height: 60)
+//                    .background(Color.black)
+//                    .cornerRadius(10)
+//            }
+//
+//            Button(action: {
+//                // handle pinterest login
+//                print("Pinterest button tapped")
+//            }) {
+//                Image("pinterest_logo")
+//                    .resizable()
+//                    .frame(width: 60, height: 60)
+//                    .background(Color.black)
+//                    .cornerRadius(10)
+//            }
+//        }
+//
+//        Button(action: {
+//            isCreateAnAccountShown = true
+//        }) {
+//            Text("Create An Account")
+//                .font(.headline)
+//                .foregroundColor(.white)
+//                .padding()
+//                .frame(width: 200, height: 50)
+//                .background(Color.black)
+//                .cornerRadius(10)
+//        }
+//        .fullScreenCover(isPresented: $isCreateAnAccountShown) {
+//            CreateAccountView()
+//        }
     }
     
 }
