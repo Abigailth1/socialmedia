@@ -17,16 +17,170 @@ enum Tab {
     case ai
 }
 
-enum LeftSwipe {
-    case originals
-    case daily
-    case genres
+enum navItems {
+    case universe
+    case world
+    case scene
+    case character
+    case language
+    case quest
+    case religion
+    case calendar
+    case brainstorm
+    case home
 }
+
+struct Folder: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct Universe: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct CityWorld: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct CharacterSpecies: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct LanguageConstruction: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct QuestBuilder: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct ReligionCulture: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct CalendarModel: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct Note: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct TeamMember: Identifiable {
+    let id = UUID()
+    let name: String
+    let profileImageName: String
+}
+
+struct User {
+    let name: String
+    let profileImageName: String
+    let followers: Int
+    let following: Int
+}
+
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         return true
+    }
+}
+
+class ContentViewModel: ObservableObject {
+    @Published var user: User
+    @Published var folders: [Folder]
+    @Published var universes: [Universe]
+    @Published var cityWorlds: [CityWorld]
+    @Published var characterSpecies: [CharacterSpecies]
+    @Published var languageConstructions: [LanguageConstruction]
+    @Published var questBuilders: [QuestBuilder]
+    @Published var religionCultures: [ReligionCulture]
+    @Published var calendars: [CalendarModel]
+    @Published var notes: [Note]
+    @Published var teamMembers: [TeamMember]
+    @Published var planets: [Planet]
+
+    
+    init() {
+        user = User(name: "John Doe", profileImageName: "profile", followers: 100, following: 50)
+        
+        folders = [
+            Folder(name: "Folder 1"),
+            Folder(name: "Folder 2"),
+            Folder(name: "Folder 3")
+        ]
+        
+        planets = [
+                    Planet(name: "Planet 1"),
+                    Planet(name: "Planet 2"),
+                    Planet(name: "Planet 3")
+                ]
+        
+        universes = [
+            Universe(name: "Universe 1"),
+            Universe(name: "Universe 2"),
+            Universe(name: "Universe 3")
+        ]
+        
+        cityWorlds = [
+            CityWorld(name: "City World 1"),
+            CityWorld(name: "City World 2"),
+            CityWorld(name: "City World 3")
+        ]
+        
+        characterSpecies = [
+            CharacterSpecies(name: "Species 1"),
+            CharacterSpecies(name: "Species 2"),
+            CharacterSpecies(name: "Species 3")
+        ]
+        
+        languageConstructions = [
+            LanguageConstruction(name: "Language 1"),
+            LanguageConstruction(name: "Language 2"),
+            LanguageConstruction(name: "Language 3")
+        ]
+        
+        questBuilders = [
+            QuestBuilder(name: "Quest Builder 1"),
+            QuestBuilder(name: "Quest Builder 2"),
+            QuestBuilder(name: "Quest Builder 3")
+        ]
+        
+        religionCultures = [
+            ReligionCulture(name: "Religion Culture 1"),
+            ReligionCulture(name: "Religion Culture 2"),
+            ReligionCulture(name: "Religion Culture 3")
+        ]
+        
+        calendars = [
+            CalendarModel(name: "Calendar 1"),
+            CalendarModel(name: "Calendar 2"),
+            CalendarModel(name: "Calendar 3")
+        ]
+        
+        notes = [
+            Note(name: "Note 1"),
+            Note(name: "Note 2"),
+            Note(name: "Note 3")
+        ]
+        
+        teamMembers = [
+            TeamMember(name: "Member 1", profileImageName: "member1"),
+            TeamMember(name: "Member 2", profileImageName: "member2"),
+            TeamMember(name: "Member 3", profileImageName: "member3"),
+            TeamMember(name: "Member 4", profileImageName: "member4"),
+            TeamMember(name: "Member 5", profileImageName: "member5")
+        ]
     }
 }
 
@@ -376,12 +530,12 @@ struct HomePageView: View {
                 }
                 .tag(Tab.notifications)
             
-            MessagesView()
+            WorldView()
                 .tabItem {
                     Image(systemName: "book")
                     Text("World")
                 }
-                .tag(Tab.messages)
+                .tag(Tab.world)
             
             if accountType == .personal {
                 PersonalProfileView()
@@ -527,33 +681,6 @@ struct PersonalProfileView: View {
             .padding()
     }
 }
-        
-struct leftSwipeView: View {
-    @State private var selectedTab: LeftSwipe = .originals
-    
-    var body: some View {
-        TabView(selection: $selectedTab) {
-            OriginalsView()
-                .tabItem {
-                    Label("Originals", systemImage: "heart")
-                }
-                .tag(LeftSwipe.originals)
-            
-            DailyView()
-                .tabItem {
-                    Label("Daily", systemImage: "sun.max")
-                }
-                .tag(LeftSwipe.daily)
-            
-            GenresView()
-                .tabItem {
-                    Label("Genres", systemImage: "text.book.closed")
-                }
-                .tag(LeftSwipe.genres)
-        }
-        .accentColor(.primary)
-    }
-}
 
 struct FeedView: View {
     var body: some View {
@@ -604,40 +731,862 @@ struct AIView: View {
 }
 
 struct WorldView: View {
+    @StateObject var viewModel = ContentViewModel()
+    @State private var selectedFolder: Folder?
+    @State private var selectedUniverse: Universe?
+    @State private var selectedCityWorld: CityWorld?
+    @State private var selectedCharacterSpecies: CharacterSpecies?
+    @State private var selectedLanguageConstruction: LanguageConstruction?
+    @State private var selectedQuestBuilder: QuestBuilder?
+    @State private var selectedReligionCulture: ReligionCulture?
+    @State private var selectedCalendar: CalendarModel?
+    @State private var selectedNote: Note?
+    @State private var isAddingFolder = false
+    @State private var isAddingUniverse = false
+    @State private var isAddingCityWorld = false
+    @State private var isAddingCharacterSpecies = false
+    @State private var isAddingLanguageConstruction = false
+    @State private var isAddingQuestBuilder = false
+    @State private var isAddingReligionCulture = false
+    @State private var isAddingCalendar = false
+    @State private var isAddingNote = false
+    @State private var newFolderName = ""
+    @State private var newUniverseName = ""
+    @State private var newCityWorldName = ""
+    @State private var newCharacterSpeciesName = ""
+    @State private var newLanguageConstructionName = ""
+    @State private var newQuestBuilderName = ""
+    @State private var newReligionCultureName = ""
+    @State private var newCalendarName = ""
+    @State private var newNoteName = ""
+    
     var body: some View {
-        Text("AI View")
-            .font(.title)
-            .padding()
+        NavigationView {
+            VStack {
+                List {
+                    Section(header: Text("User")) {
+                        UserProfileView(user: viewModel.user)
+                    }
+                    
+                    Section(header: Text("Folders")) {
+                        ForEach(viewModel.folders) { folder in
+                            NavigationLink(destination: FolderDetailView(folder: folder)) {
+                                Text(folder.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.folders.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("Universe")) {
+                        ForEach(viewModel.universes) { universe in
+                            NavigationLink(destination: UniverseDetailView(universe: universe)) {
+                                Text(universe.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.universes.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("City World")) {
+                        ForEach(viewModel.cityWorlds) { cityWorld in
+                            NavigationLink(destination: CityWorldDetailView(cityWorld: cityWorld)) {
+                                Text(cityWorld.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.cityWorlds.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("Character Species")) {
+                        ForEach(viewModel.characterSpecies) { characterSpecies in
+                            NavigationLink(destination: CharacterSpeciesDetailView(characterSpecies: characterSpecies)) {
+                                Text(characterSpecies.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.characterSpecies.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("Language Construction")) {
+                        ForEach(viewModel.languageConstructions) { languageConstruction in
+                            NavigationLink(destination: LanguageConstructionDetailView(languageConstruction: languageConstruction)) {
+                                Text(languageConstruction.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.languageConstructions.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("Quest Builder")) {
+                        ForEach(viewModel.questBuilders) { questBuilder in
+                            NavigationLink(destination: QuestBuilderDetailView(questBuilder: questBuilder)) {
+                                Text(questBuilder.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.questBuilders.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("Religion Culture")) {
+                        ForEach(viewModel.religionCultures) { religionCulture in
+                            NavigationLink(destination: ReligionCultureDetailView(religionCulture: religionCulture)) {
+                                Text(religionCulture.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.religionCultures.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("Calendar")) {
+                        ForEach(viewModel.calendars) { calendar in
+                            NavigationLink(destination: CalendarDetailView(calendar: calendar)) {
+                                Text(calendar.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.calendars.remove(atOffsets: indexSet)
+                        }
+                    }
+                    
+                    Section(header: Text("Notes")) {
+                        ForEach(viewModel.notes) { note in
+                            NavigationLink(destination: NoteDetailView(note: note)) {
+                                Text(note.name)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.notes.remove(atOffsets: indexSet)
+                        }
+                    }
+                }
+            }
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("THE BESTIARY")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button(action: {
+                            isAddingFolder = true
+                        }) {
+                            Label("Add Folder", systemImage: "folder.badge.plus")
+                        }
+                        
+                        Button(action: {
+                            isAddingUniverse = true
+                        }) {
+                            Label("Add Universe", systemImage: "globe")
+                        }
+                        
+                        Button(action: {
+                            isAddingCityWorld = true
+                        }) {
+                            Label("Add City World", systemImage: "building.2.crop.circle")
+                        }
+                        
+                        Button(action: {
+                            isAddingCharacterSpecies = true
+                        }) {
+                            Label("Add Character Species", systemImage: "person.2")
+                        }
+                        
+                        Button(action: {
+                            isAddingLanguageConstruction = true
+                        }) {
+                            Label("Add Language Construction", systemImage: "textformat")
+                        }
+                        
+                        Button(action: {
+                            isAddingQuestBuilder = true
+                        }) {
+                            Label("Add Quest Builder", systemImage: "scroll")
+                        }
+                        
+                        Button(action: {
+                            isAddingReligionCulture = true
+                        }) {
+                            Label("Add Religion Culture", systemImage: "cross.circle")
+                        }
+                        
+                        Button(action: {
+                            isAddingCalendar = true
+                        }) {
+                            Label("Add Calendar", systemImage: "calendar")
+                        }
+                        
+                        Button(action: {
+                            isAddingNote = true
+                        }) {
+                            Label("Add Note", systemImage: "note.text")
+                        }
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title)
+                    }
+                }
+            }
+            .sheet(isPresented: $isAddingFolder) {
+                NewFolderView(isAddingFolder: $isAddingFolder, newFolderName: $newFolderName) { name in
+                    // Save folder logic
+                    viewModel.folders.append(Folder(name: name))
+                } onCancel: {
+                    // Cancel folder creation logic
+                    isAddingFolder = false
+                }
+            }
+            .sheet(isPresented: $isAddingUniverse) {
+                NewUniverseView(isAddingUniverse: $isAddingUniverse, newUniverseName: $newUniverseName) { name in
+                    // Save universe logic
+                    viewModel.universes.append(Universe(name: name))
+                } onCancel: {
+                    // Cancel universe creation logic
+                    isAddingUniverse = false
+                }
+            }
+            .sheet(isPresented: $isAddingCityWorld) {
+                NewCityWorldView(isAddingCityWorld: $isAddingCityWorld, newCityWorldName: $newCityWorldName) { name in
+                    // Save city world logic
+                    viewModel.cityWorlds.append(CityWorld(name: name))
+                } onCancel: {
+                    // Cancel city world creation logic
+                    isAddingCityWorld = false
+                }
+            }
+            .sheet(isPresented: $isAddingCharacterSpecies) {
+                NewCharacterSpeciesView(isAddingCharacterSpecies: $isAddingCharacterSpecies, newCharacterSpeciesName: $newCharacterSpeciesName) { name in
+                    // Save character species logic
+                    viewModel.characterSpecies.append(CharacterSpecies(name: name))
+                } onCancel: {
+                    // Cancel character species creation logic
+                    isAddingCharacterSpecies = false
+                }
+            }
+            .sheet(isPresented: $isAddingLanguageConstruction) {
+                NewLanguageConstructionView(isAddingLanguageConstruction: $isAddingLanguageConstruction, newLanguageConstructionName: $newLanguageConstructionName) { name in
+                    // Save language construction logic
+                    viewModel.languageConstructions.append(LanguageConstruction(name: name))
+                } onCancel: {
+                    // Cancel language construction creation logic
+                    isAddingLanguageConstruction = false
+                }
+            }
+            .sheet(isPresented: $isAddingQuestBuilder) {
+                NewQuestBuilderView(isAddingQuestBuilder: $isAddingQuestBuilder, newQuestBuilderName: $newQuestBuilderName) { name in
+                    // Save quest builder logic
+                    viewModel.questBuilders.append(QuestBuilder(name: name))
+                } onCancel: {
+                    // Cancel quest builder creation logic
+                    isAddingQuestBuilder = false
+                }
+            }
+            .sheet(isPresented: $isAddingReligionCulture) {
+                NewReligionCultureView(isAddingReligionCulture: $isAddingReligionCulture, newReligionCultureName: $newReligionCultureName) { name in
+                    // Save religion culture logic
+                    viewModel.religionCultures.append(ReligionCulture(name: name))
+                } onCancel: {
+                    // Cancel religion culture creation logic
+                    isAddingReligionCulture = false
+                }
+            }
+            .sheet(isPresented: $isAddingCalendar) {
+                NewCalendarView(isAddingCalendar: $isAddingCalendar, newCalendarName: $newCalendarName) { name in
+                    // Save calendar logic
+                    viewModel.calendars.append(CalendarModel(name: name))
+                } onCancel: {
+                    // Cancel calendar creation logic
+                    isAddingCalendar = false
+                }
+            }
+            .sheet(isPresented: $isAddingNote) {
+                NewNoteView(isAddingNote: $isAddingNote, newNoteName: $newNoteName) { name in
+                    // Save note logic
+                    viewModel.notes.append(Note(name: name))
+                } onCancel: {
+                    // Cancel note creation logic
+                    isAddingNote = false
+                }
+            }
+            
+            Text("Select an item")
+        }
     }
 }
 
-struct OriginalsView: View {
+struct UserProfileView: View {
+    let user: User
+    
     var body: some View {
-        Text("Originals View")
-            .font(.title)
-            .padding()
+        VStack {
+            Image(user.profileImageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100, height: 100)
+                .clipShape(Circle())
+            
+            Text(user.name)
+                .font(.headline)
+            
+            HStack {
+                Label("\(user.followers)", systemImage: "person.fill")
+                Label("\(user.following)", systemImage: "person.2.fill")
+            }
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+        }
+        .padding()
     }
 }
 
-struct DailyView: View {
+struct FolderDetailView: View {
+    let folder: Folder
+    
     var body: some View {
-        Text("Originals View")
-            .font(.title)
-            .padding()
+        Text("Folder Detail View")
+            .navigationTitle(folder.name)
     }
 }
 
-struct GenresView: View {
+struct Planet: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct UniverseDetailView: View {
+    let universe: Universe
+    @StateObject var viewModel = ContentViewModel()
+    @State private var isAddingFolder = false
+    @State private var newFolderName = ""
+
     var body: some View {
-        Text("Originals View")
-            .font(.title)
-            .padding()
+        VStack {
+            HStack {
+                Text(universe.name)
+                    .font(.title)
+                
+                Spacer()
+                
+                Button(action: {
+                    isAddingFolder = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title)
+                }
+            }
+
+            List {
+                Section(header: Text("Folders")) {
+                    ForEach(viewModel.folders) { folder in
+                        NavigationLink(destination: FolderDetailView(folder: folder)) {
+                            Text(folder.name)
+                        }
+                    }
+                    .onDelete { indexSet in
+                        viewModel.folders.remove(atOffsets: indexSet)
+                    }
+                }
+            }
+            .listStyle(InsetGroupedListStyle())
+        }
+        .navigationBarItems(trailing: EditButton())
+        .navigationTitle("")
+        .sheet(isPresented: $isAddingFolder) {
+            NewFolderView(isAddingFolder: $isAddingFolder, newFolderName: $newFolderName) { name in
+                // Save folder logic
+                viewModel.folders.append(Folder(name: name))
+            } onCancel: {
+                // Cancel folder creation logic
+                isAddingFolder = false
+            }
+        }
     }
 }
+
+
+struct NewPlanetView: View {
+    @Binding var isAddingPlanet: Bool
+    @Binding var newPlanetName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Planet Name", text: $newPlanetName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newPlanetName)
+                        isAddingPlanet = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Planet")
+        }
+    }
+}
+
+
+struct CityWorldDetailView: View {
+    let cityWorld: CityWorld
+    
+    var body: some View {
+        Text("City World Detail View")
+            .navigationTitle(cityWorld.name)
+    }
+}
+
+struct CharacterSpeciesDetailView: View {
+    let characterSpecies: CharacterSpecies
+    
+    var body: some View {
+        Text("Character Species Detail View")
+            .navigationTitle(characterSpecies.name)
+    }
+}
+
+struct LanguageConstructionDetailView: View {
+    let languageConstruction: LanguageConstruction
+    
+    var body: some View {
+        Text("Language Construction Detail View")
+            .navigationTitle(languageConstruction.name)
+    }
+}
+
+struct QuestBuilderDetailView: View {
+    let questBuilder: QuestBuilder
+    
+    var body: some View {
+        Text("Quest Builder Detail View")
+            .navigationTitle(questBuilder.name)
+    }
+}
+
+struct ReligionCultureDetailView: View {
+    let religionCulture: ReligionCulture
+    
+    var body: some View {
+        Text("Religion Culture Detail View")
+            .navigationTitle(religionCulture.name)
+    }
+}
+
+struct CalendarDetailView: View {
+    let calendar: CalendarModel
+    
+    var body: some View {
+        Text("Calendar Detail View")
+            .navigationTitle(calendar.name)
+    }
+}
+
+struct NoteDetailView: View {
+    let note: Note
+    
+    var body: some View {
+        Text("Note Detail View")
+            .navigationTitle(note.name)
+    }
+}
+
+struct NewFolderView: View {
+    @Binding var isAddingFolder: Bool
+    @Binding var newFolderName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Folder Name", text: $newFolderName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newFolderName)
+                        isAddingFolder = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Folder")
+        }
+    }
+}
+
+struct NewUniverseView: View {
+    @Binding var isAddingUniverse: Bool
+    @Binding var newUniverseName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Universe Name", text: $newUniverseName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newUniverseName)
+                        isAddingUniverse = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Universe")
+        }
+    }
+}
+
+struct NewCityWorldView: View {
+    @Binding var isAddingCityWorld: Bool
+    @Binding var newCityWorldName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("City World Name", text: $newCityWorldName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newCityWorldName)
+                        isAddingCityWorld = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New City World")
+        }
+    }
+}
+
+struct NewCharacterSpeciesView: View {
+    @Binding var isAddingCharacterSpecies: Bool
+    @Binding var newCharacterSpeciesName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Character Species Name", text: $newCharacterSpeciesName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newCharacterSpeciesName)
+                        isAddingCharacterSpecies = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Character Species")
+        }
+    }
+}
+
+struct NewLanguageConstructionView: View {
+    @Binding var isAddingLanguageConstruction: Bool
+    @Binding var newLanguageConstructionName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Language Construction Name", text: $newLanguageConstructionName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newLanguageConstructionName)
+                        isAddingLanguageConstruction = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Language Construction")
+        }
+    }
+}
+
+struct NewQuestBuilderView: View {
+    @Binding var isAddingQuestBuilder: Bool
+    @Binding var newQuestBuilderName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Quest Builder Name", text: $newQuestBuilderName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newQuestBuilderName)
+                        isAddingQuestBuilder = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Quest Builder")
+        }
+    }
+}
+
+struct NewReligionCultureView: View {
+    @Binding var isAddingReligionCulture: Bool
+    @Binding var newReligionCultureName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Religion Culture Name", text: $newReligionCultureName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newReligionCultureName)
+                        isAddingReligionCulture = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Religion Culture")
+        }
+    }
+}
+
+struct NewCalendarView: View {
+    @Binding var isAddingCalendar: Bool
+    @Binding var newCalendarName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Calendar Name", text: $newCalendarName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newCalendarName)
+                        isAddingCalendar = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Calendar")
+        }
+    }
+}
+
+struct NewNoteView: View {
+    @Binding var isAddingNote: Bool
+    @Binding var newNoteName: String
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextField("Note Name", text: $newNoteName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        onCancel()
+                    }) {
+                        Text("Cancel")
+                            .foregroundColor(.red)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        onSave(newNoteName)
+                        isAddingNote = false
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("New Note")
+        }
+    }
+}
+
+
+struct MainPageView: View {
+    var body: some View {
+        Text("Main Post")
+    }
+}
+
 
 struct ContentView: View {
     var body: some View {
-        LoginView()
+        HomePageView()
     }
 }
 

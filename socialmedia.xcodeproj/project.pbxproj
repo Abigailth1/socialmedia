@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F1682122A60A55F00ACFBF2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F1682112A60A55F00ACFBF2 /* GoogleService-Info.plist */; };
 		9E2B74AB2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
 		9E2B74AC2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
 		9E2B74AD2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
@@ -42,7 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2F1682112A60A55F00ACFBF2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socialmediaApp.swift; sourceTree = "<group>"; };
 		9EC42ACE2A5C3D0F00E2F248 /* socialmedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socialmedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,7 +87,6 @@
 		9EC42AC52A5C3D0F00E2F248 = {
 			isa = PBXGroup;
 			children = (
-				2F1682112A60A55F00ACFBF2 /* GoogleService-Info.plist */,
 				9EC42AD02A5C3D0F00E2F248 /* socialmedia */,
 				9EC42AE12A5C3D1000E2F248 /* socialmediaTests */,
 				9EC42AEB2A5C3D1000E2F248 /* socialmediaUITests */,
@@ -268,7 +265,6 @@
 			files = (
 				9EC42AD92A5C3D0F00E2F248 /* Preview Assets.xcassets in Resources */,
 				9EC42AD62A5C3D0F00E2F248 /* Assets.xcassets in Resources */,
-				2F1682122A60A55F00ACFBF2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
