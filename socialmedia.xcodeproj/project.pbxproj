@@ -132,11 +132,82 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F22A01F2A67107F000324E0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2F22A0202A671090000324E0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2F22A0212A671098000324E0 /* Auth */,
+				2F22A0222A67109E000324E0 /* Feed */,
+				2F22A0232A6710A4000324E0 /* Profile */,
+				2F22A0262A6710D7000324E0 /* Root */,
+				2F22A0252A6710C2000324E0 /* Search */,
+				2F22A0272A671125000324E0 /* TabBar */,
+				2F22A0292A6711C4000324E0 /* UploadPost */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2F22A0212A671098000324E0 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		2F22A0222A67109E000324E0 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		2F22A0232A6710A4000324E0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		2F22A0252A6710C2000324E0 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		2F22A0262A6710D7000324E0 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		2F22A0272A671125000324E0 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		2F22A0292A6711C4000324E0 /* UploadPost */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UploadPost;
+			sourceTree = "<group>";
+		};
 		2F8311572A632EC1002C7E77 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */,
 				2F8311822A633266002C7E77 /* LoginView.swift */,
+				9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */,
 				2F8311582A632F13002C7E77 /* CreateAccountView.swift */,
 				2F8311802A63322B002C7E77 /* GenresView.swift */,
 				2F83117E2A633205002C7E77 /* DailyView.swift */,
@@ -194,9 +265,10 @@
 		9EC42AD02A5C3D0F00E2F248 /* socialmedia */ = {
 			isa = PBXGroup;
 			children = (
+				2F22A0202A671090000324E0 /* Core */,
+				2F22A01F2A67107F000324E0 /* App */,
 				2F8311862A65DD37002C7E77 /* Model */,
 				2F8311842A633A2C002C7E77 /* AuthViewModel.swift */,
-				9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */,
 				2F8311572A632EC1002C7E77 /* Views */,
 				9EDE5CE32A5E01030060E816 /* Info.plist */,
 				9EC42AD52A5C3D0F00E2F248 /* Assets.xcassets */,
