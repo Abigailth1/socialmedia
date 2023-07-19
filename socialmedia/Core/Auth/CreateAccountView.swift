@@ -121,9 +121,10 @@ struct CreateAccountView: View {
                 Toggle("I agree to the Terms and Conditions", isOn: $isTermsAccepted)
                     .padding(.horizontal, 40)
                 
-                Button(action: {
-                    registerUser()
-                }) {
+                NavigationLink {
+                    VerificationView()
+                        .navigationBarBackButtonHidden()
+                } label: {
                     Text("Register")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -133,7 +134,21 @@ struct CreateAccountView: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                 }
-                .padding(.top, 30)
+
+                
+//                Button(action: {
+//                    registerUser()
+//                }) {
+//                    Text("Register")
+//                        .font(.headline)
+//                        .foregroundColor(.white)
+//                        .padding()
+//                        .frame(minWidth: 0, maxWidth: .infinity)
+//                        .background(Color.black)
+//                        .cornerRadius(10)
+//                        .padding(.horizontal)
+//                }
+//                .padding(.top, 30)
             }
         }
         .fullScreenCover(isPresented: $isVerificationCodeShown) {
