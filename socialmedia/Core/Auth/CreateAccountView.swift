@@ -10,6 +10,7 @@ import Firebase
 
 struct CreateAccountView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @State private var profileImage: Image? = nil
     @State private var username: String = ""
     @State private var email: String = ""
@@ -25,19 +26,19 @@ struct CreateAccountView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "arrow.left")
-                        .font(.title)
-                        .foregroundColor(.black)
-                        .padding(.leading, 10)
-                }
-                .padding(.top, 10)
-                
-                Spacer()
-            }
+//            HStack {
+//                Button(action: {
+//                    presentationMode.wrappedValue.dismiss()
+//                }) {
+//                    Image(systemName: "arrow.left")
+//                        .font(.title)
+//                        .foregroundColor(.black)
+//                        .padding(.leading, 10)
+//                }
+//                .padding(.top, 10)
+//                
+//                Spacer()
+//            }
             Group {
                 if let profileImage = profileImage {
                     profileImage
@@ -114,6 +115,8 @@ struct CreateAccountView: View {
                     .padding(.horizontal, 10)
             }
             
+            Spacer()
+            
             Group {
                 Toggle("I agree to the Terms and Conditions", isOn: $isTermsAccepted)
                     .padding(.horizontal, 40)
@@ -135,6 +138,14 @@ struct CreateAccountView: View {
         }
         .fullScreenCover(isPresented: $isVerificationCodeShown) {
             VerificationView()
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Image(systemName: "chevron.left")
+                    .onTapGesture {
+                        dismiss()
+                    }
+            }
         }
     }
     
