@@ -730,19 +730,91 @@ struct AIView: View {
     }
 }
 
+import SwiftUI
+
+struct Planet: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct CityWorld: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct Folder: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct LanguageConstruction: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct Species: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct QuestBuilder: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct ReligionCulture: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct FantasyCalendar: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct BrainstormNote: Identifiable {
+    let id = UUID()
+    let name: String
+}
+
+struct User {
+    let name: String
+    let profileImageName: String
+    let followers: Int
+    let following: Int
+    let posts: Int
+}
+
+class ContentViewModel: ObservableObject {
+    @Published var user: User
+    @Published var planets: [Planet]
+    @Published var folders: [Folder]
+    @Published var cityWorlds: [CityWorld]
+    @Published var characterSpecies: [Species]
+    @Published var languageConstructions: [LanguageConstruction]
+    @Published var questBuilders: [QuestBuilder]
+    @Published var religionCultures: [ReligionCulture]
+    @Published var fantasyCalendars: [FantasyCalendar]
+    @Published var brainstormNotes: [BrainstormNote]
+    
+    init() {
+        user = User(name: "John Doe", profileImageName: "profile", followers: 100, following: 50, posts: 3)
+        folders = []
+        planets = []
+        cityWorlds = []
+        characterSpecies = []
+        languageConstructions = []
+        questBuilders = []
+        religionCultures = []
+        fantasyCalendars = []
+        brainstormNotes = []
+    }
+}
+
 struct WorldView: View {
-    @StateObject var viewModel = ContentViewModel()
-    @State private var selectedFolder: Folder?
-    @State private var selectedUniverse: Universe?
-    @State private var selectedCityWorld: CityWorld?
-    @State private var selectedCharacterSpecies: CharacterSpecies?
-    @State private var selectedLanguageConstruction: LanguageConstruction?
-    @State private var selectedQuestBuilder: QuestBuilder?
-    @State private var selectedReligionCulture: ReligionCulture?
-    @State private var selectedCalendar: CalendarModel?
-    @State private var selectedNote: Note?
+    @ObservedObject var viewModel = ContentViewModel()
     @State private var isAddingFolder = false
-    @State private var isAddingUniverse = false
+    @State private var isAddingPlanet = false
     @State private var isAddingCityWorld = false
     @State private var isAddingCharacterSpecies = false
     @State private var isAddingLanguageConstruction = false
@@ -751,27 +823,30 @@ struct WorldView: View {
     @State private var isAddingCalendar = false
     @State private var isAddingNote = false
     @State private var newFolderName = ""
-    @State private var newUniverseName = ""
+    @State private var newPlanetName = ""
     @State private var newCityWorldName = ""
     @State private var newCharacterSpeciesName = ""
     @State private var newLanguageConstructionName = ""
     @State private var newQuestBuilderName = ""
     @State private var newReligionCultureName = ""
-    @State private var newCalendarName = ""
-    @State private var newNoteName = ""
+    @State private var newFantasyCalendarName = ""
+    @State private var newBrainstormNote = ""
     
     var body: some View {
-        NavigationView {
-            VStack {
+        VStack {
+            NavigationView {
                 List {
-                    Section(header: Text("User")) {
-                        UserProfileView(user: viewModel.user)
+                    Section(header: Text("Profile")) {
+                        userProfileView(user: viewModel.user)
                     }
                     
                     Section(header: Text("Folders")) {
-                        ForEach(viewModel.folders) { folder in
+                        ForEach(viewModel.folders.sorted(by: { $0.name < $1.name })) { folder in
                             NavigationLink(destination: FolderDetailView(folder: folder)) {
-                                Text(folder.name)
+                                HStack {
+                                    Image(systemName: "folder")
+                                    Text(folder.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
@@ -779,97 +854,320 @@ struct WorldView: View {
                         }
                     }
                     
-                    Section(header: Text("Universe")) {
-                        ForEach(viewModel.universes) { universe in
-                            NavigationLink(destination: UniverseDetailView(universe: universe)) {
-                                Text(universe.name)
+                    Section(header: Text("Files")) {
+                        ForEach(viewModel.planets.sorted(by: { $0.name < $1.name })) { planet in
+                            NavigationLink(destination: PlanetDetailView(planet: planet)) {
+                                HStack {
+                                    Image(systemName: "globe")
+                                    Text(planet.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
-                            viewModel.universes.remove(atOffsets: indexSet)
+                            viewModel.planets.remove(atOffsets: indexSet)
                         }
-                    }
-                    
-                    Section(header: Text("City World")) {
-                        ForEach(viewModel.cityWorlds) { cityWorld in
-                            NavigationLink(destination: CityWorldDetailView(cityWorld: cityWorld)) {
-                                Text(cityWorld.name)
+                        
+                        ForEach(viewModel.cityWorlds.sorted(by: { $0.name < $1.name })) { cityWorld in
+                            NavigationLink(destination: CityDetailView(cityWorld: cityWorld)) {
+                                HStack {
+                                    Image(systemName: "building.2")
+                                    Text(cityWorld.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
                             viewModel.cityWorlds.remove(atOffsets: indexSet)
                         }
-                    }
-                    
-                    Section(header: Text("Character Species")) {
-                        ForEach(viewModel.characterSpecies) { characterSpecies in
-                            NavigationLink(destination: CharacterSpeciesDetailView(characterSpecies: characterSpecies)) {
-                                Text(characterSpecies.name)
+                        
+                        ForEach(viewModel.characterSpecies.sorted(by: { $0.name < $1.name })) { species in
+                            NavigationLink(destination: CharacterSpeciesDetailView(species: species)) {
+                                HStack {
+                                    Image(systemName: "person")
+                                    Text(species.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
                             viewModel.characterSpecies.remove(atOffsets: indexSet)
                         }
-                    }
-                    
-                    Section(header: Text("Language Construction")) {
-                        ForEach(viewModel.languageConstructions) { languageConstruction in
+                        
+                        ForEach(viewModel.languageConstructions.sorted(by: { $0.name < $1.name })) { languageConstruction in
                             NavigationLink(destination: LanguageConstructionDetailView(languageConstruction: languageConstruction)) {
-                                Text(languageConstruction.name)
+                                HStack {
+                                    Image(systemName: "scribble")
+                                    Text(languageConstruction.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
                             viewModel.languageConstructions.remove(atOffsets: indexSet)
                         }
-                    }
-                    
-                    Section(header: Text("Quest Builder")) {
-                        ForEach(viewModel.questBuilders) { questBuilder in
+                        
+                        ForEach(viewModel.questBuilders.sorted(by: { $0.name < $1.name })) { questBuilder in
                             NavigationLink(destination: QuestBuilderDetailView(questBuilder: questBuilder)) {
-                                Text(questBuilder.name)
+                                HStack {
+                                    Image(systemName: "scroll")
+                                    Text(questBuilder.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
                             viewModel.questBuilders.remove(atOffsets: indexSet)
                         }
-                    }
-                    
-                    Section(header: Text("Religion Culture")) {
-                        ForEach(viewModel.religionCultures) { religionCulture in
+                        
+                        ForEach(viewModel.religionCultures.sorted(by: { $0.name < $1.name })) { religionCulture in
                             NavigationLink(destination: ReligionCultureDetailView(religionCulture: religionCulture)) {
-                                Text(religionCulture.name)
+                                HStack {
+                                    Image(systemName: "cross")
+                                    Text(religionCulture.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
                             viewModel.religionCultures.remove(atOffsets: indexSet)
                         }
-                    }
-                    
-                    Section(header: Text("Calendar")) {
-                        ForEach(viewModel.calendars) { calendar in
-                            NavigationLink(destination: CalendarDetailView(calendar: calendar)) {
-                                Text(calendar.name)
+                        
+                        ForEach(viewModel.fantasyCalendars.sorted(by: { $0.name < $1.name })) { fantasyCalendar in
+                            NavigationLink(destination: FantasyCalendarDetailView(fantasyCalendar: fantasyCalendar)) {
+                                HStack {
+                                    Image(systemName: "calendar")
+                                    Text(fantasyCalendar.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
-                            viewModel.calendars.remove(atOffsets: indexSet)
+                            viewModel.fantasyCalendars.remove(atOffsets: indexSet)
                         }
-                    }
-                    
-                    Section(header: Text("Notes")) {
-                        ForEach(viewModel.notes) { note in
-                            NavigationLink(destination: NoteDetailView(note: note)) {
-                                Text(note.name)
+                        
+                        ForEach(viewModel.brainstormNotes.sorted(by: { $0.name < $1.name })) { brainstormNote in
+                            NavigationLink(destination: BrainstormNoteDetailView(brainstormNote: brainstormNote)) {
+                                HStack {
+                                    Image(systemName: "brain")
+                                    Text(brainstormNote.name)
+                                }
                             }
                         }
                         .onDelete { indexSet in
-                            viewModel.notes.remove(atOffsets: indexSet)
+                            viewModel.brainstormNotes.remove(atOffsets: indexSet)
+                        }
+                    }
+                }
+                .listStyle(GroupedListStyle())
+                .navigationTitle("Writer's Hub")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        EditButton()
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Menu {
+                            Button(action: {
+                                isAddingFolder = true
+                            }) {
+                                Label("Add Universe", systemImage: "moon.stars")
+                            }
+                            Button(action: {
+                                isAddingPlanet = true
+                            }) {
+                                Label("Add Planet", systemImage: "globe")
+                            }
+                            Button(action: {
+                                isAddingCityWorld = true
+                            }) {
+                                Label("Add CityWorld", systemImage: "building.2")
+                            }
+                            Button(action: {
+                                isAddingCharacterSpecies = true
+                            }) {
+                                Label("Add Character Species", systemImage: "person")
+                            }
+                            Button(action: {
+                                isAddingLanguageConstruction = true
+                            }) {
+                                Label("Add Language Construction", systemImage: "scribble")
+                            }
+                            Button(action: {
+                                isAddingQuestBuilder = true
+                            }) {
+                                Label("Add Quest Builder", systemImage: "scroll")
+                            }
+                            Button(action: {
+                                isAddingReligionCulture = true
+                            }) {
+                                Label("Add Religion/Culture", systemImage: "cross")
+                            }
+                            Button(action: {
+                                isAddingCalendar = true
+                            }) {
+                                Label("Add Fantasy Calendar", systemImage: "calendar")
+                            }
+                            Button(action: {
+                                isAddingNote = true
+                            }) {
+                                Label("Brainstorm", systemImage: "brain")
+                            }
+                        } label: {
+                            Image(systemName: "plus")
                         }
                     }
                 }
             }
-            .listStyle(InsetGroupedListStyle())
-            .navigationTitle("THE BESTIARY")
+            .sheet(isPresented: $isAddingFolder) {
+                // Add Folder sheet
+                newFolderView(isPresented: $isAddingFolder, newFolderName: $newFolderName) { name in
+                    viewModel.folders.append(Folder(name: name))
+                    isAddingFolder = false // Close the sheet
+                } onCancel: {
+                    isAddingFolder = false // Close the sheet
+                }
+            }
+            .sheet(isPresented: $isAddingPlanet) {
+                // Add Planet sheet
+                newPlanetView(isPresented: $isAddingPlanet, newPlanetName: $newPlanetName) { name in
+                    viewModel.planets.append(Planet(name: name))
+                    isAddingPlanet = false // Close the sheet
+                } onCancel: {
+                    isAddingPlanet = false // Close the sheet
+                }
+            }
+            .sheet(isPresented: $isAddingCityWorld) {
+                // Add CityWorld sheet
+                newCityWorldView(isPresented: $isAddingCityWorld, newCityWorldName: $newCityWorldName) { name in
+                    viewModel.cityWorlds.append(CityWorld(name: name))
+                    isAddingCityWorld = false // Close the sheet
+                } onCancel: {
+                    isAddingCityWorld = false // Close the sheet
+                }
+            }
+            .sheet(isPresented: $isAddingCharacterSpecies) {
+                // Add Character Species sheet
+                newCharacterSpeciesView(isPresented: $isAddingCharacterSpecies, newCharacterName: $newCharacterSpeciesName) { name in
+                    viewModel.characterSpecies.append(Species(name: name))
+                    isAddingCharacterSpecies = false // Close the sheet
+                } onCancel: {
+                    isAddingCharacterSpecies = false // Close the sheet
+                }
+            }
+
+            .sheet(isPresented: $isAddingLanguageConstruction) {
+                // Add Language Construction sheet
+                newLanguageConstructionView(isPresented: $isAddingLanguageConstruction, newLanguageConstructionName: $newLanguageConstructionName) { name in
+                    viewModel.languageConstructions.append(LanguageConstruction(name: name))
+                    isAddingLanguageConstruction = false // Close the sheet
+                } onCancel: {
+                    isAddingLanguageConstruction = false // Close the sheet
+                }
+            }
+
+            .sheet(isPresented: $isAddingQuestBuilder) {
+                // Add Quest Builder sheet
+                newQuestBuilderView(isPresented: $isAddingQuestBuilder, newQuestName: $newQuestBuilderName) { name in
+                    viewModel.questBuilders.append(QuestBuilder(name: name))
+                    isAddingQuestBuilder = false // Close the sheet
+                } onCancel: {
+                    isAddingQuestBuilder = false // Close the sheet
+                }
+            }
+            
+            .sheet(isPresented: $isAddingReligionCulture) {
+                // Add Religion Culture sheet
+                newReligionCultureView(isPresented: $isAddingReligionCulture, newCultureName: $newReligionCultureName) { name in
+                    viewModel.religionCultures.append(ReligionCulture(name: name))
+                    isAddingReligionCulture = false // Close the sheet
+                } onCancel: {
+                    isAddingReligionCulture = false // Close the sheet
+                }
+            }
+            .sheet(isPresented: $isAddingCalendar) {
+                // Add Fantasy Calendar sheet
+                newFantasyCalendarView(isPresented: $isAddingCalendar, newCalendarName: $newFantasyCalendarName) { name in
+                    viewModel.fantasyCalendars.append(FantasyCalendar(name: name))
+                    isAddingCalendar = false // Close the sheet
+                } onCancel: {
+                    isAddingCalendar = false // Close the sheet
+                }
+            }
+            .sheet(isPresented: $isAddingNote) {
+                // Add Brainstorm Note sheet
+                newBrainstormNoteView(isPresented: $isAddingNote, newNotes: $newBrainstormNote) { note in
+                    viewModel.brainstormNotes.append(BrainstormNote(name: note))
+                    isAddingNote = false // Close the sheet
+                } onCancel: {
+                    isAddingNote = false // Close the sheet
+                }
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(.pink)
+            
+        }
+    }
+}
+
+
+struct FolderDetailView: View {
+    let folder: Folder
+    @ObservedObject var viewModel = ContentViewModel()
+    @State private var isAddingFolder = false
+    @State private var isAddingPlanet = false
+    @State private var isAddingCityWorld = false
+    @State private var isAddingCharacterSpecies = false
+    @State private var isAddingLanguageConstruction = false
+    @State private var isAddingQuestBuilder = false
+    @State private var isAddingReligionCulture = false
+    @State private var isAddingCalendar = false
+    @State private var isAddingNote = false
+    @State private var newFolderName = ""
+    @State private var newPlanetName = ""
+    @State private var newCityWorldName = ""
+    @State private var newCharacterSpeciesName = ""
+    @State private var newLanguageConstructionName = ""
+    @State private var newQuestBuilderName = ""
+    @State private var newReligionCultureName = ""
+    @State private var newFantasyCalendarName = ""
+    @State private var newBrainstormNote = ""
+    
+    var body: some View {
+        VStack {
+            List {
+                Section(header: Text("Files")) {
+                    ForEach(viewModel.planets.sorted(by: { $0.name < $1.name })) { planet in
+                        NavigationLink(destination: PlanetDetailView(planet: planet)) {
+                            HStack {
+                                Image(systemName: "globe")
+                                Text(planet.name)
+                            }
+                        }
+                    }
+                    .onDelete { indexSet in
+                        viewModel.planets.remove(atOffsets: indexSet)
+                    }
+                    
+                    ForEach(viewModel.cityWorlds.sorted(by: { $0.name < $1.name })) { cityWorld in
+                        NavigationLink(destination: CityDetailView(cityWorld: cityWorld)) {
+                            HStack {
+                                Image(systemName: "building.2")
+                                Text(cityWorld.name)
+                            }
+                        }
+                    }
+                    .onDelete { indexSet in
+                        viewModel.cityWorlds.remove(atOffsets: indexSet)
+                    }
+                    
+                    ForEach(viewModel.languageConstructions.sorted(by: { $0.name < $1.name })) { languageConstruction in
+                        NavigationLink(destination: LanguageConstructionDetailView(languageConstruction: languageConstruction)) {
+                            HStack {
+                                Image(systemName: "text.book.closed")
+                                Text(languageConstruction.name)
+                            }
+                        }
+                    }
+                    .onDelete { indexSet in
+                        viewModel.languageConstructions.remove(atOffsets: indexSet)
+                    }
+                }
+            }
+            .listStyle(GroupedListStyle())
+            .navigationBarTitle("\(folder.name)")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     EditButton()
@@ -877,148 +1175,935 @@ struct WorldView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
                         Button(action: {
-                            isAddingFolder = true
+                            isAddingPlanet = true
                         }) {
-                            Label("Add Folder", systemImage: "folder.badge.plus")
+                            Label("Add Planet", systemImage: "globe")
                         }
-                        
-                        Button(action: {
-                            isAddingUniverse = true
-                        }) {
-                            Label("Add Universe", systemImage: "globe")
-                        }
-                        
                         Button(action: {
                             isAddingCityWorld = true
                         }) {
-                            Label("Add City World", systemImage: "building.2.crop.circle")
+                            Label("Add CityWorld", systemImage: "building.2")
                         }
-                        
                         Button(action: {
                             isAddingCharacterSpecies = true
                         }) {
-                            Label("Add Character Species", systemImage: "person.2")
+                            Label("Add Character Species", systemImage: "person")
                         }
-                        
                         Button(action: {
                             isAddingLanguageConstruction = true
                         }) {
-                            Label("Add Language Construction", systemImage: "textformat")
+                            Label("Add Language Construction", systemImage: "scribble")
                         }
-                        
                         Button(action: {
                             isAddingQuestBuilder = true
                         }) {
                             Label("Add Quest Builder", systemImage: "scroll")
                         }
-                        
                         Button(action: {
                             isAddingReligionCulture = true
                         }) {
-                            Label("Add Religion Culture", systemImage: "cross.circle")
+                            Label("Add Religion/Culture", systemImage: "cross")
                         }
-                        
                         Button(action: {
                             isAddingCalendar = true
                         }) {
-                            Label("Add Calendar", systemImage: "calendar")
+                            Label("Add Fantasy Calendar", systemImage: "calendar")
                         }
-                        
                         Button(action: {
                             isAddingNote = true
                         }) {
-                            Label("Add Note", systemImage: "note.text")
+                            Label("Brainstorm", systemImage: "brain")
                         }
                     } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title)
+                        Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $isAddingFolder) {
-                NewFolderView(isAddingFolder: $isAddingFolder, newFolderName: $newFolderName) { name in
-                    // Save folder logic
-                    viewModel.folders.append(Folder(name: name))
-                } onCancel: {
-                    // Cancel folder creation logic
-                    isAddingFolder = false
-                }
+        }
+        .sheet(isPresented: $isAddingPlanet) {
+            // Add Planet sheet
+            newPlanetView(isPresented: $isAddingPlanet, newPlanetName: $newPlanetName) { name in
+                viewModel.planets.append(Planet(name: name))
+                isAddingPlanet = false // Close the sheet
+            } onCancel: {
+                isAddingPlanet = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingUniverse) {
-                NewUniverseView(isAddingUniverse: $isAddingUniverse, newUniverseName: $newUniverseName) { name in
-                    // Save universe logic
-                    viewModel.universes.append(Universe(name: name))
-                } onCancel: {
-                    // Cancel universe creation logic
-                    isAddingUniverse = false
-                }
+        }
+        .sheet(isPresented: $isAddingCityWorld) {
+            // Add CityWorld sheet
+            newCityWorldView(isPresented: $isAddingCityWorld, newCityWorldName: $newCityWorldName) { name in
+                viewModel.cityWorlds.append(CityWorld(name: name))
+                isAddingCityWorld = false // Close the sheet
+            } onCancel: {
+                isAddingCityWorld = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingCityWorld) {
-                NewCityWorldView(isAddingCityWorld: $isAddingCityWorld, newCityWorldName: $newCityWorldName) { name in
-                    // Save city world logic
-                    viewModel.cityWorlds.append(CityWorld(name: name))
-                } onCancel: {
-                    // Cancel city world creation logic
-                    isAddingCityWorld = false
-                }
+        }
+        .sheet(isPresented: $isAddingCharacterSpecies) {
+            // Add Character Species sheet
+            newCharacterSpeciesView(isPresented: $isAddingCharacterSpecies, newCharacterName: $newCharacterSpeciesName) { name in
+                viewModel.characterSpecies.append(Species(name: name))
+                isAddingCharacterSpecies = false // Close the sheet
+            } onCancel: {
+                isAddingCharacterSpecies = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingCharacterSpecies) {
-                NewCharacterSpeciesView(isAddingCharacterSpecies: $isAddingCharacterSpecies, newCharacterSpeciesName: $newCharacterSpeciesName) { name in
-                    // Save character species logic
-                    viewModel.characterSpecies.append(CharacterSpecies(name: name))
-                } onCancel: {
-                    // Cancel character species creation logic
-                    isAddingCharacterSpecies = false
-                }
+        }
+        
+        .sheet(isPresented: $isAddingLanguageConstruction) {
+            // Add Language Construction sheet
+            newLanguageConstructionView(isPresented: $isAddingLanguageConstruction, newLanguageConstructionName: $newLanguageConstructionName) { name in
+                viewModel.languageConstructions.append(LanguageConstruction(name: name))
+                isAddingLanguageConstruction = false // Close the sheet
+            } onCancel: {
+                isAddingLanguageConstruction = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingLanguageConstruction) {
-                NewLanguageConstructionView(isAddingLanguageConstruction: $isAddingLanguageConstruction, newLanguageConstructionName: $newLanguageConstructionName) { name in
-                    // Save language construction logic
-                    viewModel.languageConstructions.append(LanguageConstruction(name: name))
-                } onCancel: {
-                    // Cancel language construction creation logic
-                    isAddingLanguageConstruction = false
-                }
+        }
+        
+        .sheet(isPresented: $isAddingQuestBuilder) {
+            // Add Quest Builder sheet
+            newQuestBuilderView(isPresented: $isAddingQuestBuilder, newQuestName: $newQuestBuilderName) { name in
+                viewModel.questBuilders.append(QuestBuilder(name: name))
+                isAddingQuestBuilder = false // Close the sheet
+            } onCancel: {
+                isAddingQuestBuilder = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingQuestBuilder) {
-                NewQuestBuilderView(isAddingQuestBuilder: $isAddingQuestBuilder, newQuestBuilderName: $newQuestBuilderName) { name in
-                    // Save quest builder logic
-                    viewModel.questBuilders.append(QuestBuilder(name: name))
-                } onCancel: {
-                    // Cancel quest builder creation logic
-                    isAddingQuestBuilder = false
-                }
+        }
+        
+        .sheet(isPresented: $isAddingReligionCulture) {
+            // Add Religion Culture sheet
+            newReligionCultureView(isPresented: $isAddingReligionCulture, newCultureName: $newReligionCultureName) { name in
+                viewModel.religionCultures.append(ReligionCulture(name: name))
+                isAddingReligionCulture = false // Close the sheet
+            } onCancel: {
+                isAddingReligionCulture = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingReligionCulture) {
-                NewReligionCultureView(isAddingReligionCulture: $isAddingReligionCulture, newReligionCultureName: $newReligionCultureName) { name in
-                    // Save religion culture logic
-                    viewModel.religionCultures.append(ReligionCulture(name: name))
-                } onCancel: {
-                    // Cancel religion culture creation logic
-                    isAddingReligionCulture = false
-                }
+        }
+        .sheet(isPresented: $isAddingCalendar) {
+            // Add Fantasy Calendar sheet
+            newFantasyCalendarView(isPresented: $isAddingCalendar, newCalendarName: $newFantasyCalendarName) { name in
+                viewModel.fantasyCalendars.append(FantasyCalendar(name: name))
+                isAddingCalendar = false // Close the sheet
+            } onCancel: {
+                isAddingCalendar = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingCalendar) {
-                NewCalendarView(isAddingCalendar: $isAddingCalendar, newCalendarName: $newCalendarName) { name in
-                    // Save calendar logic
-                    viewModel.calendars.append(CalendarModel(name: name))
-                } onCancel: {
-                    // Cancel calendar creation logic
-                    isAddingCalendar = false
-                }
+        }
+        .sheet(isPresented: $isAddingNote) {
+            // Add Brainstorm Note sheet
+            newBrainstormNoteView(isPresented: $isAddingNote, newNotes: $newBrainstormNote) { note in
+                viewModel.brainstormNotes.append(BrainstormNote(name: note))
+                isAddingNote = false // Close the sheet
+            } onCancel: {
+                isAddingNote = false // Close the sheet
             }
-            .sheet(isPresented: $isAddingNote) {
-                NewNoteView(isAddingNote: $isAddingNote, newNoteName: $newNoteName) { name in
-                    // Save note logic
-                    viewModel.notes.append(Note(name: name))
-                } onCancel: {
-                    // Cancel note creation logic
-                    isAddingNote = false
+        }
+        .buttonStyle(.plain)
+        .foregroundColor(.blue)
+    }
+}
+    
+struct PlanetDetailView: View {
+    var planet: Planet
+    
+    @State private var name: String = ""
+    @State private var altName: String = ""
+    @State private var skyColor: String = ""
+    @State private var moonNumber: Int = 0
+    @State private var moonNames: [String] = []
+    @State private var size: String = ""
+    @State private var radiusMiles: String = ""
+    @State private var radiusKm: String = ""
+    @State private var gravity: String = ""
+    @State private var temperatureLowCelsius: String = ""
+    @State private var temperatureLowFahrenheit: String = ""
+    @State private var temperatureHighCelsius: String = ""
+    @State private var temperatureHighFahrenheit: String = ""
+    @State private var averageSurfaceTemperatureCelsius: String = ""
+    @State private var averageSurfaceTemperatureFahrenheit: String = ""
+    @State private var lengthOfDay: String = ""
+    @State private var lengthOfYear: String = ""
+    @State private var seasonalVariation: String = ""
+    @State private var surfaceWater: Int = 0
+    @State private var subterraneanWater: Int = 0
+    @State private var seasonalVariationDescription: String = ""
+    @State private var selectedType: String = ""
+    
+    
+    let types = ["Rocky", "Earth-Like", "Water-World", "Desert", "Humid", "Frozen", "Ice", "Gas", "Toxic"]
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Group {
+                    Text("Universe Details")
+                        .font(.headline)
+                    
+                    TextField("Name", text: $name)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.leading, 10) // Indentation
+                    
+                    Picker("Type", selection: $selectedType) {
+                        ForEach(types, id: \.self) { type in
+                            Text(type)
+                                .tag(type)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    
+                    
+                    TextField("Alt Name", text: $altName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.leading, 10) // Indentation
+                    
+                    TextField("Sky Color", text: $skyColor)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.leading, 10) // Indentation
                 }
+                
+                Divider()
+                
+                Group {
+                    Text("Moons")
+                        .font(.headline)
+                    
+                    VStack {
+                        HStack {
+                            Text("Number:")
+                            Text("\(moonNumber)")
+                                .fontWeight(.bold)
+                            Spacer()
+                            Button("Generate") {
+                                moonNumber = Int.random(in: 1...10)
+                                moonNames = Array(repeating: "", count: moonNumber)
+                            }
+                        }
+                        
+                        ForEach(0..<moonNumber, id: \.self) { index in
+                            HStack {
+                                Text("Moon \(index + 1):")
+                                TextField("Moon Name", text: $moonNames[index])
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .padding(.leading, 10) // Indentation
+                            }
+                        }
+                    }
+                    .padding(.vertical)
+                    
+                    Divider()
+                }
+                
+                Group {
+                    Text("Planet Stats")
+                        .font(.headline)
+                    
+                    VStack {
+                        HStack {
+                            Text("Size:")
+                            TextField("x Earth", text: $size)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
+                                .onChange(of: size) { newValue in
+                                    if let number = Double(newValue), number >= 0.01 && number <= 10 {
+                                        size = String(format: "%.2f", number)
+                                    } else {
+                                        size = ""
+                                    }
+                                }
+                        }
+                        
+                        HStack {
+                            Text("Radius:")
+                            TextField("miles", text: $radiusMiles)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
+                                .onChange(of: radiusMiles) { newValue in
+                                    if let miles = Double(newValue) {
+                                        let kilometers = round(miles * 1.60934)
+                                        radiusKm = String(format: "%.0f", kilometers)
+                                    } else {
+                                        radiusKm = ""
+                                    }
+                                }
+                            Text("/")
+                            Text("\(radiusKm) km")
+                        }
+                        
+                        HStack {
+                            Text("Gravity:")
+                            TextField("x Earth's Gravity", text: $gravity)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
+                        }
+                        
+                        HStack {
+                            Text("Temperature Range:")
+                            TextField("Low: °C", text: $temperatureLowCelsius)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
+                                .onChange(of: temperatureLowCelsius) { newValue in
+                                    if let celsius = Double(newValue) {
+                                        let fahrenheit = round((celsius * 9/5) + 32)
+                                        temperatureLowFahrenheit = String(format: "%.0f", fahrenheit)
+                                    } else {
+                                        temperatureLowFahrenheit = ""
+                                    }
+                                    
+                                    updateAverageSurfaceTemperature()
+                                }
+                            
+                            Text("/")
+                            
+                            Text("\(temperatureLowFahrenheit) °F")
+                        }
+                        
+                        HStack {
+                            Text("High:")
+                            TextField("°C", text: $temperatureHighCelsius)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
+                                .onChange(of: temperatureHighCelsius) { newValue in
+                                    if let celsius = Double(newValue) {
+                                        let fahrenheit = round((celsius * 9/5) + 32)
+                                        temperatureHighFahrenheit = String(format: "%.0f", fahrenheit)
+                                    } else {
+                                        temperatureHighFahrenheit = ""
+                                    }
+                                    
+                                    updateAverageSurfaceTemperature()
+                                }
+                            
+                            Text("/")
+                            
+                            Text("\(temperatureHighFahrenheit) °F")
+                        }
+                        
+                        HStack {
+                            Text("Average Surface Temperature:")
+                            Text("\(averageSurfaceTemperatureCelsius) °C")
+                            Text("/")
+                            Text("\(averageSurfaceTemperatureFahrenheit) °F")
+                        }
+                    }
+                    
+                    Divider()
+                }
+                
+                Group {
+                    Text("Water Prevalence")
+                        .font(.headline)
+                    
+                    VStack {
+                        HStack {
+                            Text("Surface Water:")
+                            
+                            TextField("Surface Water", value: $surfaceWater, formatter: NumberFormatter())
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.numberPad)
+                        }
+                        
+                        HStack {
+                            Text("Subterranean:")
+                            
+                            TextField("Subterranean", value: $subterraneanWater, formatter: NumberFormatter())
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.numberPad)
+                        }
+                        
+                        let totalWaterPercentage = (surfaceWater + subterraneanWater)
+                        Text("Water Prevalence: \(totalWaterPercentage)% (\(surfaceWater) surface water / \(subterraneanWater) subterranean)")
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Divider()
+                }
+                
+                Group {
+                    Text("Planet Motion")
+                        .font(.headline)
+                    
+                    VStack {
+                        HStack {
+                            Text("Length of Day:")
+                            TextField("hours", text: $lengthOfDay)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.numberPad)
+                        }
+                        
+                        HStack {
+                            Text("Length of Year:")
+                            TextField("Earth days", text: $lengthOfYear)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .padding(.leading, 10) // Indentation
+                                .foregroundColor(Color(.systemGray))
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.numberPad)
+                        }
+                    }
+                    
+                    Divider()
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .navigationTitle(planet.name)
+        }
+        
+        HStack {
+            Button(action: {
+                // Save logic here
+            }) {
+                Text("Save")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(10)
             }
             
-            Text("Select an item")
+            Spacer()
+            
+            Button(action: {
+                // Generate logic here
+                let randomSize = String(format: "%.2f", Double.random(in: 0.01...10))
+                let randomRadius = String(Int.random(in: 1000...10_000))
+                let randomGravity = String(format: "%.2f", Double.random(in: 0.01...10))
+                let randomLengthOfDay = Int.random(in: 1...100)
+                let randomLengthOfYear = Int.random(in: 1...1000)
+                let randomsurfaceWater = Int.random(in: 1...100)
+                let variations = [
+                    ("None", "[Name]'s circular orbit means temperature variations are caused by the day/night cycle only"),
+                    ("Extreme", "The planet's axial tilt results in extremely long-lasting seasons"),
+                    ("Distinct", "Multiple distinct seasons with notable temperature differences during the year"),
+                    ("Slight", "Temperature varies only slightly based on the position of the planet over the year")
+                ]
+                let (randomVariation, description) = variations.randomElement() ?? ("None", "")
+                seasonalVariation = randomVariation
+                seasonalVariationDescription = description
+                
+                lengthOfDay = "\(randomLengthOfDay)"
+                size = randomSize
+                radiusMiles = randomRadius
+                gravity = randomGravity
+                lengthOfYear = "\(randomLengthOfYear)"
+                let totalWater = 100
+                surfaceWater = Int.random(in: 0...totalWater)
+                subterraneanWater = totalWater - surfaceWater
+                let temperatureRange: ClosedRange<Int>?
+                
+                switch selectedType {
+                case "Rocky":
+                    temperatureRange = 50...Int.max
+                case "Earth-Like":
+                    temperatureRange = 50...Int.max
+                case "Water-World":
+                    temperatureRange = 50...Int.max
+                case "Desert":
+                    temperatureRange = 50...Int.max
+                case "Humid":
+                    temperatureRange = Int.min...0
+                case "Frozen":
+                    temperatureRange = Int.min...0
+                case "Ice":
+                    temperatureRange = Int.min...0
+                case "Gas":
+                    temperatureRange = 100...Int.max
+                case "Toxic":
+                    temperatureRange = Int.min...Int.max
+                default:
+                    temperatureRange = nil
+                }
+                
+                if let temperatureRange = temperatureRange {
+                    if let lowerBound = temperatureRange.lowerBound as Int? {
+                        temperatureLowCelsius = "\(lowerBound)"
+                        temperatureLowFahrenheit = String(format: "%.0f", (Double(lowerBound) * 9/5) + 32)
+                    }
+                    
+                    if let upperBound = temperatureRange.upperBound as Int? {
+                        temperatureHighCelsius = "\(upperBound)"
+                        temperatureHighFahrenheit = String(format: "%.0f", (Double(upperBound) * 9/5) + 32)
+                    }
+                }
+                
+                updateAverageSurfaceTemperature()
+                
+            }){
+                Text("Generate")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.green)
+                    .cornerRadius(10)
+            }
         }
+        .padding()
+    }
+    
+    private func updateAverageSurfaceTemperature() {
+        if let lowCelsius = Double(temperatureLowCelsius),
+           let highCelsius = Double(temperatureHighCelsius) {
+            let averageCelsius = (lowCelsius + highCelsius) / 2
+            averageSurfaceTemperatureCelsius = String(format: "%.0f", averageCelsius)
+            
+            let averageFahrenheit = round((averageCelsius * 9/5) + 32)
+            averageSurfaceTemperatureFahrenheit = String(format: "%.0f", averageFahrenheit)
+        } else {
+            averageSurfaceTemperatureCelsius = ""
+            averageSurfaceTemperatureFahrenheit = ""
+        }
+    }
+}
+
+    
+    struct CityDetailView: View {
+        var cityWorld: CityWorld
+        
+        var body: some View {
+            Text("City World Detail: \(cityWorld.name)")
+        }
+    }
+    
+    struct LanguageConstructionDetailView: View {
+        var languageConstruction: LanguageConstruction
+        
+        var body: some View {
+            Text("Language Construction Detail: \(languageConstruction.name)")
+        }
+    }
+    
+    struct CharacterSpeciesDetailView: View {
+        var species: Species
+        
+        var body: some View {
+            Text("Character Species Detail: \(species.name)")
+        }
+    }
+    
+    struct ReligionCultureDetailView: View {
+        var religionCulture: ReligionCulture
+        
+        var body: some View {
+            Text("Religion Culture Detail: \(religionCulture.name)")
+        }
+    }
+    
+    struct QuestBuilderDetailView: View {
+        var questBuilder: QuestBuilder
+        
+        var body: some View {
+            Text("Quest Builder Detail: \(questBuilder.name)")
+        }
+    }
+
+    struct FantasyCalendarDetailView: View {
+        var fantasyCalendar: FantasyCalendar
+        
+        var body: some View {
+            Text("Fantasy Calendar Detail: \(fantasyCalendar.name)")
+        }
+    }
+
+    struct BrainstormNoteDetailView: View {
+        var brainstormNote: BrainstormNote
+        
+        var body: some View {
+            Text("Notes Detail: \(brainstormNote.name)")
+        }
+    }
+    
+    struct newFolderView: View {
+        @Binding var isPresented: Bool
+        @Binding var newFolderName: String
+        
+        var onSave: (String) -> Void
+        var onCancel: () -> Void
+        
+        var body: some View {
+            VStack {
+                Text("New Folder")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                TextField("Folder Name", text: $newFolderName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                HStack {
+                    Button("Cancel") {
+                        onCancel()
+                    }
+                    .padding()
+                    
+                    Button("Save") {
+                        onSave(newFolderName)
+                    }
+                    .padding()
+                    .foregroundColor(.blue)
+                }
+            }
+        }
+    }
+    
+    struct newPlanetView: View {
+        @Binding var isPresented: Bool
+        @Binding var newPlanetName: String
+        
+        var onSave: (String) -> Void
+        var onCancel: () -> Void
+        
+        var body: some View {
+            VStack {
+                Text("New Planet")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                TextField("Planet Name", text: $newPlanetName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                HStack {
+                    Button("Cancel") {
+                        onCancel()
+                    }
+                    .padding()
+                    
+                    Button("Save") {
+                        onSave(newPlanetName)
+                    }
+                    .padding()
+                    .foregroundColor(.red)
+                }
+            }
+        }
+    }
+    
+    struct newCityWorldView: View {
+        @Binding var isPresented: Bool
+        @Binding var newCityWorldName: String
+        
+        var onSave: (String) -> Void
+        var onCancel: () -> Void
+        
+        var body: some View {
+            VStack {
+                Text("New City World")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                TextField("CityWorld Name", text: $newCityWorldName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                HStack {
+                    Button("Cancel") {
+                        onCancel()
+                    }
+                    .padding()
+                    
+                    Button("Save") {
+                        onSave(newCityWorldName)
+                        onCancel() // Close the sheet after saving
+                    }
+                    .padding()
+                    .foregroundColor(.blue)
+                }
+            }
+        }
+    }
+    
+    struct newLanguageConstructionView: View {
+        @Binding var isPresented: Bool
+        @Binding var newLanguageConstructionName: String
+        
+        var onSave: (String) -> Void
+        var onCancel: () -> Void
+        
+        var body: some View {
+            VStack {
+                Text("New Language Construction")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                TextField("Language Construction Name", text: $newLanguageConstructionName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                HStack {
+                    Button("Cancel") {
+                        onCancel()
+                    }
+                    .padding()
+                    
+                    Button("Save") {
+                        onSave(newLanguageConstructionName)
+                        onCancel() // Close the sheet after saving
+                    }
+                    .padding()
+                    .foregroundColor(.green)
+                }
+            }
+        }
+    }
+
+struct newCharacterSpeciesView: View {
+    @Binding var isPresented: Bool
+    @Binding var newCharacterName: String
+    
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text("New Character/Species")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding()
+            
+            TextField("Character/Species Name", text: $newCharacterName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            HStack {
+                Button("Cancel") {
+                    onCancel()
+                }
+                .padding()
+                
+                Button("Save") {
+                    onSave(newCharacterName)
+                }
+                .padding()
+                .foregroundColor(.blue)
+            }
+        }
+    }
+}
+
+struct newQuestBuilderView: View {
+    @Binding var isPresented: Bool
+    @Binding var newQuestName: String
+    
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text("New Character/Species")
+                .fontWeight(.bold)
+                .padding()
+            
+            TextField("Character/Species Name", text: $newQuestName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            HStack {
+                Button("Cancel") {
+                    onCancel()
+                }
+                .padding()
+                
+                Button("Save") {
+                    onSave(newQuestName)
+                }
+                .padding()
+                .foregroundColor(.red)
+            }
+        }
+    }
+}
+
+struct newReligionCultureView: View {
+    @Binding var isPresented: Bool
+    @Binding var newCultureName: String
+    
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text("New Religion/Culture")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding()
+            
+            TextField("Religion/Culture Name", text: $newCultureName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            HStack {
+                Button("Cancel") {
+                    onCancel()
+                }
+                .padding()
+                
+                Button("Save") {
+                    onSave(newCultureName)
+                    onCancel() // Close the sheet after saving
+                }
+                .padding()
+                .foregroundColor(.blue)
+            }
+        }
+    }
+}
+
+struct newFantasyCalendarView: View {
+    @Binding var isPresented: Bool
+    @Binding var newCalendarName: String
+    
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text("Name of the Calendar")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding()
+            
+            TextField("Name of the Calendar", text: $newCalendarName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            HStack {
+                Button("Cancel") {
+                    onCancel()
+                }
+                .padding()
+                
+                Button("Save") {
+                    onSave(newCalendarName)
+                    onCancel() // Close the sheet after saving
+                }
+                .padding()
+                .foregroundColor(.green)
+            }
+        }
+    }
+}
+
+struct newBrainstormNoteView: View {
+    @Binding var isPresented: Bool
+    @Binding var newNotes: String
+    
+    var onSave: (String) -> Void
+    var onCancel: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text("Name of Storm")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding()
+            
+            TextField("Name of Storm", text: $newNotes)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            HStack {
+                Button("Cancel") {
+                    onCancel()
+                }
+                .padding()
+                
+                Button("Save") {
+                    onSave(newNotes)
+                    onCancel() // Close the sheet after saving
+                }
+                .padding()
+                .foregroundColor(.green)
+            }
+        }
+    }
+}
+    
+struct userProfileView: View {
+    let user: User
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Circle()
+                .foregroundColor(.gray)
+                .frame(width: 120, height: 120)
+                .overlay(
+                    Image(user.profileImageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 110, height: 110)
+                )
+            
+            Text(user.name)
+                .font(.title)
+            
+            HStack(spacing: 24) {
+                VStack {
+                    Text("\(user.followers)")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Text("Followers")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                VStack {
+                    Text("\(user.following)")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Text("Following")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                VStack {
+                    Text("\(user.posts)")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Text("Posts")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(.systemBackground))
+                .shadow(color: Color(.black).opacity(0.2), radius: 5, x: 0, y: 2)
+        )
+    }
+}
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        WorldView()
     }
 }
 
