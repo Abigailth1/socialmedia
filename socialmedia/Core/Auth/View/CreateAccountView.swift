@@ -11,6 +11,7 @@ import Firebase
 struct CreateAccountView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var viewModel: RegisterViewModel
     @State private var profileImage: Image? = nil
     @State private var username: String = ""
     @State private var email: String = ""
@@ -70,45 +71,45 @@ struct CreateAccountView: View {
                 .padding(.horizontal, 50)
                 .padding(.bottom, 20)
                 
-                TextField("Username", text: $username)
+                TextField("Username", text: $viewModel.username)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
                     .padding(.horizontal, 10)
                 
                 if accountType == .business {
-                    TextField("Company Name", text: $companyName)
+                    TextField("Company Name", text: $viewModel.companyName)
                         .padding()
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(5)
                         .padding(.horizontal, 10)
                 } else {
-                    TextField("Alias", text: $alias)
+                    TextField("Alias", text: $viewModel.alias)
                         .padding()
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(5)
                         .padding(.horizontal, 10)
                 }
                 
-                TextField("Email", text: $email)
+                TextField("Email", text: $viewModel.email)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
                     .padding(.horizontal, 10)
                 
-                TextField("Phone Number", text: $phoneNumber)
+                TextField("Phone Number", text: $viewModel.phoneNumber)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
                     .padding(.horizontal, 10)
                 
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $viewModel.password)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
                     .padding(.horizontal, 10)
                 
-                SecureField("Confirm Password", text: $confirmPassword)
+                SecureField("Confirm Password", text: $viewModel.confirmPassword)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
@@ -211,5 +212,6 @@ struct CreateAccountView: View {
 struct CreateAccountView_Previews: PreviewProvider {
     static var previews: some View {
         CreateAccountView()
+            .environmentObject(RegisterViewModel())
     }
 }
