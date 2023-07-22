@@ -1,0 +1,41 @@
+[debug] [2023-07-21T22:21:38.650Z] ----------------------------------------------------------------------
+[debug] [2023-07-21T22:21:38.653Z] Command:       /usr/local/bin/firebase /Users/danielmaliro/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase emulators:start --import data --export-on-exit
+[debug] [2023-07-21T22:21:38.654Z] CLI Version:   12.4.4
+[debug] [2023-07-21T22:21:38.654Z] Platform:      darwin
+[debug] [2023-07-21T22:21:38.655Z] Node Version:  v16.16.0
+[debug] [2023-07-21T22:21:38.659Z] Time:          Fri Jul 21 2023 18:21:38 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-07-21T22:21:38.660Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-07-21T22:21:38.827Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-07-21T22:21:38.829Z] > authorizing via signed-in user (kingdanielmaliro10@gmail.com)
+[info] i  emulators: Starting emulators: auth {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth"}}
+[debug] [2023-07-21T22:21:40.116Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-21T22:21:40.116Z] [auth] Authentication Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-21T22:21:40.117Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2023-07-21T22:21:40.134Z] [hub] writing locator at /var/folders/cd/xl6srbtd7fv7kmyc9pjxm1cc0000gn/T/hub-inkgenius-88774.json
+[info] i  auth: Importing config from /Users/danielmaliro/Desktop/InkGenius/socialmedia/data/auth_export/config.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing config from /Users/danielmaliro/Desktop/InkGenius/socialmedia/data/auth_export/config.json"}}
+[info] i  auth: Importing accounts from /Users/danielmaliro/Desktop/InkGenius/socialmedia/data/auth_export/accounts.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing accounts from /Users/danielmaliro/Desktop/InkGenius/socialmedia/data/auth_export/accounts.json"}}
+[debug] [2023-07-21T22:21:48.706Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-07-21T22:21:48.708Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-07-21T22:21:48.708Z] Starting Emulator UI with command {"binary":"node","args":["/Users/danielmaliro/.cache/firebase/emulators/ui-v1.11.7/server/server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/danielmaliro/.cache/firebase/emulators/ui-v1.11.7/server/server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-07-21T22:21:49.066Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-07-21T22:21:49.069Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI        │
+├────────────────┼────────────────┼────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:4000/auth │
+└────────────────┴────────────────┴────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 

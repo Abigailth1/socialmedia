@@ -9,12 +9,14 @@ import SwiftUI
 
 struct VerificationView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var viewModel: RegisterViewModel
+    
     var body: some View {
         
         VStack {
             Spacer()
             
-            Text("Welcome to InkGenius, name")
+            Text("Welcome to InkGenius, \(viewModel.username)")
                 .font(.title)
                 .fontWeight(.semibold)
                 .padding(.top)
@@ -27,7 +29,7 @@ struct VerificationView: View {
             
             
             Button {
-                print("Complete Sign Up")
+                Task { try await viewModel.createUser() }
             } label: {
                 Text("Complete")
                     .font(.headline)

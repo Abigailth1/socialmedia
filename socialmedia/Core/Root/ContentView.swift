@@ -24,10 +24,12 @@ enum LeftSwipe {
 
 struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
+    @StateObject var registrationViewModel = RegisterViewModel()
     var body: some View {
         Group {
             if viewModel.userSession == nil {
                 LoginView()
+                    .environmentObject(registrationViewModel)
             }else {
                 //Main View
             }

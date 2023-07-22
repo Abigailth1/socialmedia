@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import Combine
 
+@MainActor
 class ContentViewModel: ObservableObject {
     
     //listen to when ViewModel is set
@@ -18,7 +19,7 @@ class ContentViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     
     init() {
-        
+        setupSubscribers()
     }
     
     func setupSubscribers() {
