@@ -9,7 +9,6 @@ import Foundation
 import Firebase
 import Combine
 
-@MainActor
 class ContentViewModel: ObservableObject {
     
     //listen to when ViewModel is set

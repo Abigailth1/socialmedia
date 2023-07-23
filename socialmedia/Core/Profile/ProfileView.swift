@@ -63,7 +63,7 @@ struct ProfileView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        
+                        AuthViewModel.shared.signout()
                     }label: {
                         Image(systemName: "gearshape.fill")
                             .foregroundColor(.black)

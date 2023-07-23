@@ -1,0 +1,39 @@
+Jul 23, 2023 3:29:00 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://127.0.0.1:9150
+API endpoint: http://127.0.0.1:8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
+
+Dev App Server is now running.
+
+Jul 23, 2023 3:29:10 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+Jul 23, 2023 3:29:10 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:29:10 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+Jul 23, 2023 3:33:37 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:33:39 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+Jul 23, 2023 3:33:39 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+Jul 23, 2023 3:37:56 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:37:56 AM io.gapi.emulators.netty.NotFoundHandler handleRequest
+INFO: Unknown request URI: /www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDpc9zVlXv5lBMXLk-8yS4Uc5_QkJskxn0
+Jul 23, 2023 3:38:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:40:46 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:41:52 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:42:44 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:44:47 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Jul 23, 2023 3:44:47 AM io.gapi.emulators.netty.NotFoundHandler handleRequest
+INFO: Unknown request URI: /www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDpc9zVlXv5lBMXLk-8yS4Uc5_QkJskxn0
+*** shutting down gRPC server since JVM is shutting down
+*** server shut down

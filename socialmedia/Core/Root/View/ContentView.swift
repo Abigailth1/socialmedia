@@ -32,6 +32,7 @@ struct ContentView: View {
                     .environmentObject(registrationViewModel)
             }else {
                 //Main View
+                ProfileView()
             }
         }
     }

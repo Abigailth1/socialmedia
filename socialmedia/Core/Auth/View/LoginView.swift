@@ -10,12 +10,13 @@ import Firebase
 
 struct LoginView: View {
     @State private var showCreateAccount = false
-    @State private var email: String = ""
+//    @State private var email: String = ""
     @State private var username: String = ""
-    @State private var password: String = ""
+//    @State private var password: String = ""
     @State private var isCreateAnAccountShown: Bool = false
     @State private var isLoggedIn: Bool = false
     @State private var isHomePageShown: Bool = false
+    @StateObject var viewModel = LoginViewModel()
     
     //    func login() {
     //        Auth.auth().signIn(withEmail: email, password: password) { _, error in
@@ -51,10 +52,10 @@ struct LoginView: View {
                 
                 //Text
                 VStack {
-                    TextField("Username", text: $username)
+                    TextField("Username", text: $viewModel.email)
                         .modifier(TextFieldModifier())
                     
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.password)
                         .modifier(TextFieldModifier())
                 }
                 
@@ -70,7 +71,7 @@ struct LoginView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 Button {
-                    print("Login")
+                    Task{ try await viewModel.signIn() }
                 } label: {
                     Text("Login")
                         .font(.headline)
