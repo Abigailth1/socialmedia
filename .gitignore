@@ -22,3 +22,6 @@ node_modules
 .sass-cache
 
 GoogleService-Info.plist
+
+socialmedia.xcodeproj/project.xcworkspace/xcuserdata/
+socialmedia.xcodeproj/xcuserdata/danielmaliro.xcuserdatad/
