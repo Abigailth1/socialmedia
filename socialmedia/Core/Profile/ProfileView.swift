@@ -8,65 +8,68 @@
 import SwiftUI
 
 struct ProfileView: View {
+    private let gridItems: [GridItem] = [
+        .init(.flexible(), spacing: 1),
+        .init(.flexible(), spacing: 1),
+        .init(.flexible(), spacing: 1),
+    ]
     var body: some View {
-        VStack(spacing: 10) {
-            //header
-            VStack {
-                HStack {
-                    Image(systemName: "person.crop.circle.fill")
+        NavigationStack {
+            ScrollView {
+                //header
+                VStack(spacing: 10) {
+                    HStack {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80, height: 80)
+                            .clipShape(Circle())
+                        
+                        Spacer()
+                        
+                        HStack(spacing: 10) {
+                            UserStatView(value: 3, title: "Posts")
+                            
+                            UserStatView(value: 3, title: "Followers")
+                            
+                            UserStatView(value: 3, title: "Following")
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Bio")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                        
+                        Text("Bio")
+                            .font(.footnote)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    
+                    Divider()
+                }
+                //post grid view
+                
+                LazyVGrid(columns: gridItems, spacing: 1) {
+                    Image(systemName: "circle")
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 80, height: 80)
-    git                     .clipShape(Circle())
-                    
-                    Spacer()
-                    
-                    HStack(spacing: 10) {
-                        VStack {
-                            Text("3")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            
-                            Text("Posts")
-                                .font(.footnote)
-                        }
-                        .frame(width: 80)
+                }
+            }
+            .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
                         
-                        VStack {
-                            Text("3")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            
-                            Text("Followers")
-                                .font(.footnote)
-                        }
-                        .frame(width: 80)
-                        
-                        VStack {
-                            Text("3")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            
-                            Text("Following")
-                                .font(.footnote)
-                        }
-                        .frame(width: 80)
+                    }label: {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundColor(.black)
                     }
                 }
-                .padding(.horizontal)
-                
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Bio")
-                        .font(.footnote)
-                    Text("Bio")
-                        .font(.footnote)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-                
-                Divider()
             }
-            //post grid view
         }
     }
 }
