@@ -1,10 +1,18 @@
 import SwiftUI
 import Firebase
 import FirebaseCore
+import Foundation
+import Combine
 
 enum AccountType: String {
     case personal
-    case business
+    case studio
+}
+
+struct Employee: Identifiable {
+    let id: UUID = UUID()
+    let name: String
+    let role: String
 }
 
 enum Tab {
@@ -17,77 +25,15 @@ enum Tab {
     case ai
 }
 
-enum navItems {
-    case universe
-    case world
-    case scene
-    case character
-    case language
-    case quest
-    case religion
-    case calendar
-    case brainstorm
-    case home
+struct UserProfile {
+    var name: String
+    var role: String
+    var bio: String?
+    var profileImageURL: String?
+    var websiteURL: String?
+    var socialMediaURL: String?
+    var interests: [String]
 }
-
-struct Folder: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct Universe: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct CityWorld: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct CharacterSpecies: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct LanguageConstruction: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct QuestBuilder: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct ReligionCulture: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct CalendarModel: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct Note: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct TeamMember: Identifiable {
-    let id = UUID()
-    let name: String
-    let profileImageName: String
-}
-
-struct User {
-    let name: String
-    let profileImageName: String
-    let followers: Int
-    let following: Int
-}
-
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -96,93 +42,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
-class ContentViewModel: ObservableObject {
-    @Published var user: User
-    @Published var folders: [Folder]
-    @Published var universes: [Universe]
-    @Published var cityWorlds: [CityWorld]
-    @Published var characterSpecies: [CharacterSpecies]
-    @Published var languageConstructions: [LanguageConstruction]
-    @Published var questBuilders: [QuestBuilder]
-    @Published var religionCultures: [ReligionCulture]
-    @Published var calendars: [CalendarModel]
-    @Published var notes: [Note]
-    @Published var teamMembers: [TeamMember]
-    @Published var planets: [Planet]
+class ProjectDetailsViewModel: ObservableObject {
+    @Published var project: Project
 
-    
-    init() {
-        user = User(name: "John Doe", profileImageName: "profile", followers: 100, following: 50)
-        
-        folders = [
-            Folder(name: "Folder 1"),
-            Folder(name: "Folder 2"),
-            Folder(name: "Folder 3")
-        ]
-        
-        planets = [
-                    Planet(name: "Planet 1"),
-                    Planet(name: "Planet 2"),
-                    Planet(name: "Planet 3")
-                ]
-        
-        universes = [
-            Universe(name: "Universe 1"),
-            Universe(name: "Universe 2"),
-            Universe(name: "Universe 3")
-        ]
-        
-        cityWorlds = [
-            CityWorld(name: "City World 1"),
-            CityWorld(name: "City World 2"),
-            CityWorld(name: "City World 3")
-        ]
-        
-        characterSpecies = [
-            CharacterSpecies(name: "Species 1"),
-            CharacterSpecies(name: "Species 2"),
-            CharacterSpecies(name: "Species 3")
-        ]
-        
-        languageConstructions = [
-            LanguageConstruction(name: "Language 1"),
-            LanguageConstruction(name: "Language 2"),
-            LanguageConstruction(name: "Language 3")
-        ]
-        
-        questBuilders = [
-            QuestBuilder(name: "Quest Builder 1"),
-            QuestBuilder(name: "Quest Builder 2"),
-            QuestBuilder(name: "Quest Builder 3")
-        ]
-        
-        religionCultures = [
-            ReligionCulture(name: "Religion Culture 1"),
-            ReligionCulture(name: "Religion Culture 2"),
-            ReligionCulture(name: "Religion Culture 3")
-        ]
-        
-        calendars = [
-            CalendarModel(name: "Calendar 1"),
-            CalendarModel(name: "Calendar 2"),
-            CalendarModel(name: "Calendar 3")
-        ]
-        
-        notes = [
-            Note(name: "Note 1"),
-            Note(name: "Note 2"),
-            Note(name: "Note 3")
-        ]
-        
-        teamMembers = [
-            TeamMember(name: "Member 1", profileImageName: "member1"),
-            TeamMember(name: "Member 2", profileImageName: "member2"),
-            TeamMember(name: "Member 3", profileImageName: "member3"),
-            TeamMember(name: "Member 4", profileImageName: "member4"),
-            TeamMember(name: "Member 5", profileImageName: "member5")
-        ]
+    init(project: Project) {
+        self.project = project
+    }
+
+    func updateProject(_ project: Project) {
+        self.project = project
     }
 }
+
+
 
 struct LoginView: View {
     @State private var showCreateAccount = false
@@ -193,103 +65,96 @@ struct LoginView: View {
     @State private var isHomePageShown: Bool = false
 
     var body: some View {
-        VStack {
-            ZStack {
-                Circle()
-                    .foregroundColor(.black)
-                    .frame(width: 150, height: 150)
-                
-                Text("Logo")
-                    .font(.title)
-                    .foregroundColor(.white)
-            }
-            .padding(.top, 50)
-            
-            Text("Ink Genius")
-                .font(.headline)
-                .padding(.bottom, 50)
-            
-            TextField("Username", text: $username)
-                .padding()
-                .background(Color.gray.opacity(0.2))
+        VStack(spacing: 20) {
+            Image("instagram_logo") // Replace with your Instagram logo image
+                .resizable()
+                .scaledToFit()
+                .frame(width: 150, height: 50)
+                .padding(.top, 100)
+
+            TextField("Phone number, username, or email", text: $username)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(Color(.systemGray6))
                 .cornerRadius(5)
-                .padding(.horizontal, 50)
-            
+
             SecureField("Password", text: $password)
-                .padding()
-                .background(Color.gray.opacity(0.2))
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(Color(.systemGray6))
                 .cornerRadius(5)
-                .padding(.horizontal, 50)
-            
+
             Button(action: {
                 isHomePageShown = true
             }) {
                 Text("Log In")
                     .font(.headline)
                     .foregroundColor(.white)
-                    .padding()
-                    .frame(width: 200, height: 50)
-                    .background(Color.black)
-                    .cornerRadius(10)
-                    .padding(.top, 5)
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue) // Blue color similar to Instagram
+                    .cornerRadius(5)
             }
-        }
-        .fullScreenCover(isPresented: $isHomePageShown) {
-            HomePageView()
-        }
-        
-        Divider()
-            .padding(.vertical, 20)
-        
-        HStack {
+
+            Text("OR")
+                .foregroundColor(Color(.systemGray))
+                .padding(.vertical, 5)
+
+            HStack(spacing: 20) {
+                Button(action: {
+                    // handle google login
+                    print("Google button tapped")
+                }) {
+                    Image("google_logo") // Replace with your Google logo image
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(20)
+                }
+
+                Button(action: {
+                    // handle facebook login
+                    print("Facebook button tapped")
+                }) {
+                    Image("facebook_logo") // Replace with your Facebook logo image
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(20)
+                }
+
+                Button(action: {
+                    // handle pinterest login
+                    print("Pinterest button tapped")
+                }) {
+                    Image("pinterest_logo") // Replace with your Pinterest logo image
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(20)
+                }
+            }
+
             Button(action: {
-                // handle google login
-                print("Google button tapped")
+                isCreateAnAccountShown = true
             }) {
-                Image("google_logo")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .background(Color.black)
-                    .cornerRadius(10)
+                Text("Create New Account")
+                    .font(.headline)
+                    .foregroundColor(.purple) // Purple color similar to Instagram
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(5)
             }
-            
-            Button(action: {
-                // handle facebook login
-                print("Facebook button tapped")
-            }) {
-                Image("facebook_logo")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .background(Color.black)
-                    .cornerRadius(10)
+            .fullScreenCover(isPresented: $isCreateAnAccountShown) {
+                CreateAccountView()
             }
-            
-            Button(action: {
-                // handle pinterest login
-                print("Pinterest button tapped")
-            }) {
-                Image("pinterest_logo")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .background(Color.black)
-                    .cornerRadius(10)
-            }
+
+            Spacer()
         }
-        
-        Button(action: {
-            isCreateAnAccountShown = true
-        }) {
-            Text("Create An Account")
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding()
-                .frame(width: 200, height: 50)
-                .background(Color.black)
-                .cornerRadius(10)
-        }
-        .fullScreenCover(isPresented: $isCreateAnAccountShown) {
-            CreateAccountView()
-        }
+        .padding(.horizontal, 30)
+        .background(Color(red: 0.94, green: 0.94, blue: 0.96)) // Light gray background color
+        .edgesIgnoringSafeArea(.all) // Ignore safe area to extend the background color
     }
 }
 
@@ -303,126 +168,156 @@ struct CreateAccountView: View {
     @State private var isTermsAccepted: Bool = false
     @State private var accountType: AccountType = .personal
     @State private var companyName: String = ""
-    @State private var phoneNumber: String = ""
+    @State private var websiteURL: String = ""
+    @State private var socialMediaURL: String = ""
     @State private var alias: String = ""
+    @State private var phoneNumber: String = ""
     @State private var isVerificationCodeShown: Bool = false
     @State private var isRegistered: Bool = false
-    
+    @State private var userProfile: UserProfile = UserProfile(name: "", role: "", bio: "", profileImageURL: "", websiteURL: "", socialMediaURL: "", interests: [])
+    @State private var newInterest: String = ""
+
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "arrow.left")
-                        .font(.title)
-                        .foregroundColor(.black)
-                        .padding(.leading, 10)
-                }
-                .padding(.top, 10)
-                
-                Spacer()
-            }
-            Group {
-                if let profileImage = profileImage {
-                    profileImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(Circle())
+        ScrollView {
+            VStack(spacing: 20) {
+                Group {
+                    if let profileImage = profileImage {
+                        profileImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(Circle())
+                            .padding(.bottom, 10)
+                            .frame(width: 120, height: 120)
+                    } else {
+                        Button(action: {
+                            print("Select profile picture tapped")
+                        }) {
+                            Image(systemName: "person.crop.circle.fill")
+                                .font(.system(size: 100))
+                                .foregroundColor(accountType == .personal ? .blue : .purple) // Personal is blue, Studio is purple
+                        }
                         .padding(.bottom, 10)
-                        .background(Color.black)
-                } else {
-                    Button(action: {
-                        print("Select profile picture tapped")
-                    }) {
-                        Image(systemName: "person.crop.circle.fill")
-                            .font(.system(size: 100))
-                            .foregroundColor(.black)
+                        .frame(width: 120, height: 120)
+                        .background(accountType == .personal ? Color.blue : Color.purple) // Personal is blue, Studio is purple
+                        .clipShape(Circle())
                     }
-                    .padding(.bottom, 10)
-                }
-                
-                Text("Create An Account")
-                    .font(.title)
-                    .padding(.bottom, 10)
-                
-                Picker("Account Type", selection: $accountType) {
-                    Text("Personal").tag(AccountType.personal)
-                    Text("Business").tag(AccountType.business)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal, 50)
-                .padding(.bottom, 20)
-                
-                TextField("Username", text: $username)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(5)
-                    .padding(.horizontal, 10)
-                
-                if accountType == .business {
-                    TextField("Company Name", text: $companyName)
+
+                    Text("Create An Account")
+                        .font(.title)
+                        .padding(.bottom, 10)
+
+                    Picker("Account Type", selection: $accountType) {
+                        Text("Personal").tag(AccountType.personal)
+                        Text("Studio").tag(AccountType.studio)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.horizontal, 50)
+                    .padding(.bottom, 20)
+
+                    if accountType == .studio {
+                        TextField("Studio Name", text: $companyName)
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .cornerRadius(5)
+                            .padding(.horizontal, 10)
+
+                        TextField("Website URL", text: $websiteURL)
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .cornerRadius(5)
+                            .padding(.horizontal, 10)
+
+                        TextField("Social Media URL", text: $socialMediaURL)
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .cornerRadius(5)
+                            .padding(.horizontal, 10)
+                    } else {
+                        TextField("Username", text: $username)
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .cornerRadius(5)
+                            .padding(.horizontal, 10)
+
+                        TextField("Alias", text: $alias)
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .cornerRadius(5)
+                            .padding(.horizontal, 10)
+                    }
+
+                    TextField("Email", text: $email)
                         .padding()
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color(.systemGray6))
                         .cornerRadius(5)
                         .padding(.horizontal, 10)
-                } else {
-                    TextField("Alias", text: $alias)
+
+                    TextField("Phone Number", text: $phoneNumber)
                         .padding()
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color(.systemGray6))
+                        .cornerRadius(5)
+                        .padding(.horizontal, 10)
+
+                    SecureField("Password", text: $password)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(5)
+                        .padding(.horizontal, 10)
+
+                    SecureField("Confirm Password", text: $confirmPassword)
+                        .padding()
+                        .background(Color(.systemGray6))
                         .cornerRadius(5)
                         .padding(.horizontal, 10)
                 }
-                
-                TextField("Email", text: $email)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(5)
-                    .padding(.horizontal, 10)
-                
-                TextField("Phone Number", text: $phoneNumber)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(5)
-                    .padding(.horizontal, 10)
-                
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(5)
-                    .padding(.horizontal, 10)
-                
-                SecureField("Confirm Password", text: $confirmPassword)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(5)
-                    .padding(.horizontal, 10)
-            }
-            
-            Group {
-                Toggle("I agree to the Terms and Conditions", isOn: $isTermsAccepted)
-                    .padding(.horizontal, 40)
-                
-                Button(action: {
-                    registerUser()
-                }) {
-                    Text("Register")
-                        .font(.headline)
-                        .foregroundColor(.white)
+
+                Group {
+                    Toggle("I agree to the Terms and Conditions", isOn: $isTermsAccepted)
+                        .padding(.horizontal, 40)
+
+                    Button(action: {
+                        registerUser()
+                    }) {
+                        Text("Register")
+                            .font(.headline)
+                            .foregroundColor(.white) // Set the color to white
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(accountType == .personal ? Color.blue : Color.purple) // Set the background color to blue
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                    }
+                    .padding(.top, 30)
+                    .disabled(!isTermsAccepted) // Disable the button if terms are not accepted
+
+                    List {
+                        ForEach(userProfile.interests, id: \.self) { interest in
+                            Text(interest)
+                        }
+                        .onDelete(perform: deleteInterest)
+                    }
+                    .listStyle(PlainListStyle())
+
+                    TextField("Add Interest", text: $newInterest)
                         .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .background(Color.black)
-                        .cornerRadius(10)
-                        .padding(.horizontal)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(5)
+                        .padding(.horizontal, 10)
+
+                    Button(action: addInterest) {
+                        Text("Add")
+                            .foregroundColor(.blue)
+                    }
+                    .padding(.bottom)
                 }
-                .padding(.top, 30)
             }
+            .padding() // Add overall padding
         }
         .fullScreenCover(isPresented: $isVerificationCodeShown) {
             VerificationView()
         }
     }
-    
+
     private func registerUser() {
         Auth.auth().createUser(withEmail: email, password: password) { _, error in
             if let error = error {
@@ -430,33 +325,26 @@ struct CreateAccountView: View {
             } else {
                 print("User registered successfully!")
                 isRegistered = true
-                saveUserData()
+                saveUserProfileData()
                 isVerificationCodeShown = true
             }
         }
     }
-    
-    private func saveUserData() {
+
+    private func saveUserProfileData() {
         let db = Firestore.firestore()
         let userDocument = db.collection("users").document(email)
-        
-        var accountTypeString: String = ""
-        switch accountType {
-        case .personal:
-            accountTypeString = AccountType.personal.rawValue
-        case .business:
-            accountTypeString = AccountType.business.rawValue
-        }
-        
+
         let userData: [String: Any] = [
-            "username": username,
-            "email": email,
-            "accountType": accountTypeString,
-            "companyName": companyName,
-            "alias": alias,
-            "phoneNumber": phoneNumber
-        ]
-        
+                    // Existing code...
+                    "name": userProfile.name,
+                    "role": userProfile.role,
+                    "bio": userProfile.bio ?? "", // Add a default value for bio
+                    "profileImageURL": userProfile.profileImageURL ?? "", // Add a default value for profileImageURL
+                    "websiteURL": userProfile.websiteURL ?? "", // Add a default value for websiteURL
+                    "socialMediaURL": userProfile.socialMediaURL ?? "", // Add a default value for socialMediaURL
+                    "interests": userProfile.interests,
+                ]
         userDocument.setData(userData) { error in
             if let error = error {
                 print("Error saving user data: \(error.localizedDescription)")
@@ -464,6 +352,17 @@ struct CreateAccountView: View {
                 print("User data saved successfully!")
             }
         }
+    }
+
+    private func addInterest() {
+        if !newInterest.isEmpty {
+            userProfile.interests.append(newInterest)
+            newInterest = ""
+        }
+    }
+
+    private func deleteInterest(at offsets: IndexSet) {
+        userProfile.interests.remove(atOffsets: offsets)
     }
 }
 
@@ -475,7 +374,8 @@ struct VerificationView: View {
                     .font(.title)
                     .padding()
                 
-                NavigationLink(destination: HomePageView()) {
+                NavigationLink(destination: HomePageView(editedProfile: UserProfile(name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
+) {
                     Text("Continue")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -493,11 +393,22 @@ struct VerificationView: View {
 
 struct HomePageView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State private var selectedTab : Tab = .feed
+    @State private var selectedTab: Tab = .feed
     @State private var bottomSafeAreaInset: CGFloat = 0
-    @State private var accountType: AccountType = . personal
+    @State private var accountType: AccountType = .personal
     
-    
+    @State private var projects: [Project] = [
+        Project(title: "Project 1", description: "Description 1", characterDescriptions: "Character Descriptions 1", progressUpdates: "Progress Updates 1"),
+        Project(title: "Project 2", description: "Description 2", characterDescriptions: "Character Descriptions 2", progressUpdates: "Progress Updates 2"),
+        Project(title: "Project 3", description: "Description 3", characterDescriptions: "Character Descriptions 3", progressUpdates: "Progress Updates 3")
+    ]
+    @State private var yourProjectsArray: [Project] = []
+    @State private var editedProfile: UserProfile
+
+    public init(editedProfile: UserProfile) { // Add public access control
+        self._editedProfile = State(initialValue: editedProfile)
+    }
+
     var body: some View {
         TabView(selection: $selectedTab) {
             if accountType == .personal {
@@ -509,43 +420,43 @@ struct HomePageView: View {
                     .tag(Tab.feed)
             } else {
                 BusinessFeedView()
-                    .tabItem{
+                    .tabItem {
                         Image(systemName: "house")
                         Text("Feed")
                     }
                     .tag(Tab.feed)
             }
-            
+
             ExploreView()
-                .tabItem{
+                .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Explore")
                 }
                 .tag(Tab.explore)
-            
-            NotificationsView()
-                .tabItem{
+
+            AIView()
+                .tabItem {
                     Image(systemName: "shareplay")
                     Text("AI")
                 }
                 .tag(Tab.notifications)
-            
+
             WorldView()
                 .tabItem {
                     Image(systemName: "book")
                     Text("World")
                 }
                 .tag(Tab.world)
-            
+
             if accountType == .personal {
-                PersonalProfileView()
-                    .tabItem{
+                PersonalProfileView(userProfile: editedProfile, projects: projects)
+                    .tabItem {
                         Image(systemName: "person")
                         Text("Profile")
                     }
                     .tag(Tab.profile)
             } else {
-                BusinessProfileView()
+                ProductionStudioProfileView(userProfile: editedProfile)
                     .tabItem {
                         Image(systemName: "business")
                         Text("Profile")
@@ -558,7 +469,7 @@ struct HomePageView: View {
         .overlay(
             HStack(spacing: 0) {
                 Spacer()
-                
+
                 Button(action: {
                     selectedTab = .messages
                 }) {
@@ -573,76 +484,308 @@ struct HomePageView: View {
                 .padding(.bottom, bottomSafeAreaInset)
                 .offset(x: -5, y: 250)
             }
-                .onAppear{
-                    updateBottomSafeAreaInset()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                    updateBottomSafeAreaInset()
-                }
+            .onAppear {
+                updateBottomSafeAreaInset()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                updateBottomSafeAreaInset()
+            }
         )
     }
-    
+
     private func updateBottomSafeAreaInset() {
         guard let keyWindow = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .flatMap({ $0.windows })
             .first(where: { $0.isKeyWindow }) else {
-            return
+                return
         }
         bottomSafeAreaInset = keyWindow.safeAreaInsets.bottom
     }
 }
 
-struct PersonalFeedView: View {
+
+// WorldView
+struct WorldView: View {
+    @StateObject private var viewModel = WorldViewModel(projects: [
+        Project(title: "Project 1", description: "Description 1", characterDescriptions: "Character Descriptions 1", progressUpdates: "Progress Updates 1"),
+        Project(title: "Project 2", description: "Description 2", characterDescriptions: "Character Descriptions 2", progressUpdates: "Progress Updates 2"),
+        Project(title: "Project 3", description: "Description 3", characterDescriptions: "Character Descriptions 3", progressUpdates: "Progress Updates 3")
+    ])
+    @State private var showingCreateProjectSheet = false
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                // List of projects
+                List(viewModel.projects, id: \.id) { project in
+                    NavigationLink(destination: ProjectDetailsView(project: $viewModel.projects[getIndex(for: project)])) {
+                        Text(project.title)
+                    }
+                }
+                .listStyle(GroupedListStyle())
+
+                // Add the "add project" button here
+                Button(action: {
+                    showingCreateProjectSheet = true // Show the sheet when the button is tapped
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(.blue)
+                }
+                .padding(.bottom, 20)
+            }
+            .navigationBarTitle("World") // Set the title of the NavigationBar
+        }
+        .sheet(isPresented: $showingCreateProjectSheet) {
+            // Present the CreateProjectView as a sheet and pass the projects array as a binding to CreateProjectView
+            CreateProjectView(projects: $viewModel.projects)
+        }
+    }
+
+    // Helper function to get the index of the project in the projects array
+    private func getIndex(for project: Project) -> Int {
+        guard let index = viewModel.projects.firstIndex(where: { $0.id == project.id }) else {
+            fatalError("Project not found in the array")
+        }
+        return index
+    }
+}
+
+//Project
+struct Project: Identifiable {
+    let id = UUID()
+    var title: String
+    var description: String
+    var characterDescriptions: String // Add character descriptions property
+    var progressUpdates: String // Add progress updates property
+
+    // Add any other properties or methods as needed
+}
+
+struct ProjectDetailsView: View {
+    @Binding var project: Project // Add @Binding here
+
     var body: some View {
         VStack {
-            
+            Text("Project Details")
+                .font(.title)
+
+            // Display the details of the selected project here
+            Text("Title: \(project.title)")
+            Text("Description: \(project.description)")
+            Text("Character Descriptions: \(project.characterDescriptions)")
+            // Add more details as needed
+
+            // Add the "Edit" button here
+            NavigationLink(destination: EditProjectView(project: $project)) {
+                Text("Edit")
+            }
         }
+        .padding()
+    }
+}
+
+struct EditProjectView: View {
+    @Binding var project: Project
+
+    var body: some View {
+        Form {
+            Section(header: Text("Edit Project")) {
+                TextField("Title", text: $project.title)
+                TextField("Description", text: $project.description)
+                TextField("Character Descriptions", text: $project.characterDescriptions)
+                // Add more fields for other project details...
+            }
+        }
+        .navigationBarTitle("Edit Project")
+        .navigationBarItems(trailing: Button("Save", action: saveProject))
+    }
+
+    private func saveProject() {
+        // Save the changes made to the project
+        // You can update the project in the projects array or save it to a backend database
+    }
+}
+
+struct CreateProjectView: View {
+    @Binding var projects: [Project]
+
+    @State private var projectTitle: String = ""
+    @State private var projectDescription: String = ""
+    @State private var characterDescriptions: String = ""
+    @State private var progressUpdates: String = ""
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Project Details")) {
+                    TextField("Title", text: $projectTitle)
+                    TextField("Description", text: $projectDescription)
+                    TextField("Character Descriptions", text: $characterDescriptions)
+                    TextField("Progress Updates", text: $progressUpdates)
+                    // Add more fields for other project details...
+                }
+
+                // Add a button to save the project
+                Button(action: saveProject) {
+                    Text("Save Project")
+                }
+            }
+            .navigationBarTitle("Create New Project")
+        }
+    }
+
+    private func saveProject() {
+        // Create a new project with the provided details
+        let newProject = Project(title: projectTitle, description: projectDescription, characterDescriptions: characterDescriptions, progressUpdates: progressUpdates)
+
+        // Append the new project to the projects array (binding)
+        projects.append(newProject)
+    }
+}
+
+
+struct PersonalFeedView: View {
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 20) {
+                ForEach(1...10, id: \.self) { index in
+                    PostView(postText: "Post \(index)")
+                }
+            }
+            .padding()
+        }
+    }
+}
+
+struct PostView: View {
+    var postText: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 10) {
+                Image(systemName: "person.circle.fill")
+                    .font(.title)
+                    .foregroundColor(.blue)
+                
+                Text("John Doe")
+                    .font(.headline)
+                
+                Spacer()
+                
+                Text("2h ago")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            
+            Text(postText)
+            
+            HStack(spacing: 20) {
+                Button(action: {
+                    // Handle like button action
+                }) {
+                    Image(systemName: "heart")
+                        .font(.title)
+                        .foregroundColor(.red)
+                }
+                
+                Button(action: {
+                    // Handle comment button action
+                }) {
+                    Image(systemName: "message")
+                        .font(.title)
+                        .foregroundColor(.blue)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    // Handle share button action
+                }) {
+                    Image(systemName: "paperplane")
+                        .font(.title)
+                        .foregroundColor(.green)
+                }
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
     }
 }
 
 struct BusinessFeedView: View {
     var body: some View {
-        Text("Business")
+        VStack {
+            Text("Business Feed View")
+                .font(.title)
+                .padding()
+        }
     }
 }
 
+
 struct ProfileHeaderView: View {
     let accountType: AccountType
-    
+    let studioName: String
+    let role: String?
+    let websiteURL: String?
+    let socialMediaURL: String?
+    let interests: [String]
+
     var body: some View {
-        HStack(spacing: 10) {
-            Image("profile_picture")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .background(.black)
-                .clipShape(Circle())
-            
+        VStack(spacing: 10) {
+            if accountType == .studio {
+                Image(systemName: "film")
+                    .font(.title)
+                    .foregroundColor(.black)
+                    .padding(.leading, 10)
+            }
+
             VStack(alignment: .leading, spacing: 5) {
-                Text("Alias Name")
+                Text(accountType == .studio ? "Studio Name" : "Username")
                     .font(.headline)
-                
-                if accountType == .personal {
-                    Text("Username")
+
+                Text(studioName)
+                    .font(.title)
+
+                if let role = role, !role.isEmpty {
+                    Text("Role: \(role)")
                         .font(.subheadline)
-                } else {
-                    Text("Company Name")
+                        .foregroundColor(.secondary)
+                }
+
+                if let websiteURL = websiteURL, !websiteURL.isEmpty {
+                    Link("Website", destination: URL(string: websiteURL)!)
+                        .foregroundColor(.blue)
                         .font(.subheadline)
+                        .padding(.top, 5)
+                }
+
+                if let socialMediaURL = socialMediaURL, !socialMediaURL.isEmpty {
+                    Link("Social Media", destination: URL(string: socialMediaURL)!)
+                        .foregroundColor(.blue)
+                        .font(.subheadline)
+                        .padding(.top, 5)
                 }
             }
-            
+
             Spacer()
-            
+
             Button(action: {
-                //handle
+                // Handle settings or other actions
             }) {
                 Image(systemName: "gearshape.2")
                     .font(.title)
                     .foregroundColor(.primary)
             }
+            .padding(.trailing, 10)
         }
         .padding(.horizontal)
-        
+
         HStack(spacing: 20) {
             ProfileStatView(title: "Posts", value: "123")
             ProfileStatView(title: "Followers", value: "456")
@@ -668,925 +811,300 @@ struct ProfileStatView: View {
     }
 }
 
-struct BusinessProfileView: View {
-    var body: some View {
-        Text("Business Feed View")
-    }
-}
 
-struct PersonalProfileView: View {
-    var body: some View {
-        Text("Personal Feed View")
-            .font(.title)
-            .padding()
-    }
-}
+struct ProductionStudioProfileHeaderView: View {
+    let studioName: String
+    let role: String?
+    let websiteURL: String?
+    let socialMediaURL: String?
 
-struct FeedView: View {
     var body: some View {
-        Text("Feed View")
-            .font(.title)
-            .padding()
-    }
-}
+        VStack(alignment: .leading, spacing: 10) {
+            Text(studioName)
+                .font(.title)
+                .foregroundColor(.black)
 
-struct ExploreView: View {
-    var body: some View {
-        Text("Explore View")
-            .font(.title)
-            .padding()
-    }
-}
+            if let role = role {
+                Text("Role: \(role)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
 
-struct NotificationsView: View {
-    var body: some View {
-        Text("Notification View")
-            .font(.title)
-            .padding()
-    }
-}
+            if let websiteURL = websiteURL {
+                Link(destination: URL(string: websiteURL)!) {
+                    HStack {
+                        Image(systemName: "globe")
+                        Text("Website")
+                    }
+                }
+            }
 
-struct MessagesView: View {
-    var body: some View {
-        Text("Message View")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct ProfileView: View {
-    var body: some View {
-        Text("Profile View")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct AIView: View {
-    var body: some View {
-        Text("AI View")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct WorldView: View {
-    @StateObject var viewModel = ContentViewModel()
-    @State private var selectedFolder: Folder?
-    @State private var selectedUniverse: Universe?
-    @State private var selectedCityWorld: CityWorld?
-    @State private var selectedCharacterSpecies: CharacterSpecies?
-    @State private var selectedLanguageConstruction: LanguageConstruction?
-    @State private var selectedQuestBuilder: QuestBuilder?
-    @State private var selectedReligionCulture: ReligionCulture?
-    @State private var selectedCalendar: CalendarModel?
-    @State private var selectedNote: Note?
-    @State private var isAddingFolder = false
-    @State private var isAddingUniverse = false
-    @State private var isAddingCityWorld = false
-    @State private var isAddingCharacterSpecies = false
-    @State private var isAddingLanguageConstruction = false
-    @State private var isAddingQuestBuilder = false
-    @State private var isAddingReligionCulture = false
-    @State private var isAddingCalendar = false
-    @State private var isAddingNote = false
-    @State private var newFolderName = ""
-    @State private var newUniverseName = ""
-    @State private var newCityWorldName = ""
-    @State private var newCharacterSpeciesName = ""
-    @State private var newLanguageConstructionName = ""
-    @State private var newQuestBuilderName = ""
-    @State private var newReligionCultureName = ""
-    @State private var newCalendarName = ""
-    @State private var newNoteName = ""
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    Section(header: Text("User")) {
-                        UserProfileView(user: viewModel.user)
-                    }
-                    
-                    Section(header: Text("Folders")) {
-                        ForEach(viewModel.folders) { folder in
-                            NavigationLink(destination: FolderDetailView(folder: folder)) {
-                                Text(folder.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.folders.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("Universe")) {
-                        ForEach(viewModel.universes) { universe in
-                            NavigationLink(destination: UniverseDetailView(universe: universe)) {
-                                Text(universe.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.universes.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("City World")) {
-                        ForEach(viewModel.cityWorlds) { cityWorld in
-                            NavigationLink(destination: CityWorldDetailView(cityWorld: cityWorld)) {
-                                Text(cityWorld.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.cityWorlds.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("Character Species")) {
-                        ForEach(viewModel.characterSpecies) { characterSpecies in
-                            NavigationLink(destination: CharacterSpeciesDetailView(characterSpecies: characterSpecies)) {
-                                Text(characterSpecies.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.characterSpecies.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("Language Construction")) {
-                        ForEach(viewModel.languageConstructions) { languageConstruction in
-                            NavigationLink(destination: LanguageConstructionDetailView(languageConstruction: languageConstruction)) {
-                                Text(languageConstruction.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.languageConstructions.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("Quest Builder")) {
-                        ForEach(viewModel.questBuilders) { questBuilder in
-                            NavigationLink(destination: QuestBuilderDetailView(questBuilder: questBuilder)) {
-                                Text(questBuilder.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.questBuilders.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("Religion Culture")) {
-                        ForEach(viewModel.religionCultures) { religionCulture in
-                            NavigationLink(destination: ReligionCultureDetailView(religionCulture: religionCulture)) {
-                                Text(religionCulture.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.religionCultures.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("Calendar")) {
-                        ForEach(viewModel.calendars) { calendar in
-                            NavigationLink(destination: CalendarDetailView(calendar: calendar)) {
-                                Text(calendar.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.calendars.remove(atOffsets: indexSet)
-                        }
-                    }
-                    
-                    Section(header: Text("Notes")) {
-                        ForEach(viewModel.notes) { note in
-                            NavigationLink(destination: NoteDetailView(note: note)) {
-                                Text(note.name)
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.notes.remove(atOffsets: indexSet)
-                        }
+            if let socialMediaURL = socialMediaURL {
+                Link(destination: URL(string: socialMediaURL)!) {
+                    HStack {
+                        Image(systemName: "link")
+                        Text("Social Media")
                     }
                 }
             }
-            .listStyle(InsetGroupedListStyle())
-            .navigationTitle("THE BESTIARY")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button(action: {
-                            isAddingFolder = true
-                        }) {
-                            Label("Add Folder", systemImage: "folder.badge.plus")
-                        }
-                        
-                        Button(action: {
-                            isAddingUniverse = true
-                        }) {
-                            Label("Add Universe", systemImage: "globe")
-                        }
-                        
-                        Button(action: {
-                            isAddingCityWorld = true
-                        }) {
-                            Label("Add City World", systemImage: "building.2.crop.circle")
-                        }
-                        
-                        Button(action: {
-                            isAddingCharacterSpecies = true
-                        }) {
-                            Label("Add Character Species", systemImage: "person.2")
-                        }
-                        
-                        Button(action: {
-                            isAddingLanguageConstruction = true
-                        }) {
-                            Label("Add Language Construction", systemImage: "textformat")
-                        }
-                        
-                        Button(action: {
-                            isAddingQuestBuilder = true
-                        }) {
-                            Label("Add Quest Builder", systemImage: "scroll")
-                        }
-                        
-                        Button(action: {
-                            isAddingReligionCulture = true
-                        }) {
-                            Label("Add Religion Culture", systemImage: "cross.circle")
-                        }
-                        
-                        Button(action: {
-                            isAddingCalendar = true
-                        }) {
-                            Label("Add Calendar", systemImage: "calendar")
-                        }
-                        
-                        Button(action: {
-                            isAddingNote = true
-                        }) {
-                            Label("Add Note", systemImage: "note.text")
-                        }
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title)
-                    }
-                }
-            }
-            .sheet(isPresented: $isAddingFolder) {
-                NewFolderView(isAddingFolder: $isAddingFolder, newFolderName: $newFolderName) { name in
-                    // Save folder logic
-                    viewModel.folders.append(Folder(name: name))
-                } onCancel: {
-                    // Cancel folder creation logic
-                    isAddingFolder = false
-                }
-            }
-            .sheet(isPresented: $isAddingUniverse) {
-                NewUniverseView(isAddingUniverse: $isAddingUniverse, newUniverseName: $newUniverseName) { name in
-                    // Save universe logic
-                    viewModel.universes.append(Universe(name: name))
-                } onCancel: {
-                    // Cancel universe creation logic
-                    isAddingUniverse = false
-                }
-            }
-            .sheet(isPresented: $isAddingCityWorld) {
-                NewCityWorldView(isAddingCityWorld: $isAddingCityWorld, newCityWorldName: $newCityWorldName) { name in
-                    // Save city world logic
-                    viewModel.cityWorlds.append(CityWorld(name: name))
-                } onCancel: {
-                    // Cancel city world creation logic
-                    isAddingCityWorld = false
-                }
-            }
-            .sheet(isPresented: $isAddingCharacterSpecies) {
-                NewCharacterSpeciesView(isAddingCharacterSpecies: $isAddingCharacterSpecies, newCharacterSpeciesName: $newCharacterSpeciesName) { name in
-                    // Save character species logic
-                    viewModel.characterSpecies.append(CharacterSpecies(name: name))
-                } onCancel: {
-                    // Cancel character species creation logic
-                    isAddingCharacterSpecies = false
-                }
-            }
-            .sheet(isPresented: $isAddingLanguageConstruction) {
-                NewLanguageConstructionView(isAddingLanguageConstruction: $isAddingLanguageConstruction, newLanguageConstructionName: $newLanguageConstructionName) { name in
-                    // Save language construction logic
-                    viewModel.languageConstructions.append(LanguageConstruction(name: name))
-                } onCancel: {
-                    // Cancel language construction creation logic
-                    isAddingLanguageConstruction = false
-                }
-            }
-            .sheet(isPresented: $isAddingQuestBuilder) {
-                NewQuestBuilderView(isAddingQuestBuilder: $isAddingQuestBuilder, newQuestBuilderName: $newQuestBuilderName) { name in
-                    // Save quest builder logic
-                    viewModel.questBuilders.append(QuestBuilder(name: name))
-                } onCancel: {
-                    // Cancel quest builder creation logic
-                    isAddingQuestBuilder = false
-                }
-            }
-            .sheet(isPresented: $isAddingReligionCulture) {
-                NewReligionCultureView(isAddingReligionCulture: $isAddingReligionCulture, newReligionCultureName: $newReligionCultureName) { name in
-                    // Save religion culture logic
-                    viewModel.religionCultures.append(ReligionCulture(name: name))
-                } onCancel: {
-                    // Cancel religion culture creation logic
-                    isAddingReligionCulture = false
-                }
-            }
-            .sheet(isPresented: $isAddingCalendar) {
-                NewCalendarView(isAddingCalendar: $isAddingCalendar, newCalendarName: $newCalendarName) { name in
-                    // Save calendar logic
-                    viewModel.calendars.append(CalendarModel(name: name))
-                } onCancel: {
-                    // Cancel calendar creation logic
-                    isAddingCalendar = false
-                }
-            }
-            .sheet(isPresented: $isAddingNote) {
-                NewNoteView(isAddingNote: $isAddingNote, newNoteName: $newNoteName) { name in
-                    // Save note logic
-                    viewModel.notes.append(Note(name: name))
-                } onCancel: {
-                    // Cancel note creation logic
-                    isAddingNote = false
-                }
-            }
-            
-            Text("Select an item")
         }
+        .padding(.horizontal)
     }
 }
 
-struct UserProfileView: View {
-    let user: User
-    
+struct ProductionStudioProfileView: View {
+    let userProfile: UserProfile
+    @State private var employees: [Employee] = []
+    @State private var newEmployeeName: String = ""
+    @State private var newEmployeeRole: String = ""
+
     var body: some View {
         VStack {
-            Image(user.profileImageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100, height: 100)
-                .clipShape(Circle())
-            
-            Text(user.name)
-                .font(.headline)
-            
-            HStack {
-                Label("\(user.followers)", systemImage: "person.fill")
-                Label("\(user.following)", systemImage: "person.2.fill")
+            ProfileHeaderView(accountType: .studio, studioName: userProfile.name, role: userProfile.role, websiteURL: userProfile.websiteURL ?? "", socialMediaURL: userProfile.socialMediaURL ?? "", interests: userProfile.interests)
+
+            List(employees, id: \.id) { employee in
+                EmployeeRowView(employee: employee)
             }
-            .font(.subheadline)
-            .foregroundColor(.secondary)
+
+            HStack {
+                TextField("Employee Name", text: $newEmployeeName)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(5)
+                    .padding(.horizontal, 10)
+
+                TextField("Role", text: $newEmployeeRole)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(5)
+                    .padding(.horizontal, 10)
+
+                Button(action: addEmployee) {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 25))
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+
+    private func addEmployee() {
+        guard !newEmployeeName.isEmpty, !newEmployeeRole.isEmpty else {
+            return
+        }
+
+        let newEmployee = Employee(name: newEmployeeName, role: newEmployeeRole)
+        employees.append(newEmployee)
+
+        newEmployeeName = ""
+        newEmployeeRole = ""
+    }
+}
+
+struct EmployeeRowView: View {
+    let employee: Employee
+
+    var body: some View {
+        HStack {
+            Text(employee.name)
+            Spacer()
+            Text(employee.role)
         }
         .padding()
     }
 }
 
-struct FolderDetailView: View {
-    let folder: Folder
-    
-    var body: some View {
-        Text("Folder Detail View")
-            .navigationTitle(folder.name)
+struct PersonalProfileView: View {
+    @State private var isEditingProfile = false
+    @State private var editedProfile: UserProfile
+    var projects: [Project] // Add this line to accept projects array
+
+    init(userProfile: UserProfile, projects: [Project]) { // Modify the init to accept projects
+        self._editedProfile = State(initialValue: userProfile)
+        self.projects = projects // Initialize the projects array
     }
-}
-
-struct Planet: Identifiable {
-    let id = UUID()
-    let name: String
-}
-
-struct UniverseDetailView: View {
-    let universe: Universe
-    @StateObject var viewModel = ContentViewModel()
-    @State private var isAddingFolder = false
-    @State private var newFolderName = ""
 
     var body: some View {
         VStack {
-            HStack {
-                Text(universe.name)
-                    .font(.title)
-                
-                Spacer()
-                
-                Button(action: {
-                    isAddingFolder = true
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.title)
-                }
-            }
+            if isEditingProfile {
+                EditProfileView(editedProfile: $editedProfile, isEditing: $isEditingProfile)
+            } else {
+                WriterProfileHeaderView(name: editedProfile.name, role: editedProfile.role, profileImageURL: editedProfile.profileImageURL)
 
-            List {
-                Section(header: Text("Folders")) {
-                    ForEach(viewModel.folders) { folder in
-                        NavigationLink(destination: FolderDetailView(folder: folder)) {
-                            Text(folder.name)
+                // Display other profile information here
+
+                List {
+                    Section(header: Text("Projects")) {
+                        ForEach(projects) { project in
+                            Button(action: {
+                                navigateToProjectDetails(project: project)
+                            }) {
+                                Text(project.title)
+                            }
                         }
                     }
-                    .onDelete { indexSet in
-                        viewModel.folders.remove(atOffsets: indexSet)
+
+                    Section(header: Text("Interests")) {
+                        ForEach(editedProfile.interests, id: \.self) { interest in
+                            Text(interest)
+                        }
                     }
                 }
+                .listStyle(GroupedListStyle())
+                .navigationBarTitle("Profile", displayMode: .inline)
+
+                Button(action: {
+                    isEditingProfile = true
+                }) {
+                    Text("Edit Profile")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(5)
+                        .padding(.horizontal)
+                }
             }
-            .listStyle(InsetGroupedListStyle())
         }
-        .navigationBarItems(trailing: EditButton())
-        .navigationTitle("")
-        .sheet(isPresented: $isAddingFolder) {
-            NewFolderView(isAddingFolder: $isAddingFolder, newFolderName: $newFolderName) { name in
-                // Save folder logic
-                viewModel.folders.append(Folder(name: name))
-            } onCancel: {
-                // Cancel folder creation logic
-                isAddingFolder = false
+        .padding()
+    }
+
+    private func navigateToProjectDetails(project: Project) {
+        // Navigate to a new view displaying project details (e.g., ProjectDetailsView)
+        // You can pass the selected project to the next view if needed
+        // For example: NavigationLink(destination: ProjectDetailsView(project: project)) { ... }
+    }
+}
+
+struct WriterProfileHeaderView: View {
+    var name: String
+    var role: String
+    var profileImageURL: String?
+
+    var body: some View {
+        VStack {
+            if let imageURL = profileImageURL, let url = URL(string: imageURL), let imageData = try? Data(contentsOf: url), let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
+            } else {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
             }
+
+            Text(name)
+                .font(.title)
+                .padding(.top, 10)
+
+            Text(role)
+                .font(.headline)
+                .foregroundColor(.gray)
+                .padding(.top, 5)
         }
     }
 }
 
+struct EditProfileView: View {
+    @Binding var editedProfile: UserProfile
+    @Binding var isEditing: Bool
 
-struct NewPlanetView: View {
-    @Binding var isAddingPlanet: Bool
-    @Binding var newPlanetName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Planet Name", text: $newPlanetName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newPlanetName)
-                        isAddingPlanet = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
+        VStack {
+            // Add UI elements to edit the profile information, for example:
+            TextField("Name", text: $editedProfile.name)
                 .padding()
-            }
-            .navigationTitle("New Planet")
-        }
-    }
-}
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(5)
+                .padding(.horizontal, 10)
 
-
-struct CityWorldDetailView: View {
-    let cityWorld: CityWorld
-    
-    var body: some View {
-        Text("City World Detail View")
-            .navigationTitle(cityWorld.name)
-    }
-}
-
-struct CharacterSpeciesDetailView: View {
-    let characterSpecies: CharacterSpecies
-    
-    var body: some View {
-        Text("Character Species Detail View")
-            .navigationTitle(characterSpecies.name)
-    }
-}
-
-struct LanguageConstructionDetailView: View {
-    let languageConstruction: LanguageConstruction
-    
-    var body: some View {
-        Text("Language Construction Detail View")
-            .navigationTitle(languageConstruction.name)
-    }
-}
-
-struct QuestBuilderDetailView: View {
-    let questBuilder: QuestBuilder
-    
-    var body: some View {
-        Text("Quest Builder Detail View")
-            .navigationTitle(questBuilder.name)
-    }
-}
-
-struct ReligionCultureDetailView: View {
-    let religionCulture: ReligionCulture
-    
-    var body: some View {
-        Text("Religion Culture Detail View")
-            .navigationTitle(religionCulture.name)
-    }
-}
-
-struct CalendarDetailView: View {
-    let calendar: CalendarModel
-    
-    var body: some View {
-        Text("Calendar Detail View")
-            .navigationTitle(calendar.name)
-    }
-}
-
-struct NoteDetailView: View {
-    let note: Note
-    
-    var body: some View {
-        Text("Note Detail View")
-            .navigationTitle(note.name)
-    }
-}
-
-struct NewFolderView: View {
-    @Binding var isAddingFolder: Bool
-    @Binding var newFolderName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Folder Name", text: $newFolderName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newFolderName)
-                        isAddingFolder = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
+            TextField("Role", text: $editedProfile.role)
                 .padding()
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(5)
+                .padding(.horizontal, 10)
+
+            // Add more fields for editing other profile information
+
+            Button(action: {
+                // Save the changes and exit editing mode
+                isEditing = false
+            }) {
+                Text("Save")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .cornerRadius(5)
+                    .padding(.horizontal)
             }
-            .navigationTitle("New Folder")
         }
+        .padding()
     }
 }
 
-struct NewUniverseView: View {
-    @Binding var isAddingUniverse: Bool
-    @Binding var newUniverseName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
+class WorldViewModel: ObservableObject {
+    @Published var projects: [Project]
+
+    init(projects: [Project]) {
+        self.projects = projects
+    }
+}
+
+
+struct ExploreView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Universe Name", text: $newUniverseName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newUniverseName)
-                        isAddingUniverse = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
+        VStack {
+            Text("Explore View")
+                .font(.title)
                 .padding()
-            }
-            .navigationTitle("New Universe")
+            
+            // Add your explore content here
         }
     }
 }
 
-struct NewCityWorldView: View {
-    @Binding var isAddingCityWorld: Bool
-    @Binding var newCityWorldName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
+struct NotificationsView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("City World Name", text: $newCityWorldName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newCityWorldName)
-                        isAddingCityWorld = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
+        VStack {
+            Text("Notifications View")
+                .font(.title)
                 .padding()
-            }
-            .navigationTitle("New City World")
         }
     }
 }
 
-struct NewCharacterSpeciesView: View {
-    @Binding var isAddingCharacterSpecies: Bool
-    @Binding var newCharacterSpeciesName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
+struct MessagesView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Character Species Name", text: $newCharacterSpeciesName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newCharacterSpeciesName)
-                        isAddingCharacterSpecies = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
+        VStack {
+            Text("Message View")
+                .font(.title)
                 .padding()
-            }
-            .navigationTitle("New Character Species")
         }
     }
 }
 
-struct NewLanguageConstructionView: View {
-    @Binding var isAddingLanguageConstruction: Bool
-    @Binding var newLanguageConstructionName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
+struct ProfileView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Language Construction Name", text: $newLanguageConstructionName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newLanguageConstructionName)
-                        isAddingLanguageConstruction = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
+        VStack {
+            Text("Profile View")
+                .font(.title)
                 .padding()
-            }
-            .navigationTitle("New Language Construction")
         }
     }
 }
-
-struct NewQuestBuilderView: View {
-    @Binding var isAddingQuestBuilder: Bool
-    @Binding var newQuestBuilderName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Quest Builder Name", text: $newQuestBuilderName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newQuestBuilderName)
-                        isAddingQuestBuilder = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("New Quest Builder")
-        }
-    }
-}
-
-struct NewReligionCultureView: View {
-    @Binding var isAddingReligionCulture: Bool
-    @Binding var newReligionCultureName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Religion Culture Name", text: $newReligionCultureName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newReligionCultureName)
-                        isAddingReligionCulture = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("New Religion Culture")
-        }
-    }
-}
-
-struct NewCalendarView: View {
-    @Binding var isAddingCalendar: Bool
-    @Binding var newCalendarName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Calendar Name", text: $newCalendarName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newCalendarName)
-                        isAddingCalendar = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("New Calendar")
-        }
-    }
-}
-
-struct NewNoteView: View {
-    @Binding var isAddingNote: Bool
-    @Binding var newNoteName: String
-    var onSave: (String) -> Void
-    var onCancel: () -> Void
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Note Name", text: $newNoteName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        onCancel()
-                    }) {
-                        Text("Cancel")
-                            .foregroundColor(.red)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        onSave(newNoteName)
-                        isAddingNote = false
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("New Note")
-        }
-    }
-}
-
-
-struct MainPageView: View {
-    var body: some View {
-        Text("Main Post")
-    }
-}
-
 
 struct ContentView: View {
     var body: some View {
-        HomePageView()
+        HomePageView(editedProfile: UserProfile(name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
+
     }
 }
 
