@@ -12,12 +12,15 @@ import Firebase
 
 class AuthViewModel {
     @Published var userSession: FirebaseAuth.User?
+    @Published var currentUser: User?
     
     static let shared = AuthViewModel()
     
     //checks if user is logged into app
     init() {
-        self.userSession = Auth.auth().currentUser
+        
+        
+        Task { try await loadUserData() }
     }
     
     @MainActor
@@ -35,16 +38,18 @@ class AuthViewModel {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
-            print("DEBUG: Did create user...")
             await uploadUserData(uid: result.user.uid, username: username, email: email)
-            print("DEBUG: Didupload user data...")
         } catch {
             print("DEBUG: Failed to reigster user with error \(error.localizedDescription)")
         }
     }
     
     func loadUserData() async throws {
+        self.userSession = Auth.auth().currentUser
         
+        guard let currentUid = self.userSession?.uid else { return }
+        let snapshot = try await Firestore.firestore().collection("users").document(currentUid).getDocument()
+        self.currentUser = try? snapshot.data(as: User.self)
     }
     
     func signout() {
