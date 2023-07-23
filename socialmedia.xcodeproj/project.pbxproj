@@ -88,7 +88,7 @@
 		2F8311702A63316A002C7E77 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		2F8311722A633181002C7E77 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		2F8311742A633196002C7E77 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
-		2F8311762A6331AB002C7E77 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		2F8311762A6331AB002C7E77 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileView.swift; path = ../../Views/ProfileView.swift; sourceTree = "<group>"; };
 		2F8311782A6331C2002C7E77 /* AIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIView.swift; sourceTree = "<group>"; };
 		2F83117A2A6331DB002C7E77 /* WorldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldView.swift; sourceTree = "<group>"; };
 		2F83117C2A6331F0002C7E77 /* OriginalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalsView.swift; sourceTree = "<group>"; };
@@ -184,6 +184,7 @@
 		2F22A0232A6710A4000324E0 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				2F8311762A6331AB002C7E77 /* ProfileView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -269,7 +270,6 @@
 				2F83117C2A6331F0002C7E77 /* OriginalsView.swift */,
 				2F83117A2A6331DB002C7E77 /* WorldView.swift */,
 				2F8311782A6331C2002C7E77 /* AIView.swift */,
-				2F8311762A6331AB002C7E77 /* ProfileView.swift */,
 				2F8311742A633196002C7E77 /* MessagesView.swift */,
 				2F8311722A633181002C7E77 /* NotificationsView.swift */,
 				2F8311702A63316A002C7E77 /* ExploreView.swift */,
