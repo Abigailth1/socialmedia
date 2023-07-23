@@ -398,9 +398,9 @@ struct HomePageView: View {
     @State private var accountType: AccountType = .personal
     
     @State private var projects: [Project] = [
-        Project(title: "Project 1", description: "Description 1", characterDescriptions: "Character Descriptions 1", progressUpdates: "Progress Updates 1"),
-        Project(title: "Project 2", description: "Description 2", characterDescriptions: "Character Descriptions 2", progressUpdates: "Progress Updates 2"),
-        Project(title: "Project 3", description: "Description 3", characterDescriptions: "Character Descriptions 3", progressUpdates: "Progress Updates 3")
+        Project(id: UUID(), title: "Project 1", description: "Description of Project 1", characterDescriptions: "Character Des 1"),
+        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2"),
+        Project(id: UUID(), title: "Project 3", description: "Descritpion of Project 3", characterDescriptions: "Character Des 3"),
     ]
     @State private var yourProjectsArray: [Project] = []
     @State private var editedProfile: UserProfile
@@ -441,7 +441,7 @@ struct HomePageView: View {
                 }
                 .tag(Tab.notifications)
 
-            WorldView()
+            WorldView(projects: $projects)
                 .tabItem {
                     Image(systemName: "book")
                     Text("World")
@@ -505,87 +505,14 @@ struct HomePageView: View {
 }
 
 
-// WorldView
-struct WorldView: View {
-    @StateObject private var viewModel = WorldViewModel(projects: [
-        Project(title: "Project 1", description: "Description 1", characterDescriptions: "Character Descriptions 1", progressUpdates: "Progress Updates 1"),
-        Project(title: "Project 2", description: "Description 2", characterDescriptions: "Character Descriptions 2", progressUpdates: "Progress Updates 2"),
-        Project(title: "Project 3", description: "Description 3", characterDescriptions: "Character Descriptions 3", progressUpdates: "Progress Updates 3")
-    ])
-    @State private var showingCreateProjectSheet = false
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                // List of projects
-                List(viewModel.projects, id: \.id) { project in
-                    NavigationLink(destination: ProjectDetailsView(project: $viewModel.projects[getIndex(for: project)])) {
-                        Text(project.title)
-                    }
-                }
-                .listStyle(GroupedListStyle())
-
-                // Add the "add project" button here
-                Button(action: {
-                    showingCreateProjectSheet = true // Show the sheet when the button is tapped
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(.blue)
-                }
-                .padding(.bottom, 20)
-            }
-            .navigationBarTitle("World") // Set the title of the NavigationBar
-        }
-        .sheet(isPresented: $showingCreateProjectSheet) {
-            // Present the CreateProjectView as a sheet and pass the projects array as a binding to CreateProjectView
-            CreateProjectView(projects: $viewModel.projects)
-        }
-    }
-
-    // Helper function to get the index of the project in the projects array
-    private func getIndex(for project: Project) -> Int {
-        guard let index = viewModel.projects.firstIndex(where: { $0.id == project.id }) else {
-            fatalError("Project not found in the array")
-        }
-        return index
-    }
-}
-
 //Project
 struct Project: Identifiable {
-    let id = UUID()
+    let id: UUID
     var title: String
     var description: String
-    var characterDescriptions: String // Add character descriptions property
-    var progressUpdates: String // Add progress updates property
-
-    // Add any other properties or methods as needed
+    var characterDescriptions: String
 }
 
-struct ProjectDetailsView: View {
-    @Binding var project: Project // Add @Binding here
-
-    var body: some View {
-        VStack {
-            Text("Project Details")
-                .font(.title)
-
-            // Display the details of the selected project here
-            Text("Title: \(project.title)")
-            Text("Description: \(project.description)")
-            Text("Character Descriptions: \(project.characterDescriptions)")
-            // Add more details as needed
-
-            // Add the "Edit" button here
-            NavigationLink(destination: EditProjectView(project: $project)) {
-                Text("Edit")
-            }
-        }
-        .padding()
-    }
-}
 
 struct EditProjectView: View {
     @Binding var project: Project
@@ -606,43 +533,6 @@ struct EditProjectView: View {
     private func saveProject() {
         // Save the changes made to the project
         // You can update the project in the projects array or save it to a backend database
-    }
-}
-
-struct CreateProjectView: View {
-    @Binding var projects: [Project]
-
-    @State private var projectTitle: String = ""
-    @State private var projectDescription: String = ""
-    @State private var characterDescriptions: String = ""
-    @State private var progressUpdates: String = ""
-
-    var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Project Details")) {
-                    TextField("Title", text: $projectTitle)
-                    TextField("Description", text: $projectDescription)
-                    TextField("Character Descriptions", text: $characterDescriptions)
-                    TextField("Progress Updates", text: $progressUpdates)
-                    // Add more fields for other project details...
-                }
-
-                // Add a button to save the project
-                Button(action: saveProject) {
-                    Text("Save Project")
-                }
-            }
-            .navigationBarTitle("Create New Project")
-        }
-    }
-
-    private func saveProject() {
-        // Create a new project with the provided details
-        let newProject = Project(title: projectTitle, description: projectDescription, characterDescriptions: characterDescriptions, progressUpdates: progressUpdates)
-
-        // Append the new project to the projects array (binding)
-        projects.append(newProject)
     }
 }
 

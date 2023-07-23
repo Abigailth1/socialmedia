@@ -19,6 +19,12 @@
 		9E4E38DF2A6C260A00AC8015 /* AIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38DE2A6C260A00AC8015 /* AIView.swift */; };
 		9E4E38E02A6C260A00AC8015 /* AIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38DE2A6C260A00AC8015 /* AIView.swift */; };
 		9E4E38E12A6C260A00AC8015 /* AIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38DE2A6C260A00AC8015 /* AIView.swift */; };
+		9E4E38E32A6C748600AC8015 /* WorldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38E22A6C748500AC8015 /* WorldView.swift */; };
+		9E4E38E42A6C748600AC8015 /* WorldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38E22A6C748500AC8015 /* WorldView.swift */; };
+		9E4E38E52A6C748600AC8015 /* WorldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38E22A6C748500AC8015 /* WorldView.swift */; };
+		9E4E38E72A6C771400AC8015 /* CreateProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38E62A6C771400AC8015 /* CreateProjectView.swift */; };
+		9E4E38E82A6C771400AC8015 /* CreateProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38E62A6C771400AC8015 /* CreateProjectView.swift */; };
+		9E4E38E92A6C771400AC8015 /* CreateProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4E38E62A6C771400AC8015 /* CreateProjectView.swift */; };
 		9EC42AD42A5C3D0F00E2F248 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */; };
 		9EC42AD62A5C3D0F00E2F248 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EC42AD52A5C3D0F00E2F248 /* Assets.xcassets */; };
 		9EC42AD92A5C3D0F00E2F248 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EC42AD82A5C3D0F00E2F248 /* Preview Assets.xcassets */; };
@@ -54,6 +60,8 @@
 		9E4E38C62A6A079500AC8015 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9E4E38CA2A6A80F100AC8015 /* JobPostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobPostingView.swift; sourceTree = "<group>"; };
 		9E4E38DE2A6C260A00AC8015 /* AIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIView.swift; sourceTree = "<group>"; };
+		9E4E38E22A6C748500AC8015 /* WorldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldView.swift; sourceTree = "<group>"; };
+		9E4E38E62A6C771400AC8015 /* CreateProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectView.swift; sourceTree = "<group>"; };
 		9EC42ACE2A5C3D0F00E2F248 /* socialmedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socialmedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EC42AD32A5C3D0F00E2F248 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9EC42AD52A5C3D0F00E2F248 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -127,6 +135,8 @@
 				9EC42AD72A5C3D0F00E2F248 /* Preview Content */,
 				9E4E38CA2A6A80F100AC8015 /* JobPostingView.swift */,
 				9E4E38DE2A6C260A00AC8015 /* AIView.swift */,
+				9E4E38E22A6C748500AC8015 /* WorldView.swift */,
+				9E4E38E62A6C771400AC8015 /* CreateProjectView.swift */,
 			);
 			path = socialmedia;
 			sourceTree = "<group>";
@@ -307,8 +317,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E4E38E72A6C771400AC8015 /* CreateProjectView.swift in Sources */,
 				9E4E38DF2A6C260A00AC8015 /* AIView.swift in Sources */,
 				9EC42AD42A5C3D0F00E2F248 /* ContentView.swift in Sources */,
+				9E4E38E32A6C748600AC8015 /* WorldView.swift in Sources */,
 				9E4E38CB2A6A80F100AC8015 /* JobPostingView.swift in Sources */,
 				9E2B74AB2A60A1B500F4B33D /* socialmediaApp.swift in Sources */,
 			);
@@ -318,8 +330,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E4E38E82A6C771400AC8015 /* CreateProjectView.swift in Sources */,
 				9E4E38E02A6C260A00AC8015 /* AIView.swift in Sources */,
 				9EC42AE32A5C3D1000E2F248 /* socialmediaTests.swift in Sources */,
+				9E4E38E42A6C748600AC8015 /* WorldView.swift in Sources */,
 				9E4E38CC2A6A80F100AC8015 /* JobPostingView.swift in Sources */,
 				9E2B74AC2A60A1B500F4B33D /* socialmediaApp.swift in Sources */,
 			);
@@ -333,7 +347,9 @@
 				9E4E38CD2A6A80F100AC8015 /* JobPostingView.swift in Sources */,
 				9E4E38E12A6C260A00AC8015 /* AIView.swift in Sources */,
 				9EC42AED2A5C3D1000E2F248 /* socialmediaUITests.swift in Sources */,
+				9E4E38E92A6C771400AC8015 /* CreateProjectView.swift in Sources */,
 				9E2B74AD2A60A1B500F4B33D /* socialmediaApp.swift in Sources */,
+				9E4E38E52A6C748600AC8015 /* WorldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
