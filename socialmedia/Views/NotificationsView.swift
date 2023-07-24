@@ -9,9 +9,11 @@ import SwiftUI
 
 struct NotificationsView: View {
     var body: some View {
-        Text("Notification View")
-            .font(.title)
-            .padding()
+        VStack {
+            Text("Notifications View")
+                .font(.title)
+                .padding()
+        }
     }
 }
 

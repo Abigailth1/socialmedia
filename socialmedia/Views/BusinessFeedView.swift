@@ -9,9 +9,14 @@ import SwiftUI
 
 struct BusinessFeedView: View {
     var body: some View {
-        Text("Business")
+        VStack {
+            Text("Business Feed View")
+                .font(.title)
+                .padding()
+        }
     }
 }
+
 
 struct BusinessFeedView_Previews: PreviewProvider {
     static var previews: some View {

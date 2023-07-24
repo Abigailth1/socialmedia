@@ -9,9 +9,11 @@ import SwiftUI
 
 struct MessagesView: View {
     var body: some View {
-        Text("Message View")
-            .font(.title)
-            .padding()
+        VStack {
+            Text("Message View")
+                .font(.title)
+                .padding()
+        }
     }
 }
 

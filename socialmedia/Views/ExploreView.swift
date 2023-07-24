@@ -9,9 +9,13 @@ import SwiftUI
 
 struct ExploreView: View {
     var body: some View {
-        Text("Explore View")
-            .font(.title)
-            .padding()
+        VStack {
+            Text("Explore View")
+                .font(.title)
+                .padding()
+            
+            // Add your explore content here
+        }
     }
 }
 

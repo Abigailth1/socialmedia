@@ -19,7 +19,7 @@ struct socialmediaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView2()
         }
     }
 }

@@ -2,7 +2,7 @@
 //  ProfileStatView.swift
 //  socialmedia
 //
-//  Created by Daniel Maliro on 7/15/23.
+//  Created by Daniel Maliro on 7/24/23.
 //
 
 import SwiftUI
@@ -23,8 +23,9 @@ struct ProfileStatView: View {
     }
 }
 
+
 struct ProfileStatView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileStatView(title: "Title", value: "Value")
+        ProfileStatView(title: "title", value: "value")
     }
 }
