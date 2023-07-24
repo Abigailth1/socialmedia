@@ -26,6 +26,7 @@ enum Tab {
 }
 
 struct UserProfile {
+    var id: String // Change 'Binding<String>' to 'String'
     var name: String
     var role: String
     var bio: String?
@@ -34,6 +35,7 @@ struct UserProfile {
     var socialMediaURL: String?
     var interests: [String]
 }
+
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -174,7 +176,7 @@ struct CreateAccountView: View {
     @State private var phoneNumber: String = ""
     @State private var isVerificationCodeShown: Bool = false
     @State private var isRegistered: Bool = false
-    @State private var userProfile: UserProfile = UserProfile(name: "", role: "", bio: "", profileImageURL: "", websiteURL: "", socialMediaURL: "", interests: [])
+    @State private var userProfile: UserProfile = UserProfile(id: "", name: "", role: "", bio: "", profileImageURL: "", websiteURL: "", socialMediaURL: "", interests: [])
     @State private var newInterest: String = ""
 
     var body: some View {
@@ -314,19 +316,21 @@ struct CreateAccountView: View {
             .padding() // Add overall padding
         }
         .fullScreenCover(isPresented: $isVerificationCodeShown) {
-            VerificationView()
+            VerificationView(userID: userProfile.id) // Pass the user ID here
         }
     }
 
     private func registerUser() {
-        Auth.auth().createUser(withEmail: email, password: password) { _, error in
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("Registration error: \(error.localizedDescription)")
             } else {
-                print("User registered successfully!")
-                isRegistered = true
-                saveUserProfileData()
-                isVerificationCodeShown = true
+                if let authResult = authResult {
+                    print("User registered successfully!")
+                    isRegistered = true
+                    userProfile.id = authResult.user.uid // Set the user ID after successful registration
+                    saveUserProfileData()
+                }
             }
         }
     }
@@ -367,6 +371,12 @@ struct CreateAccountView: View {
 }
 
 struct VerificationView: View {
+    let userID: String // Add a property to store the user ID
+    
+    init(userID: String) {
+        self.userID = userID
+    }
+
     var body: some View {
         NavigationView {
             VStack {
@@ -374,8 +384,7 @@ struct VerificationView: View {
                     .font(.title)
                     .padding()
                 
-                NavigationLink(destination: HomePageView(editedProfile: UserProfile(name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
-) {
+                NavigationLink(destination: HomePageView(editedProfile: UserProfile(id: userID, name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))) {
                     Text("Continue")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -396,23 +405,26 @@ struct HomePageView: View {
     @State private var selectedTab: Tab = .feed
     @State private var bottomSafeAreaInset: CGFloat = 0
     @State private var accountType: AccountType = .personal
-    
+
     @State private var projects: [Project] = [
-        Project(id: UUID(), title: "Project 1", description: "Description of Project 1", characterDescriptions: "Character Des 1"),
-        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2"),
-        Project(id: UUID(), title: "Project 3", description: "Descritpion of Project 3", characterDescriptions: "Character Des 3"),
+        Project(id: UUID(), title: "Hello World", description: "Description of Project 1", characterDescriptions: "Character Des 1", isPublished: false),
+        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2", isPublished: false),
+        Project(id: UUID(), title: "Project 3", description: "Description of Project 3", characterDescriptions: "Character Des 3", isPublished: false),
     ]
+
     @State private var yourProjectsArray: [Project] = []
     @State private var editedProfile: UserProfile
 
-    public init(editedProfile: UserProfile) { // Add public access control
+    @State private var publishedProjects: [Project] = []
+
+    public init(editedProfile: UserProfile) {
         self._editedProfile = State(initialValue: editedProfile)
     }
 
     var body: some View {
         TabView(selection: $selectedTab) {
             if accountType == .personal {
-                PersonalFeedView()
+                PersonalFeedView(publishedProjects: $publishedProjects, yourProjectsArray: $yourProjectsArray)
                     .tabItem {
                         Image(systemName: "house")
                         Text("Feed")
@@ -439,7 +451,7 @@ struct HomePageView: View {
                     Image(systemName: "shareplay")
                     Text("AI")
                 }
-                .tag(Tab.notifications)
+                .tag(Tab.ai)
 
             WorldView(projects: $projects)
                 .tabItem {
@@ -494,15 +506,13 @@ struct HomePageView: View {
     }
 
     private func updateBottomSafeAreaInset() {
-        guard let keyWindow = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .flatMap({ $0.windows })
-            .first(where: { $0.isKeyWindow }) else {
-                return
+        guard let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
+            return
         }
         bottomSafeAreaInset = keyWindow.safeAreaInsets.bottom
     }
 }
+
 
 
 //Project
@@ -511,6 +521,7 @@ struct Project: Identifiable {
     var title: String
     var description: String
     var characterDescriptions: String
+    var isPublished: Bool
 }
 
 
@@ -538,11 +549,17 @@ struct EditProjectView: View {
 
 
 struct PersonalFeedView: View {
+    @Binding var publishedProjects: [Project]
+    @Binding var yourProjectsArray: [Project]
+
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 20) {
-                ForEach(1...10, id: \.self) { index in
-                    PostView(postText: "Post \(index)")
+                ForEach(publishedProjects) { project in
+                    PublishedProjectView(project: project)
+                }
+                ForEach(yourProjectsArray) { project in
+                    YourProjectView(project: project)
                 }
             }
             .padding()
@@ -550,28 +567,89 @@ struct PersonalFeedView: View {
     }
 }
 
-struct PostView: View {
-    var postText: String
-    
+struct YourProjectView: View {
+    var project: Project
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 10) {
                 Image(systemName: "person.circle.fill")
                     .font(.title)
                     .foregroundColor(.blue)
-                
+
                 Text("John Doe")
                     .font(.headline)
-                
+
                 Spacer()
-                
+
                 Text("2h ago")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
-            
-            Text(postText)
-            
+
+            Text(project.title)
+                .font(.title)
+
+            Text(project.description)
+                .font(.body)
+
+            Text("Character Descriptions:")
+                .font(.headline)
+                .foregroundColor(.blue)
+
+            Text(project.characterDescriptions)
+                .font(.body)
+
+            HStack(spacing: 20) {
+                Button(action: {
+                    // Handle edit button action for the project
+                }) {
+                    Image(systemName: "pencil")
+                        .font(.title)
+                        .foregroundColor(.blue)
+                }
+
+                Button(action: {
+                    // Handle delete button action for the project
+                }) {
+                    Image(systemName: "trash")
+                        .font(.title)
+                        .foregroundColor(.red)
+                }
+
+                Spacer()
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
+    }
+}
+
+
+struct PublishedProjectView: View {
+    var project: Project
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 10) {
+                Image(systemName: "person.circle.fill")
+                    .font(.title)
+                    .foregroundColor(.blue)
+
+                Text("John Doe")
+                    .font(.headline)
+
+                Spacer()
+
+                Text("2h ago")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+
+            Text(project.title) // Display project title
+
             HStack(spacing: 20) {
                 Button(action: {
                     // Handle like button action
@@ -580,7 +658,7 @@ struct PostView: View {
                         .font(.title)
                         .foregroundColor(.red)
                 }
-                
+
                 Button(action: {
                     // Handle comment button action
                 }) {
@@ -588,9 +666,9 @@ struct PostView: View {
                         .font(.title)
                         .foregroundColor(.blue)
                 }
-                
+
                 Spacer()
-                
+
                 Button(action: {
                     // Handle share button action
                 }) {
@@ -606,6 +684,7 @@ struct PostView: View {
         .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
     }
 }
+
 
 struct BusinessFeedView: View {
     var body: some View {
@@ -992,14 +1071,22 @@ struct ProfileView: View {
 }
 
 struct ContentView: View {
-    var body: some View {
-        HomePageView(editedProfile: UserProfile(name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
+    @State private var yourProjectsArray: [Project] = []
+    let userID: String // Add a property to store the user ID
 
+    var body: some View {
+        NavigationView {
+            HomePageView(editedProfile: UserProfile(id: userID, name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static let userID: String = "your_user_id" // Add a property to store the user ID
+
     static var previews: some View {
-        ContentView()
+        HomePageView(editedProfile: UserProfile(id: userID, name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
     }
 }
+
+

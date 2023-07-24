@@ -1,46 +1,45 @@
 import SwiftUI
 
 struct CreateProjectView: View {
+    @Binding var projects: [Project]
+    @Binding var isPublished: Bool
     @Environment(\.presentationMode) var presentationMode
-    @State private var title: String
-    @State private var description: String
-    @State private var characterDescriptions: String // Add characterDescriptions state
 
-    @Binding var projectsBinding: [Project]
+    @State private var projectTitle: String
+    @State private var projectDescription: String
 
-    init(projects: Binding<[Project]>, defaultTitle: String = "") {
-        _title = State(initialValue: defaultTitle)
-        _description = State(initialValue: "")
-        _characterDescriptions = State(initialValue: "") // Initialize characterDescriptions state
-        _projectsBinding = projects
+    init(projects: Binding<[Project]>, isPublished: Binding<Bool>, title: String, description: String) {
+        self._projects = projects
+        self._isPublished = isPublished
+        self._projectTitle = State(initialValue: title)
+        self._projectDescription = State(initialValue: description)
     }
 
     var body: some View {
         NavigationView {
             Form {
-                TextField("Title", text: $title)
-                TextField("Description", text: $description)
-                TextField("Character Descriptions", text: $characterDescriptions) // Add characterDescriptions TextField
+                Section(header: Text("Project Details")) {
+                    TextField("Project Title", text: $projectTitle)
+                    TextEditor(text: $projectDescription)
+                }
+
+                Section {
+                    Button("Save Project") {
+                        let newProject = Project(id: UUID(), title: projectTitle, description: projectDescription, characterDescriptions: "", isPublished: false)
+                        projects.append(newProject)
+                        isPublished = true
+                        presentationMode.wrappedValue.dismiss() // Dismiss the sheet after saving
+                    }
+                }
             }
             .navigationBarTitle("Create Project", displayMode: .inline)
-            .navigationBarItems(trailing: saveButton)
+            .navigationBarItems(leading: cancelButton) // Add the cancel button to the leading side
         }
     }
 
-    private var saveButton: some View {
-        Button("Save") {
-            // Validate the title is not empty
-            guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-                print("Please enter a title for the project.")
-                return
-            }
-
-            // Create a new project with the entered details and add it to the projects array
-            let newProject = Project(id: UUID(), title: title, description: description, characterDescriptions: characterDescriptions)
-            projectsBinding.append(newProject)
-
-            // Dismiss the sheet
-            presentationMode.wrappedValue.dismiss()
+    private var cancelButton: some View {
+        Button("Cancel") {
+            presentationMode.wrappedValue.dismiss() // Dismiss the sheet without saving
         }
     }
 }

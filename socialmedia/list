@@ -1,73 +1,3 @@
-import SwiftUI
-
-struct AIView: View {
-    @State private var userInput: String = ""
-    @State private var generatedIdea: String = ""
-    @State private var projects: [Project] = []
-    @State private var showingCreateProjectSheet = false
-    @State private var isPublished = false
-
-    var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(spacing: 20) {
-                    Image(systemName: "gear")
-                        .resizable()
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-
-                    Text("AI Idea Generator")
-                        .font(.title)
-
-                    TextField("Enter your input", text: $userInput)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-
-                    Button(action: {
-                        generatedIdea = generateIdea(using: userInput)
-                    }) {
-                        Text("Generate Idea")
-                            .padding()
-                    }
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-
-                    Text(generatedIdea)
-                        .padding()
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-
-                    Spacer()
-
-                    // Add a button to create a project
-                    Button(action: {
-                        showingCreateProjectSheet = true
-                    }) {
-                        Text("Create Project")
-                            .padding()
-                    }
-                    .foregroundColor(.white)
-                    .background(Color.green)
-                    .cornerRadius(10)
-                    .sheet(isPresented: $showingCreateProjectSheet) {
-                        CreateProjectView(projects: $projects, isPublished: $isPublished, title: "", description: "")
-                    }
-                }
-                .padding()
-                .foregroundColor(.white)
-                .background(Color(red: 0.2, green: 0.2, blue: 0.2)) // Custom robot-themed background color
-                .edgesIgnoringSafeArea(.all)
-            }
-            .navigationBarTitle("", displayMode: .inline) // Hide the navigation bar title
-        }
-    }
-
-    private func generateIdea(using userInput: String) -> String {
-        // List of 100 writing prompts
-        let writingPrompts = [
-            // ... (the list of prompts) ...
             "Write a story about a world where emotions are forbidden and a group of rebels who seek to restore them.",
                     "Describe a day in the life of a time traveler who keeps getting stuck in the wrong era.",
                     "Write a poem about the beauty of nature and its connection to human emotions.",
@@ -1612,13 +1542,5 @@ struct AIView: View {
                     "Invent a magical artifact that can unlock a person's hidden potential.",
                     "Create a story about a group of adventurers searching for a legendary fountain of youth.",
                     "Write a letter from a character to their childhood imaginary friend, reminiscing about their adventures together.",
-                    "Imagine a world where music is forbidden, and one individual's mission to bring it back."
-        ]
-
-        // Randomly select an idea from the list
-        let randomIndex = Int.random(in: 0..<writingPrompts.count)
-        let randomIdea = writingPrompts[randomIndex]
-
-        return randomIdea
-    }
-}
+                    "Imagine a world where music is forbidden, and one individual's mission to bring it back.",
+                   x

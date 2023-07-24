@@ -2,7 +2,10 @@ import SwiftUI
 
 struct WorldView: View {
     @Binding var projects: [Project]
-    @State private var selectedProject: Project?
+    @State private var selectedProject: Project? = nil
+    @State private var showingCreateProjectSheet = false
+    @State private var isPublished = false
+    @State private var selectedProjectForPublishing: Project? = nil
 
     var body: some View {
         NavigationView {
@@ -27,11 +30,15 @@ struct WorldView: View {
                         .navigationBarItems(trailing: editButton)
                 }
             }
+            .sheet(isPresented: $showingCreateProjectSheet) {
+                CreateProjectView(projects: $projects, isPublished: $isPublished, title: "", description: "")
+            }
+            .alert(isPresented: $isPublished) {
+                Alert(title: Text("Project Published"), message: Text("The project has been published to the feed."), dismissButton: .default(Text("OK")))
+            }
         }
     }
 
-    // ... (rest of the code remains the same)
-    
     // Helper function to get the index of the project in the projects array
     private func getIndex(for project: Project) -> Int {
         guard let index = projects.firstIndex(where: { $0.id == project.id }) else {
@@ -43,8 +50,8 @@ struct WorldView: View {
     // Add project button
     private var addButton: some View {
         Button(action: {
-            selectedProject = nil // Reset the selectedProject to nil before showing the sheet
-            // Show the CreateProjectView as a sheet to create a new project
+            selectedProject = nil
+            showingCreateProjectSheet = true // Show the CreateProjectView as a sheet
         }) {
             Image(systemName: "plus")
         }
@@ -53,51 +60,9 @@ struct WorldView: View {
     // Edit project button in the details view
     private var editButton: some View {
         Button(action: {
-            // Show the EditProjectView as a sheet to edit the project details
-            selectedProject = nil // Reset the selectedProject to nil before showing the sheet
+            selectedProject = nil
         }) {
             Image(systemName: "pencil")
-        }
-    }
-}
-
-struct ProjectListView: View {
-    @Binding var projects: [Project]
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    ForEach(projects) { project in
-                        NavigationLink(destination: ProjectDetailsView(project: $projects[getIndex(for: project)])) {
-                            ProjectListItem(project: project)
-                        }
-                    }
-                }
-                .listStyle(PlainListStyle())
-
-                Spacer()
-            }
-            .navigationBarTitle("Projects", displayMode: .large)
-            .navigationBarItems(trailing: addButton)
-        }
-    }
-
-    // Helper function to get the index of the project in the projects array
-    private func getIndex(for project: Project) -> Int {
-        guard let index = projects.firstIndex(where: { $0.id == project.id }) else {
-            fatalError("Project not found in the array")
-        }
-        return index
-    }
-
-    // Add project button
-    private var addButton: some View {
-        Button(action: {
-            // Show the CreateProjectView as a sheet to create a new project
-            //showingCreateProjectSheet = true
-        }) {
-            Image(systemName: "plus")
         }
     }
 }
@@ -138,51 +103,5 @@ struct ProjectDetailsView: View {
             Spacer()
         }
         .navigationBarTitle("Project Details", displayMode: .inline)
-    }
-}
-
-struct AddProjectView: View {
-    @State private var title: String = ""
-    @State private var description: String = ""
-    @State private var isProjectTitleEmpty = false
-
-    let onAdd: (String, String) -> Void
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Project Title", text: $title)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-
-                Text("Add a brief description:")
-                    .foregroundColor(.secondary)
-                    .padding(.bottom, 5)
-
-                TextEditor(text: $description)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-
-                Button("Add Project") {
-                    if title.isEmpty {
-                        isProjectTitleEmpty = true
-                    } else {
-                        onAdd(title, description)
-                    }
-                }
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .cornerRadius(10)
-                .padding(.top, 20)
-
-                Spacer()
-            }
-            .padding()
-            .navigationBarTitle("Add Project", displayMode: .inline)
-            .alert(isPresented: $isProjectTitleEmpty) {
-                Alert(title: Text("Project Title is Empty"), message: Text("Please enter a title for the project."), dismissButton: .default(Text("OK")))
-            }
-        }
     }
 }
