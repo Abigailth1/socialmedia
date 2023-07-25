@@ -41,6 +41,23 @@ struct EditProfileView: View {
                     .cornerRadius(5)
                     .padding(.horizontal)
             }
+            
+            Spacer()
+            
+            Button {
+                AuthViewModel.shared.signout()
+            } label: {
+                Text("Sign Out")
+                    .foregroundColor(.white)
+            }
+            .font(.headline)
+            .foregroundColor(.white)
+            .padding(.vertical, 12)
+            .frame(maxWidth: 150)
+            .background(Color.red)
+            .cornerRadius(5)
+            .padding(.horizontal)
+            
         }
         .padding()
     }

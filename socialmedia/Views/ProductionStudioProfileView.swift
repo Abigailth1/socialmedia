@@ -60,6 +60,6 @@ struct ProductionStudioProfileView: View {
 
 struct ProductionStudioProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductionStudioProfileView(userProfile: UserProfile.init(name: "name", role: "role", interests: ["eating"]))
+        ProductionStudioProfileView(userProfile: UserProfile.init(id: "id", name: "name", role: "role", interests: ["eating"]))
     }
 }

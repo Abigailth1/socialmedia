@@ -164,7 +164,7 @@ struct CreateAccountView2: View {
             .padding() // Add overall padding
         }
         .fullScreenCover(isPresented: $isVerificationCodeShown) {
-            VerificationView(userID: userProfile.id) // Pass the user ID here
+            VerificationView2(userID: userProfile.id) // Pass the user ID here
         }
     }
 

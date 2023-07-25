@@ -27,6 +27,6 @@ struct ProjectListItem: View {
 
 struct ProjectListItem_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectListItem(project: Project.init(id: UUID(), title: "title", description: "description", characterDescriptions: "Character Description"))
+        ProjectListItem(project: Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none, author: "author"))
     }
 }

@@ -33,9 +33,14 @@ struct EditProjectView: View {
 
                 // For the author, use a TextField or other appropriate input method
                 TextField("Author", text: $author)
+                
             }
             .navigationBarTitle("Edit Project", displayMode: .inline)
             .navigationBarItems(trailing: saveButton)
+            
+            
+            
+            
         }
     }
 

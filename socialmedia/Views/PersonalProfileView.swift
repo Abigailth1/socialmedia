@@ -72,6 +72,6 @@ struct PersonalProfileView: View {
 
 struct PersonalProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonalProfileView(userProfile: UserProfile.init(name: "name", role: "role", interests: ["eating"]), projects: [Project.init(id: UUID(), title: "title", description: "description", characterDescriptions: "Character Description")])
+        PersonalProfileView(userProfile: UserProfile.init(id: "id", name: "name", role: "role", interests: ["eating"]), projects: [Project.init(title: "title", description: "description", characterDescriptions: "Character Descriptions", isPublished: true, coverImageURL: URL?.none, author: "author")])
     }
 }

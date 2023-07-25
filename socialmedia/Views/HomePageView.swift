@@ -19,12 +19,12 @@ struct HomePageView: View {
         Project(id: UUID(), title: "Project 3", description: "Description of Project 3", characterDescriptions: "Character Des 3", isPublished: false, coverImageURL: URL(string: "https://example.com/book3.jpg"), author: "Author 3"),
     ]
 
-
-
     @State private var yourProjectsArray: [Project] = []
     @State private var editedProfile: UserProfile
 
     @State private var publishedProjects: [Project] = []
+
+    @State private var showMessageView = false // Added state variable to control MessageView
 
     public init(editedProfile: UserProfile) {
         self._editedProfile = State(initialValue: editedProfile)
@@ -92,7 +92,7 @@ struct HomePageView: View {
                 Spacer()
 
                 Button(action: {
-                    selectedTab = .messages
+                    showMessageView = true
                 }) {
                     Image(systemName: "message")
                         .resizable()
@@ -112,15 +112,21 @@ struct HomePageView: View {
                 updateBottomSafeAreaInset()
             }
         )
+        .sheet(isPresented: $showMessageView) {
+            MessageView()
+        }
+    }
+        private func updateBottomSafeAreaInset() {
+            guard let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
+                return
+            }
+            bottomSafeAreaInset = keyWindow.safeAreaInsets.bottom
+        }
     }
 
-    private func updateBottomSafeAreaInset() {
-        guard let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
-            return
-        }
-        bottomSafeAreaInset = keyWindow.safeAreaInsets.bottom
-    }
-}
+
+
+
 
 struct HomePageView_Previews: PreviewProvider {
     static var previews: some View {

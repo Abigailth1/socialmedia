@@ -51,6 +51,6 @@ struct ProjectListView: View {
 
 struct ProjectListView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectListView(projects: .constant([Project.init(id: UUID(), title: "title", description: "description", characterDescriptions: "Character Description")]))
+        ProjectListView(projects: .constant([Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none, author: "author")]))
     }
 }
