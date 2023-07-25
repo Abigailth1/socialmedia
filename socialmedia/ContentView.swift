@@ -407,10 +407,12 @@ struct HomePageView: View {
     @State private var accountType: AccountType = .personal
 
     @State private var projects: [Project] = [
-        Project(id: UUID(), title: "Hello World", description: "Description of Project 1", characterDescriptions: "Character Des 1", isPublished: false),
-        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2", isPublished: false),
-        Project(id: UUID(), title: "Project 3", description: "Description of Project 3", characterDescriptions: "Character Des 3", isPublished: false),
+        Project(id: UUID(), title: "Hello World", description: "Description of Project 1", characterDescriptions: "Character Des 1", isPublished: false, coverImageURL: URL(string: "https://example.com/book1.jpg"), author: "Author 1"),
+        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2", isPublished: false, coverImageURL: URL(string: "https://example.com/book2.jpg"), author: "Author 2"),
+        Project(id: UUID(), title: "Project 3", description: "Description of Project 3", characterDescriptions: "Character Des 3", isPublished: false, coverImageURL: URL(string: "https://example.com/book3.jpg"), author: "Author 3"),
     ]
+
+
 
     @State private var yourProjectsArray: [Project] = []
     @State private var editedProfile: UserProfile
@@ -424,7 +426,7 @@ struct HomePageView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             if accountType == .personal {
-                PersonalFeedView(publishedProjects: $publishedProjects, yourProjectsArray: $yourProjectsArray)
+                FeedView(feedProjects: $projects)
                     .tabItem {
                         Image(systemName: "house")
                         Text("Feed")
@@ -522,31 +524,26 @@ struct Project: Identifiable {
     var description: String
     var characterDescriptions: String
     var isPublished: Bool
-}
+    var coverImageURL: URL?
+    var author: String
+    var likes: Int
+    var comments: [Comment] // Add the 'comments' property
 
+    // Add any other properties and methods as needed
 
-struct EditProjectView: View {
-    @Binding var project: Project
-
-    var body: some View {
-        Form {
-            Section(header: Text("Edit Project")) {
-                TextField("Title", text: $project.title)
-                TextField("Description", text: $project.description)
-                TextField("Character Descriptions", text: $project.characterDescriptions)
-                // Add more fields for other project details...
-            }
-        }
-        .navigationBarTitle("Edit Project")
-        .navigationBarItems(trailing: Button("Save", action: saveProject))
-    }
-
-    private func saveProject() {
-        // Save the changes made to the project
-        // You can update the project in the projects array or save it to a backend database
+    // Provide a custom initializer if needed
+    init(id: UUID = UUID(), title: String, description: String, characterDescriptions: String, isPublished: Bool, coverImageURL: URL?, author: String, likes: Int = 0, comments: [Comment] = []) { // Add default values for 'likes' and 'comments'
+        self.id = id
+        self.title = title
+        self.description = description
+        self.characterDescriptions = characterDescriptions
+        self.isPublished = isPublished
+        self.coverImageURL = coverImageURL
+        self.author = author
+        self.likes = likes
+        self.comments = comments // Initialize 'comments' with the provided value or an empty array
     }
 }
-
 
 struct PersonalFeedView: View {
     @Binding var publishedProjects: [Project]
@@ -567,121 +564,36 @@ struct PersonalFeedView: View {
     }
 }
 
-struct YourProjectView: View {
-    var project: Project
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 10) {
-                Image(systemName: "person.circle.fill")
-                    .font(.title)
-                    .foregroundColor(.blue)
-
-                Text("John Doe")
-                    .font(.headline)
-
-                Spacer()
-
-                Text("2h ago")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-            }
-
-            Text(project.title)
-                .font(.title)
-
-            Text(project.description)
-                .font(.body)
-
-            Text("Character Descriptions:")
-                .font(.headline)
-                .foregroundColor(.blue)
-
-            Text(project.characterDescriptions)
-                .font(.body)
-
-            HStack(spacing: 20) {
-                Button(action: {
-                    // Handle edit button action for the project
-                }) {
-                    Image(systemName: "pencil")
-                        .font(.title)
-                        .foregroundColor(.blue)
-                }
-
-                Button(action: {
-                    // Handle delete button action for the project
-                }) {
-                    Image(systemName: "trash")
-                        .font(.title)
-                        .foregroundColor(.red)
-                }
-
-                Spacer()
-            }
-        }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
-    }
-}
-
+// Assuming PublishedProjectView and YourProjectView are custom views
+// Replace these with your actual views for displaying the project details.
 
 struct PublishedProjectView: View {
     var project: Project
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 10) {
-                Image(systemName: "person.circle.fill")
-                    .font(.title)
-                    .foregroundColor(.blue)
-
-                Text("John Doe")
-                    .font(.headline)
-
-                Spacer()
-
-                Text("2h ago")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-            }
-
-            Text(project.title) // Display project title
-
-            HStack(spacing: 20) {
-                Button(action: {
-                    // Handle like button action
-                }) {
-                    Image(systemName: "heart")
-                        .font(.title)
-                        .foregroundColor(.red)
-                }
-
-                Button(action: {
-                    // Handle comment button action
-                }) {
-                    Image(systemName: "message")
-                        .font(.title)
-                        .foregroundColor(.blue)
-                }
-
-                Spacer()
-
-                Button(action: {
-                    // Handle share button action
-                }) {
-                    Image(systemName: "paperplane")
-                        .font(.title)
-                        .foregroundColor(.green)
-                }
-            }
+        // Custom view for displaying published project details
+        VStack {
+            Text(project.title)
+            // Add other project details as needed
         }
         .padding()
-        .background(Color.white)
+        .background(Color.gray)
         .cornerRadius(10)
-        .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
+    }
+}
+
+struct YourProjectView: View {
+    var project: Project
+
+    var body: some View {
+        // Custom view for displaying your project details
+        VStack {
+            Text(project.title)
+            // Add other project details as needed
+        }
+        .padding()
+        .background(Color.blue)
+        .cornerRadius(10)
     }
 }
 

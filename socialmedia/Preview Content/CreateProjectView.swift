@@ -1,5 +1,4 @@
 import SwiftUI
-
 struct CreateProjectView: View {
     @Binding var projects: [Project]
     @Binding var isPublished: Bool
@@ -7,6 +6,9 @@ struct CreateProjectView: View {
 
     @State private var projectTitle: String
     @State private var projectDescription: String
+
+    let coverImageURL = URL(string: "https://example.com/new_project_cover.jpg")
+    let author = "New Project Author"
 
     init(projects: Binding<[Project]>, isPublished: Binding<Bool>, title: String, description: String) {
         self._projects = projects
@@ -25,7 +27,8 @@ struct CreateProjectView: View {
 
                 Section {
                     Button("Save Project") {
-                        let newProject = Project(id: UUID(), title: projectTitle, description: projectDescription, characterDescriptions: "", isPublished: false)
+                        let newProject = Project(id: UUID(), title: projectTitle, description: projectDescription, characterDescriptions: "", isPublished: false, coverImageURL: coverImageURL, author: author)
+
                         projects.append(newProject)
                         isPublished = true
                         presentationMode.wrappedValue.dismiss() // Dismiss the sheet after saving
