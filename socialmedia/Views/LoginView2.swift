@@ -10,12 +10,10 @@ import SwiftUI
 struct LoginView2: View {
     @State private var showCreateAccount = false
     @State private var username: String = ""
-    @State private var email: String = ""
     @State private var password: String = ""
     @State private var isCreateAnAccountShown: Bool = false
     @State private var isLoggedIn: Bool = false
     @State private var isHomePageShown: Bool = false
-    @StateObject var viewModel = LoginViewModel()
 
     var body: some View {
         VStack(spacing: 20) {
@@ -25,13 +23,13 @@ struct LoginView2: View {
                 .frame(width: 150, height: 50)
                 .padding(.top, 100)
 
-            TextField("Phone number, username, or email", text: $viewModel.email)
+            TextField("Phone number, username, or email", text: $username)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 .background(Color(.systemGray6))
                 .cornerRadius(5)
 
-            SecureField("Password", text: $viewModel.password)
+            SecureField("Password", text: $password)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 .background(Color(.systemGray6))
@@ -39,7 +37,6 @@ struct LoginView2: View {
 
             Button(action: {
                 isHomePageShown = true
-                Task{ try await viewModel.signIn() }
             }) {
                 Text("Log In")
                     .font(.headline)
@@ -101,7 +98,7 @@ struct LoginView2: View {
                     .cornerRadius(5)
             }
             .fullScreenCover(isPresented: $isCreateAnAccountShown) {
-                CreateAccountView()
+                CreateAccountView2()
             }
 
             Spacer()

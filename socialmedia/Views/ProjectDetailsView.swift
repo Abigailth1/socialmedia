@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProjectDetailsView: View {
     @Binding var project: Project
+    var onDelete: (() -> Void)? // Callback to delete the project
 
     var body: some View {
         VStack {
@@ -21,6 +22,14 @@ struct ProjectDetailsView: View {
                 .padding()
 
             // Add more project details as needed
+
+            // Delete button
+            Button(action: {
+                onDelete?()
+            }) {
+                Text("Delete")
+                    .foregroundColor(.red)
+            }
 
             Spacer()
         }

@@ -12,23 +12,28 @@ struct HomePageView: View {
     @State private var selectedTab: Tab = .feed
     @State private var bottomSafeAreaInset: CGFloat = 0
     @State private var accountType: AccountType = .personal
-    
+
     @State private var projects: [Project] = [
-        Project(id: UUID(), title: "Project 1", description: "Description of Project 1", characterDescriptions: "Character Des 1"),
-        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2"),
-        Project(id: UUID(), title: "Project 3", description: "Descritpion of Project 3", characterDescriptions: "Character Des 3"),
+        Project(id: UUID(), title: "Hello World", description: "Description of Project 1", characterDescriptions: "Character Des 1", isPublished: false, coverImageURL: URL(string: "https://example.com/book1.jpg"), author: "Author 1"),
+        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2", isPublished: false, coverImageURL: URL(string: "https://example.com/book2.jpg"), author: "Author 2"),
+        Project(id: UUID(), title: "Project 3", description: "Description of Project 3", characterDescriptions: "Character Des 3", isPublished: false, coverImageURL: URL(string: "https://example.com/book3.jpg"), author: "Author 3"),
     ]
+
+
+
     @State private var yourProjectsArray: [Project] = []
     @State private var editedProfile: UserProfile
 
-    public init(editedProfile: UserProfile) { // Add public access control
+    @State private var publishedProjects: [Project] = []
+
+    public init(editedProfile: UserProfile) {
         self._editedProfile = State(initialValue: editedProfile)
     }
 
     var body: some View {
         TabView(selection: $selectedTab) {
             if accountType == .personal {
-                PersonalFeedView()
+                FeedView(feedProjects: $projects)
                     .tabItem {
                         Image(systemName: "house")
                         Text("Feed")
@@ -55,7 +60,7 @@ struct HomePageView: View {
                     Image(systemName: "shareplay")
                     Text("AI")
                 }
-                .tag(Tab.notifications)
+                .tag(Tab.ai)
 
             WorldView(projects: $projects)
                 .tabItem {
@@ -110,11 +115,8 @@ struct HomePageView: View {
     }
 
     private func updateBottomSafeAreaInset() {
-        guard let keyWindow = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .flatMap({ $0.windows })
-            .first(where: { $0.isKeyWindow }) else {
-                return
+        guard let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
+            return
         }
         bottomSafeAreaInset = keyWindow.safeAreaInsets.bottom
     }
@@ -122,6 +124,6 @@ struct HomePageView: View {
 
 struct HomePageView_Previews: PreviewProvider {
     static var previews: some View {
-        HomePageView(editedProfile: UserProfile.init(name: "name", role: "role", interests: ["eating"]))
+        HomePageView(editedProfile: UserProfile.init(id: "id", name: "name", role: "role", interests: ["eating"]))
     }
 }

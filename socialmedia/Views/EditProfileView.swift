@@ -41,32 +41,14 @@ struct EditProfileView: View {
                     .cornerRadius(5)
                     .padding(.horizontal)
             }
-            
-            Spacer()
-            
-            Button(action: {
-                AuthViewModel.shared.signout()
-            }) {
-                Text("Sign Out")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.vertical, 12)
-                    .frame(maxWidth: 100)
-                    .background(Color.red)
-                    .cornerRadius(5)
-                    .padding(.horizontal)
-            }
         }
         .padding()
-        
-        
-        
     }
 }
 
 
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileView(editedProfile: .constant(UserProfile.init(name: "name", role: "role", interests: ["eating"])), isEditing: .constant(true))
+        EditProfileView(editedProfile: .constant(UserProfile.init(id: "id", name: "name", role: "role", interests: ["eating"])), isEditing: .constant(true))
     }
 }

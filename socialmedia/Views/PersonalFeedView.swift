@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct PersonalFeedView: View {
+    @Binding var publishedProjects: [Project]
+    @Binding var yourProjectsArray: [Project]
+
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 20) {
-                ForEach(1...10, id: \.self) { index in
-                    PostView(postText: "Post \(index)")
+                ForEach(publishedProjects) { project in
+                    PublishedProjectView(project: project)
+                }
+                ForEach(yourProjectsArray) { project in
+                    YourProjectView(project: project)
                 }
             }
             .padding()
@@ -23,6 +29,6 @@ struct PersonalFeedView: View {
 
 struct PersonalFeedView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonalFeedView()
+        PersonalFeedView(publishedProjects: .constant([Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none , author: "String")]), yourProjectsArray: .constant([Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none , author: "String")]))
     }
 }

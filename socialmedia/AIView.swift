@@ -1622,10 +1622,3 @@ struct AIView: View {
         return randomIdea
     }
 }
-
-
-struct AIView_Previews: PreviewProvider {
-    static var previews: some View {
-        AIView()
-    }
-}

@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct VerificationView2: View {
+    let userID: String // Add a property to store the user ID
+    
+    init(userID: String) {
+        self.userID = userID
+    }
+
     var body: some View {
         NavigationView {
             VStack {
@@ -15,8 +21,7 @@ struct VerificationView2: View {
                     .font(.title)
                     .padding()
                 
-                NavigationLink(destination: HomePageView(editedProfile: UserProfile(name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
-) {
+                NavigationLink(destination: HomePageView(editedProfile: UserProfile(id: userID, name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))) {
                     Text("Continue")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -35,6 +40,6 @@ struct VerificationView2: View {
 
 struct VerificationView2_Previews: PreviewProvider {
     static var previews: some View {
-        VerificationView2()
+        VerificationView2(userID: "id")
     }
 }

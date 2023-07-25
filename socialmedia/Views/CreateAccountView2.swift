@@ -24,7 +24,7 @@ struct CreateAccountView2: View {
     @State private var phoneNumber: String = ""
     @State private var isVerificationCodeShown: Bool = false
     @State private var isRegistered: Bool = false
-    @State private var userProfile: UserProfile = UserProfile(name: "", role: "", bio: "", profileImageURL: "", websiteURL: "", socialMediaURL: "", interests: [])
+    @State private var userProfile: UserProfile = UserProfile(id: "", name: "", role: "", bio: "", profileImageURL: "", websiteURL: "", socialMediaURL: "", interests: [])
     @State private var newInterest: String = ""
 
     var body: some View {
@@ -164,19 +164,21 @@ struct CreateAccountView2: View {
             .padding() // Add overall padding
         }
         .fullScreenCover(isPresented: $isVerificationCodeShown) {
-            VerificationView()
+            VerificationView(userID: userProfile.id) // Pass the user ID here
         }
     }
 
     private func registerUser() {
-        Auth.auth().createUser(withEmail: email, password: password) { _, error in
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("Registration error: \(error.localizedDescription)")
             } else {
-                print("User registered successfully!")
-                isRegistered = true
-                saveUserProfileData()
-                isVerificationCodeShown = true
+                if let authResult = authResult {
+                    print("User registered successfully!")
+                    isRegistered = true
+                    userProfile.id = authResult.user.uid // Set the user ID after successful registration
+                    saveUserProfileData()
+                }
             }
         }
     }

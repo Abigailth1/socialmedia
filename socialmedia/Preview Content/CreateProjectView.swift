@@ -1,14 +1,13 @@
 import SwiftUI
-
 struct CreateProjectView: View {
     @Binding var projects: [Project]
     @Binding var isPublished: Bool
-    @Environment(.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode
 
     @State private var projectTitle: String
     @State private var projectDescription: String
 
-    let coverImageURL = URL(string: "https://example.com/new_project_cover.jpg%22")
+    let coverImageURL = URL(string: "https://example.com/new_project_cover.jpg")
     let author = "New Project Author"
 
     init(projects: Binding<[Project]>, isPublished: Binding<Bool>, title: String, description: String) {
@@ -47,4 +46,3 @@ struct CreateProjectView: View {
         }
     }
 }
-

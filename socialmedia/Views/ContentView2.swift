@@ -33,6 +33,7 @@ enum LeftSwipe {
 }
 
 struct UserProfile {
+    var id: String // Change 'Binding<String>' to 'String'
     var name: String
     var role: String
     var bio: String?
@@ -60,6 +61,26 @@ struct Project: Identifiable {
     var title: String
     var description: String
     var characterDescriptions: String
+    var isPublished: Bool
+    var coverImageURL: URL?
+    var author: String
+    var likes: Int
+    var comments: [Comment] // Add the 'comments' property
+
+    // Add any other properties and methods as needed
+
+    // Provide a custom initializer if needed
+    init(id: UUID = UUID(), title: String, description: String, characterDescriptions: String, isPublished: Bool, coverImageURL: URL?, author: String, likes: Int = 0, comments: [Comment] = []) { // Add default values for 'likes' and 'comments'
+        self.id = id
+        self.title = title
+        self.description = description
+        self.characterDescriptions = characterDescriptions
+        self.isPublished = isPublished
+        self.coverImageURL = coverImageURL
+        self.author = author
+        self.likes = likes
+        self.comments = comments // Initialize 'comments' with the provided value or an empty array
+    }
 }
 
 
@@ -72,7 +93,12 @@ class WorldViewModel: ObservableObject {
 }
 
 
+
+
+
 struct ContentView2: View {
+    let userID: String
+    @State private var yourProjectsArray: [Project] = []
     @StateObject var viewModel = ContentViewModel()
     @StateObject var registrationViewModel = RegisterViewModel()
     var body: some View {
@@ -82,7 +108,9 @@ struct ContentView2: View {
                     .environmentObject(registrationViewModel)
             }else if let currentUser = viewModel.currentUser {
                 //Main View
-                HomePageView(editedProfile: UserProfile(name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
+                NavigationView {
+                    HomePageView(editedProfile: UserProfile(id: userID, name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
+                }
             }
         }
 
