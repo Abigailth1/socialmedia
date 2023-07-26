@@ -42,7 +42,7 @@ struct CurrentUserProfileView: View {
                     Button {
                         AuthViewModel.shared.signout()
                     }label: {
-                        Image(systemName: "gearshape.fill")
+                        Text("Sign Out")
                             .foregroundColor(.black)
                     }
                 }
