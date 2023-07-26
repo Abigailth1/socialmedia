@@ -37,7 +37,8 @@ struct WorldView: View {
                 }
             }
             .sheet(isPresented: $showingCreateProjectSheet) {
-                CreateProjectView(projects: $projects, isPublished: $isPublished, title: "", description: "")
+                UploadPostView(showUploadView: $showingCreateProjectSheet)
+//                CreateProjectView(projects: $projects, isPublished: $isPublished, title: "", description: "")
             }
             .sheet(isPresented: $showingEditProjectSheet) {
                 if let selectedProject = selectedProjectForPublishing {

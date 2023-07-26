@@ -49,9 +49,7 @@ struct LoginView2: View {
                         .cornerRadius(5)
                 }
                 
-                Text("OR")
-                    .foregroundColor(Color(.systemGray))
-                    .padding(.vertical, 5)
+                
                 
                 HStack(spacing: 20) {
                     Button(action: {
@@ -88,26 +86,29 @@ struct LoginView2: View {
                     }
                 }
                 
-                Button(action: {
-                    isCreateAnAccountShown = true
-                }) {
-                    Text("Create New Account")
-                        .font(.headline)
-                        .foregroundColor(.purple) // Purple color similar to Instagram
-                        .padding(.vertical, 12)
-                        .frame(maxWidth: .infinity)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(5)
-                }
-                .fullScreenCover(isPresented: $isCreateAnAccountShown) {
-                    CreateAccountView2()
-                }
-                
                 Spacer()
+                
+                Divider()
+                
+                HStack {
+                    Text("Don't have an account?")
+                        .font(.footnote)
+                    NavigationLink {
+                        CreateAccountView2()
+                            .padding()
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        Text("Sign up")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                    }
+                    
+                }
+                .padding(.vertical, 15)
+                
             }
             .padding(.horizontal, 30)
             .background(Color(red: 0.94, green: 0.94, blue: 0.96)) // Light gray background color
-            .edgesIgnoringSafeArea(.all) // Ignore safe area to extend the background color
         }
     }
 }

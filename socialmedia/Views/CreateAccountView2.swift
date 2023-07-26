@@ -10,18 +10,20 @@ import Firebase
 
 struct CreateAccountView2: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var viewModel: RegisterViewModel
     @State private var profileImage: Image? = nil
-    @State private var username: String = ""
-    @State private var email: String = ""
-    @State private var password = ""
-    @State private var confirmPassword = ""
+//    @State private var username: String = ""
+//    @State private var email: String = ""
+//    @State private var password = ""
+//    @State private var confirmPassword = ""
     @State private var isTermsAccepted: Bool = false
     @State private var accountType: AccountType = .personal
-    @State private var companyName: String = ""
+//    @State private var companyName: String = ""
     @State private var websiteURL: String = ""
     @State private var socialMediaURL: String = ""
-    @State private var alias: String = ""
-    @State private var phoneNumber: String = ""
+//    @State private var alias: String = ""
+//    @State private var phoneNumber: String = ""
     @State private var isVerificationCodeShown: Bool = false
     @State private var isRegistered: Bool = false
     @State private var userProfile: UserProfile = UserProfile(id: "", name: "", role: "", bio: "", profileImageURL: "", websiteURL: "", socialMediaURL: "", interests: [])
@@ -65,7 +67,7 @@ struct CreateAccountView2: View {
                     .padding(.bottom, 20)
 
                     if accountType == .studio {
-                        TextField("Studio Name", text: $companyName)
+                        TextField("Studio Name", text: $viewModel.companyName)
                             .padding()
                             .background(Color(.systemGray6))
                             .cornerRadius(5)
@@ -83,38 +85,38 @@ struct CreateAccountView2: View {
                             .cornerRadius(5)
                             .padding(.horizontal, 10)
                     } else {
-                        TextField("Username", text: $username)
+                        TextField("Username", text: $viewModel.username)
                             .padding()
                             .background(Color(.systemGray6))
                             .cornerRadius(5)
                             .padding(.horizontal, 10)
 
-                        TextField("Alias", text: $alias)
+                        TextField("Alias", text: $viewModel.alias)
                             .padding()
                             .background(Color(.systemGray6))
                             .cornerRadius(5)
                             .padding(.horizontal, 10)
                     }
 
-                    TextField("Email", text: $email)
+                    TextField("Email", text: $viewModel.email)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(5)
                         .padding(.horizontal, 10)
 
-                    TextField("Phone Number", text: $phoneNumber)
+                    TextField("Phone Number", text: $viewModel.phoneNumber)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(5)
                         .padding(.horizontal, 10)
 
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.password)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(5)
                         .padding(.horizontal, 10)
 
-                    SecureField("Confirm Password", text: $confirmPassword)
+                    SecureField("Confirm Password", text: $viewModel.confirmPassword)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(5)
@@ -126,7 +128,7 @@ struct CreateAccountView2: View {
                         .padding(.horizontal, 40)
 
                     Button(action: {
-                        registerUser()
+                        Task { try await viewModel.createUser() }
                     }) {
                         Text("Register")
                             .font(.headline)
@@ -163,48 +165,57 @@ struct CreateAccountView2: View {
             }
             .padding() // Add overall padding
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Image(systemName: "chevron.left")
+                    .imageScale(.large)
+                    .onTapGesture {
+                        dismiss()
+                    }
+            }
+        }
         .fullScreenCover(isPresented: $isVerificationCodeShown) {
             VerificationView2(userID: userProfile.id) // Pass the user ID here
         }
     }
 
-    private func registerUser() {
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Registration error: \(error.localizedDescription)")
-            } else {
-                if let authResult = authResult {
-                    print("User registered successfully!")
-                    isRegistered = true
-                    userProfile.id = authResult.user.uid // Set the user ID after successful registration
-                    saveUserProfileData()
-                }
-            }
-        }
-    }
+//    private func registerUser() {
+//        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+//            if let error = error {
+//                print("Registration error: \(error.localizedDescription)")
+//            } else {
+//                if let authResult = authResult {
+//                    print("User registered successfully!")
+//                    isRegistered = true
+//                    userProfile.id = authResult.user.uid // Set the user ID after successful registration
+//                    saveUserProfileData()
+//                }
+//            }
+//        }
+//    }
 
-    private func saveUserProfileData() {
-        let db = Firestore.firestore()
-        let userDocument = db.collection("users").document(email)
-
-        let userData: [String: Any] = [
-                    // Existing code...
-                    "name": userProfile.name,
-                    "role": userProfile.role,
-                    "bio": userProfile.bio ?? "", // Add a default value for bio
-                    "profileImageURL": userProfile.profileImageURL ?? "", // Add a default value for profileImageURL
-                    "websiteURL": userProfile.websiteURL ?? "", // Add a default value for websiteURL
-                    "socialMediaURL": userProfile.socialMediaURL ?? "", // Add a default value for socialMediaURL
-                    "interests": userProfile.interests,
-                ]
-        userDocument.setData(userData) { error in
-            if let error = error {
-                print("Error saving user data: \(error.localizedDescription)")
-            } else {
-                print("User data saved successfully!")
-            }
-        }
-    }
+//    private func saveUserProfileData() {
+//        let db = Firestore.firestore()
+//        let userDocument = db.collection("users").document(email)
+//
+//        let userData: [String: Any] = [
+//                    // Existing code...
+//                    "name": userProfile.name,
+//                    "role": userProfile.role,
+//                    "bio": userProfile.bio ?? "", // Add a default value for bio
+//                    "profileImageURL": userProfile.profileImageURL ?? "", // Add a default value for profileImageURL
+//                    "websiteURL": userProfile.websiteURL ?? "", // Add a default value for websiteURL
+//                    "socialMediaURL": userProfile.socialMediaURL ?? "", // Add a default value for socialMediaURL
+//                    "interests": userProfile.interests,
+//                ]
+//        userDocument.setData(userData) { error in
+//            if let error = error {
+//                print("Error saving user data: \(error.localizedDescription)")
+//            } else {
+//                print("User data saved successfully!")
+//            }
+//        }
+//    }
 
     private func addInterest() {
         if !newInterest.isEmpty {

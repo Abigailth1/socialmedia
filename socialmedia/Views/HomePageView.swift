@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomePageView: View {
+    let user: User
     @Environment(\.presentationMode) var presentationMode
     @State private var selectedTab: Tab = .feed
     @State private var bottomSafeAreaInset: CGFloat = 0
@@ -20,15 +21,13 @@ struct HomePageView: View {
 //    ]
 
     @State private var yourProjectsArray: [Project] = []
-    @State private var editedProfile: UserProfile
+//    @State private var editedProfile: UserProfile
 
     @State private var publishedProjects: [Project] = []
 
     @State private var showMessageView = false // Added state variable to control MessageView
 
-    public init(editedProfile: UserProfile) {
-        self._editedProfile = State(initialValue: editedProfile)
-    }
+    
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -68,22 +67,24 @@ struct HomePageView: View {
                     Text("World")
                 }
                 .tag(Tab.world)
+            
+            CurrentUserProfileView(user: user)
+                .tabItem {
+                    Image(systemName: "person")
+                    Text("Profile")
+                }
+                .tag(Tab.profile)
 
-            if accountType == .personal {
-                CurrentUserProfileView(user: User.MOCK_USERS[0])
-                    .tabItem {
-                        Image(systemName: "person")
-                        Text("Profile")
-                    }
-                    .tag(Tab.profile)
-            } else {
-                ProductionStudioProfileView(userProfile: editedProfile)
-                    .tabItem {
-                        Image(systemName: "business")
-                        Text("Profile")
-                    }
-                    .tag(Tab.profile)
-            }
+//            if accountType == .personal {
+//                
+//            } else {
+//                ProductionStudioProfileView(userProfile: editedProfile)
+//                    .tabItem {
+//                        Image(systemName: "business")
+//                        Text("Profile")
+//                    }
+//                    .tag(Tab.profile)
+//            }
         }
         .accentColor(.primary)
         .navigationBarHidden(true)
@@ -130,6 +131,6 @@ struct HomePageView: View {
 
 struct HomePageView_Previews: PreviewProvider {
     static var previews: some View {
-        HomePageView(editedProfile: UserProfile.init(id: "id", name: "name", role: "role", interests: ["eating"]))
+        HomePageView(user: User.MOCK_USERS[0])
     }
 }

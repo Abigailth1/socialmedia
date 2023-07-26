@@ -84,7 +84,7 @@ struct ContentView2: View {
             }else if let currentUser = viewModel.currentUser {
                 //Main View
                 NavigationView {
-                    HomePageView(editedProfile: UserProfile(id: userID, name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))
+                    HomePageView(user: currentUser)
                 }
             }
         }

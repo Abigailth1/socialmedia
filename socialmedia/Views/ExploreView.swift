@@ -2,13 +2,13 @@ import SwiftUI
 
 struct ExploreView: View {
     @State private var searchText = ""
+    @StateObject var viewModel = ExploreViewModel()
     
     var body: some View {
-        
         NavigationStack {
             ScrollView {
                 LazyVStack {
-                    ForEach(User.MOCK_USERS) { user in
+                    ForEach(viewModel.users) { user in
                         //                        Section(header: Text(user.name)) {
                         //                            ForEach(user.projects) { project in
                         NavigationLink(value: user) {

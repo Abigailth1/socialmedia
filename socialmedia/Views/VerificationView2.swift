@@ -21,7 +21,7 @@ struct VerificationView2: View {
                     .font(.title)
                     .padding()
                 
-                NavigationLink(destination: HomePageView(editedProfile: UserProfile(id: userID, name: "John Doe", role: "Writer", bio: "Bio goes here", profileImageURL: "profile_image_url", websiteURL: "website_url", socialMediaURL: "social_media_url", interests: ["Writing", "Reading"]))) {
+                NavigationLink(destination: HomePageView(user: User.MOCK_USERS[0])) {
                     Text("Continue")
                         .font(.headline)
                         .foregroundColor(.white)

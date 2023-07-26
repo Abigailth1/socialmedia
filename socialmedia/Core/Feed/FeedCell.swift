@@ -43,9 +43,9 @@ struct FeedCell: View {
             .padding(.trailing, 10)
             
             //post
-            Image(systemName: "book.fill")
+            Image(systemName: "book.closed.fill")
                 .resizable()
-                .scaledToFill()
+                .scaledToFit()
                 .frame(height: 400)
                 .clipShape(Rectangle())
             
