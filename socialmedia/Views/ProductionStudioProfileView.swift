@@ -15,7 +15,7 @@ struct ProductionStudioProfileView: View {
 
     var body: some View {
         VStack {
-            ProfileHeaderView(accountType: .studio, studioName: userProfile.name, role: userProfile.role, websiteURL: userProfile.websiteURL ?? "", socialMediaURL: userProfile.socialMediaURL ?? "", interests: userProfile.interests)
+            ProfileHeaderView(user: User.MOCK_USERS[0])
 
             List(employees, id: \.id) { employee in
                 EmployeeRowView(employee: employee)

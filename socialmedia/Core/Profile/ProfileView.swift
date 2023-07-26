@@ -24,49 +24,7 @@ struct ProfileView: View {
 //        NavigationStack {
             ScrollView {
                 //header
-                VStack(spacing: 10) {
-                    HStack {
-                        if let profileImage = user.profileImageUrl {
-                            Image(profileImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                        }else{
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 10) {
-                            UserStatView(value: 3, title: "Posts")
-                            
-                            UserStatView(value: 3, title: "Followers")
-                            
-                            UserStatView(value: 3, title: "Following")
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(user.username)
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                        
-                        if let bio = user.bio {
-                            Text(bio)
-                                .font(.footnote)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    
-                    Divider()
-                }
+                ProfileHeaderView(user: user)
                 //post grid view
                 
                 LazyVStack( spacing: 1) {
