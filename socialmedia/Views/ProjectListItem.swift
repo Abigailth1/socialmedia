@@ -15,6 +15,8 @@ struct ProjectListItem: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(project.title)
                     .font(.headline)
+                    .fontWeight(.semibold)
+                
                 Text(project.description)
                     .font(.subheadline)
                     .foregroundColor(.secondary)

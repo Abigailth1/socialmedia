@@ -56,8 +56,8 @@ class ProjectDetailsViewModel: ObservableObject {
 }
 
 //Project
-struct Project: Identifiable {
-    let id: UUID
+struct Project: Identifiable, Codable, Hashable {
+    let id: UUID = UUID()
     var title: String
     var description: String
     var characterDescriptions: String
@@ -71,7 +71,6 @@ struct Project: Identifiable {
 
     // Provide a custom initializer if needed
     init(id: UUID = UUID(), title: String, description: String, characterDescriptions: String, isPublished: Bool, coverImageURL: URL?, author: String, likes: Int = 0, comments: [Comment] = []) { // Add default values for 'likes' and 'comments'
-        self.id = id
         self.title = title
         self.description = description
         self.characterDescriptions = characterDescriptions
@@ -80,7 +79,17 @@ struct Project: Identifiable {
         self.author = author
         self.likes = likes
         self.comments = comments // Initialize 'comments' with the provided value or an empty array
+        
     }
+    
+    private enum CodingKeys : String, CodingKey { case title, description, characterDescriptions, isPublished, coverImageURL, author, likes, comments }
+    
+    static func == (lhs: Project, rhs: Project) -> Bool {
+            return lhs.id == rhs.id && lhs.title == rhs.title && lhs.description == rhs.description && lhs.characterDescriptions == rhs.characterDescriptions && lhs.isPublished == rhs.isPublished && lhs.coverImageURL == rhs.coverImageURL && lhs.author == rhs.author && lhs.likes == rhs.likes && lhs.comments == rhs.comments
+        }
+    
+    
+    
 }
 
 

@@ -17,11 +17,7 @@ class AuthViewModel {
     static let shared = AuthViewModel()
     
     //checks if user is logged into app
-    init() {
-        
-        
-        Task { try await loadUserData() }
-    }
+    init() { Task { try await loadUserData() } }
     
     @MainActor
     func login(withEmail email: String, password: String) async throws {

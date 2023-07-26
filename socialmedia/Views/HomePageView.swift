@@ -70,7 +70,7 @@ struct HomePageView: View {
                 .tag(Tab.world)
 
             if accountType == .personal {
-                PersonalProfileView(userProfile: editedProfile, projects: projects)
+                CurrentUserProfileView()
                     .tabItem {
                         Image(systemName: "person")
                         Text("Profile")

@@ -1,9 +1,15 @@
 import SwiftUI
 
-struct Comment: Identifiable {
-    let id: UUID
+struct Comment: Identifiable, Codable, Hashable {
+    let id: UUID = UUID()
     var author: String
     var text: String
+    
+    private enum CodingKeys : String, CodingKey { case author, text }
+    
+    static func == (lhs: Comment, rhs: Comment) -> Bool {
+            return lhs.id == rhs.id && lhs.author == rhs.author && lhs.text == rhs.text
+        }
 }
 
 
@@ -55,7 +61,7 @@ struct FeedView: View {
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                             Button(action: {
                                 // Handle add comment button action
-                                let newComment = Comment(id: UUID(), author: "User", text: "Your comment here")
+                                let newComment = Comment(author: "User", text: "Your comment here")
                                 project.comments.append(newComment)
                             }) {
                                 Text("Post")
