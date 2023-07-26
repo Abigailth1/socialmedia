@@ -27,7 +27,7 @@ struct UploadPostView: View {
                     .fontWeight(.semibold)
                 
                 Button {
-                    print("upload")
+                    Task {}
                 } label: {
                     Text("Upload")
                         .fontWeight(.semibold)

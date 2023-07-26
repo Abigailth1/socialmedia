@@ -57,10 +57,9 @@ struct AIView: View {
                 }
                 .padding()
                 .foregroundColor(.white)
-                .background(Color(red: 0.2, green: 0.2, blue: 0.2)) // Custom robot-themed background color
-                .edgesIgnoringSafeArea(.all)
             }
             .navigationBarTitle("", displayMode: .inline) // Hide the navigation bar title
+            .background(Color.gray)
         }
     }
 

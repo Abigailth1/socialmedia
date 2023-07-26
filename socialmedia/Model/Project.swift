@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct Project: Identifiable, Codable, Hashable {
     let id: String
@@ -17,9 +18,9 @@ struct Project: Identifiable, Codable, Hashable {
     var coverImageURL: String?
     var author: String
     var likes: Int
-    let timestamp: Date
+    let timestamp: Timestamp
     var user: User?
-    var comments: [Comment] // Add the 'comments' property
+    var comments: [Comment]? // Add the 'comments' property
     
     
     
@@ -51,11 +52,11 @@ struct Project: Identifiable, Codable, Hashable {
 
 extension Project {
     static var MOCK_POSTS: [Project] = [
-        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Date(), user: User.MOCK_USERS[0], comments: [Comment.init(author: "author", text: "text")]),
-        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Date(), user: User.MOCK_USERS[1], comments: [Comment.init(author: "author", text: "text")]),
-        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Date(), user: User.MOCK_USERS[2], comments: [Comment.init(author: "author", text: "text")]),
-        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Date(), user: User.MOCK_USERS[3], comments: [Comment.init(author: "author", text: "text")]),
-        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Date(), user: User.MOCK_USERS[4], comments: [Comment.init(author: "author", text: "text")]),
+        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Timestamp(), user: User.MOCK_USERS[0], comments: [Comment.init(author: "author", text: "text")]),
+        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Timestamp(), user: User.MOCK_USERS[1], comments: [Comment.init(author: "author", text: "text")]),
+        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Timestamp(), user: User.MOCK_USERS[2], comments: [Comment.init(author: "author", text: "text")]),
+        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Timestamp(), user: User.MOCK_USERS[3], comments: [Comment.init(author: "author", text: "text")]),
+        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, title: "title", description: "description", characterDescriptions: "Character Description", author: "author", likes: 12, timestamp: Timestamp(), user: User.MOCK_USERS[4], comments: [Comment.init(author: "author", text: "text")]),
 //        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, caption: "caption", likes: 3, imageUrl: "image", timestamp: Date(), user: User.MOCK_USERS[0]),
 //        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, caption: "caption", likes: 32, imageUrl: "image", timestamp: Date(), user: User.MOCK_USERS[1]),
 //        .init(id: NSUUID().uuidString, ownerUid: NSUUID().uuidString, caption: "caption", likes: 0, imageUrl: "image", timestamp: Date(), user: User.MOCK_USERS[2]),

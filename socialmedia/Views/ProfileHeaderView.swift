@@ -46,18 +46,33 @@ struct ProfileHeaderView: View {
             }
             .padding(.horizontal)
             
-            VStack(alignment: .leading, spacing: 5) {
-                Text(user.username)
-                    .font(.footnote)
-                    .fontWeight(.semibold)
-                
-                if let bio = user.bio {
-                    Text(bio)
+            HStack {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(user.username)
                         .font(.footnote)
+                        .fontWeight(.semibold)
+                    
+                    if let bio = user.bio {
+                        Text(bio)
+                            .font(.footnote)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
+                
+                Spacer()
+                
+                Button {
+                    
+                } label: {
+                    Text(user.isCurrentUser ? "Edit" : "Follow")
+                        .padding(5)
+                        .background(user.isCurrentUser ? .clear : .blue)
+                        .foregroundColor(user.isCurrentUser ? .black : .white)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .padding(.trailing, 20)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal)
             
             Divider()
         }
