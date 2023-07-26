@@ -12,6 +12,20 @@ struct ProjectListItem: View {
 
     var body: some View {
         HStack {
+            if let coverImage = project.coverImageURL {
+                Image(coverImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .padding(.trailing)
+            } else {
+                Image(systemName: "book.fill")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .padding(.trailing)
+            }
+            
             VStack(alignment: .leading, spacing: 4) {
                 Text(project.title)
                     .font(.headline)
@@ -29,6 +43,6 @@ struct ProjectListItem: View {
 
 struct ProjectListItem_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectListItem(project: Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none, author: "author"))
+        ProjectListItem(project: Project.MOCK_POSTS[0])
     }
 }

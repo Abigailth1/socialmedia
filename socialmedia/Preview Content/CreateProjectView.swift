@@ -27,7 +27,7 @@ struct CreateProjectView: View {
 
                 Section {
                     Button("Save Project") {
-                        let newProject = Project(id: UUID(), title: projectTitle, description: projectDescription, characterDescriptions: "", isPublished: false, coverImageURL: coverImageURL, author: author)
+                        let newProject = Project.MOCK_POSTS[1]
 
                         projects.append(newProject)
                         isPublished = true

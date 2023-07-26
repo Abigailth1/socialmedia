@@ -40,6 +40,6 @@ struct ProjectDetailsView: View {
 
 struct ProjectDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetailsView(project: .constant(Project.init(title: "title", description: "description", characterDescriptions: "Character Descriptions", isPublished: true, coverImageURL: URL?.none, author: "author")))
+        ProjectDetailsView(project: .constant(Project.MOCK_POSTS[0]))
     }
 }

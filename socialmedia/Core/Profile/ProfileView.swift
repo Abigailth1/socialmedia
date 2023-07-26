@@ -8,22 +8,37 @@
 import SwiftUI
 
 struct ProfileView: View {
+    let user: User
+    
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1),
     ]
+    
+    var projects: [Project] {
+        return Project.MOCK_POSTS.filter { $0.user?.username == user.username}
+    }
+    
     var body: some View {
 //        NavigationStack {
             ScrollView {
                 //header
                 VStack(spacing: 10) {
                     HStack {
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
+                        if let profileImage = user.profileImageUrl {
+                            Image(profileImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                        }else{
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                        }
                         
                         Spacer()
                         
@@ -38,12 +53,14 @@ struct ProfileView: View {
                     .padding(.horizontal)
                     
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Bio")
+                        Text(user.username)
                             .font(.footnote)
                             .fontWeight(.semibold)
                         
-                        Text("Bio")
-                            .font(.footnote)
+                        if let bio = user.bio {
+                            Text(bio)
+                                .font(.footnote)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
@@ -52,30 +69,21 @@ struct ProfileView: View {
                 }
                 //post grid view
                 
-                LazyVGrid(columns: gridItems, spacing: 1) {
-                    Image(systemName: "circle")
-                        .resizable()
-                        .scaledToFill()
+                LazyVStack( spacing: 1) {
+                    ForEach(projects) { project in
+                        ProjectListItem(project: project)
+                    }
+                    Divider()
                 }
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        AuthViewModel.shared.signout()
-                    }label: {
-                        Image(systemName: "gearshape.fill")
-                            .foregroundColor(.black)
-                    }
-                }
-            }
 //        }
     }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(user: User.MOCK_USERS[0])
     }
 }

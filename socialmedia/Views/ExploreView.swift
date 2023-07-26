@@ -44,6 +44,9 @@ struct ExploreView: View {
                             }
                             .foregroundColor(.black)
                             .padding(.horizontal)
+                            .navigationDestination(for: User.self, destination: { user in
+                                ProfileView(user: user)
+                            })
                         }
                         
                         Divider()
@@ -51,12 +54,12 @@ struct ExploreView: View {
                         
                     }
                 }
+                .searchable(text: $searchText, prompt: "Search")
+                .padding(.vertical, 10)
             }
-            .searchable(text: $searchText, prompt: "Search")
-            .padding(.vertical, 10)
+            .navigationBarTitle("Explore")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationBarTitle("Explore")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

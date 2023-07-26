@@ -13,11 +13,11 @@ struct HomePageView: View {
     @State private var bottomSafeAreaInset: CGFloat = 0
     @State private var accountType: AccountType = .personal
 
-    @State private var projects: [Project] = [
-        Project(id: UUID(), title: "Hello World", description: "Description of Project 1", characterDescriptions: "Character Des 1", isPublished: false, coverImageURL: URL(string: "https://example.com/book1.jpg"), author: "Author 1"),
-        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2", isPublished: false, coverImageURL: URL(string: "https://example.com/book2.jpg"), author: "Author 2"),
-        Project(id: UUID(), title: "Project 3", description: "Description of Project 3", characterDescriptions: "Character Des 3", isPublished: false, coverImageURL: URL(string: "https://example.com/book3.jpg"), author: "Author 3"),
-    ]
+//    @State private var projects: [Project] = [
+//        Project(id: UUID(), title: "Hello World", description: "Description of Project 1", characterDescriptions: "Character Des 1", isPublished: false, coverImageURL: URL(string: "https://example.com/book1.jpg"), author: "Author 1"),
+//        Project(id: UUID(), title: "Project 2", description: "Description of Project 2", characterDescriptions: "Character Des 2", isPublished: false, coverImageURL: URL(string: "https://example.com/book2.jpg"), author: "Author 2"),
+//        Project(id: UUID(), title: "Project 3", description: "Description of Project 3", characterDescriptions: "Character Des 3", isPublished: false, coverImageURL: URL(string: "https://example.com/book3.jpg"), author: "Author 3"),
+//    ]
 
     @State private var yourProjectsArray: [Project] = []
     @State private var editedProfile: UserProfile
@@ -33,7 +33,7 @@ struct HomePageView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             if accountType == .personal {
-                FeedView(feedProjects: $projects)
+                FeedView(feedProjects: .constant(Project.MOCK_POSTS))
                     .tabItem {
                         Image(systemName: "house")
                         Text("Feed")
@@ -62,7 +62,7 @@ struct HomePageView: View {
                 }
                 .tag(Tab.ai)
 
-            WorldView(projects: $projects)
+            WorldView(projects: .constant(Project.MOCK_POSTS))
                 .tabItem {
                     Image(systemName: "book")
                     Text("World")
@@ -70,7 +70,7 @@ struct HomePageView: View {
                 .tag(Tab.world)
 
             if accountType == .personal {
-                CurrentUserProfileView()
+                CurrentUserProfileView(user: User.MOCK_USERS[0])
                     .tabItem {
                         Image(systemName: "person")
                         Text("Profile")

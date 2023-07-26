@@ -16,7 +16,7 @@ struct EditProjectView: View {
     init(project: Binding<Project>) {
         self._project = project
         self._characterDescriptions = State(initialValue: self.project.characterDescriptions)
-        self._coverImageURL = State(initialValue: self.project.coverImageURL?.absoluteString ?? "")
+//        self._coverImageURL = State(initialValue: self.project.coverImageURL?.absoluteString ?? "")
         self._author = State(initialValue: self.project.author)
     }
 
@@ -48,7 +48,7 @@ struct EditProjectView: View {
         Button(action: {
             // Update the project properties with the edited values
             project.characterDescriptions = characterDescriptions
-            project.coverImageURL = URL(string: coverImageURL)
+//            project.coverImageURL = URL(string: coverImageURL)
             project.author = author
 
             // Perform any necessary save operations here
@@ -65,6 +65,6 @@ struct EditProjectView: View {
 
 struct EditProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProjectView(project: .constant(Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none , author: "String")))
+        EditProjectView(project: .constant(Project.MOCK_POSTS[0]))
     }
 }

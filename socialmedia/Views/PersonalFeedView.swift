@@ -29,6 +29,6 @@ struct PersonalFeedView: View {
 
 struct PersonalFeedView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonalFeedView(publishedProjects: .constant([Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none , author: "String")]), yourProjectsArray: .constant([Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none , author: "String")]))
+        PersonalFeedView(publishedProjects: .constant(Project.MOCK_POSTS), yourProjectsArray: .constant(Project.MOCK_POSTS))
     }
 }

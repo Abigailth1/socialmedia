@@ -100,6 +100,6 @@ struct WorldView: View {
 
 struct WorldView_Previews: PreviewProvider {
     static var previews: some View {
-        WorldView(projects: .constant([Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none , author: "String")]))
+        WorldView(projects: .constant(Project.MOCK_POSTS))
     }
 }

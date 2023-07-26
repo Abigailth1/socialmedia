@@ -17,61 +17,78 @@ struct FeedView: View {
     @Binding var feedProjects: [Project]
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 20) {
-                ForEach($feedProjects) { $project in // Use $ to create a binding from feedProjects
-                    VStack(alignment: .leading, spacing: 8) {
-                        if let coverImageURL = $project.coverImageURL.wrappedValue {
-                            RemoteImage(url: coverImageURL, placeholder: Image(systemName: "book"))
-                        } else {
-                            Image(systemName: "book")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
-
-                        HStack {
-                            Text(project.title)
-                                .font(.headline)
-                            Spacer()
-                            Button(action: {
-                                // Handle like button action
-                                project.likes += 1
-                            }) {
-                                Image(systemName: "heart")
-                                Text("\(project.likes)")
-                            }
-                        }
-
-                        Text(project.description)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-
-                        // Display comments
-                        ForEach(project.comments) { comment in
-                            VStack(alignment: .leading) {
-                                Text("\(comment.author): \(comment.text)")
-                                    .font(.body)
-                                Divider()
-                            }
-                        }
-
-                        // Comment section
-                        HStack {
-                            TextField("Write a comment", text: .constant(""))
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                            Button(action: {
-                                // Handle add comment button action
-                                let newComment = Comment(author: "User", text: "Your comment here")
-                                project.comments.append(newComment)
-                            }) {
-                                Text("Post")
-                            }
-                        }
+        
+        NavigationStack {
+            ScrollView {
+                LazyVStack(spacing: 35) {
+                    ForEach(Project.MOCK_POSTS) { post in
+                        FeedCell(project: post)
                     }
-                    .padding()
                 }
             }
+            .navigationTitle("Feed")
+            .navigationBarTitleDisplayMode(.inline)
+            
         }
+        
+        
+        
+        
+//        ScrollView {
+//            LazyVStack(spacing: 20) {
+//                ForEach($feedProjects) { $project in // Use $ to create a binding from feedProjects
+//                    VStack(alignment: .leading, spacing: 8) {
+//                        if let coverImageURL = $project.coverImageURL.wrappedValue {
+//                            RemoteImage(url: coverImageURL, placeholder: Image(systemName: "book"))
+//                        } else {
+//                            Image(systemName: "book")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                        }
+//
+//                        HStack {
+//                            Text(project.title)
+//                                .font(.headline)
+//                            Spacer()
+//                            Button(action: {
+//                                // Handle like button action
+//                                project.likes += 1
+//                            }) {
+//                                Image(systemName: "heart")
+//                                Text("\(project.likes)")
+//                            }
+//                        }
+//
+//                        Text(project.description)
+//                            .font(.subheadline)
+//                            .foregroundColor(.secondary)
+//
+//                        // Display comments
+//                        ForEach(project.comments) { comment in
+//                            VStack(alignment: .leading) {
+//                                Text("\(comment.author): \(comment.text)")
+//                                    .font(.body)
+//                                Divider()
+//                            }
+//                        }
+//
+//                        // Comment section
+//                        HStack {
+//                            TextField("Write a comment", text: .constant(""))
+//                                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                            Button(action: {
+//                                // Handle add comment button action
+//                                let newComment = Comment(author: "User", text: "Your comment here")
+//                                project.comments.append(newComment)
+//                            }) {
+//                                Text("Post")
+//                            }
+//                        }
+//                    }
+//                    .padding()
+//                }
+//            }
+//        }
     }
 }
 
@@ -121,5 +138,17 @@ class ImageLoader: ObservableObject {
                 self.image = UIImage(data: data)
             }
         }.resume()
+    }
+}
+
+struct FeedView_Previews: PreviewProvider {
+    static var previews: some View {
+        FeedView(feedProjects: .constant(Project.MOCK_POSTS))
+    }
+}
+
+struct RemoteImage_Previews: PreviewProvider {
+    static var previews: some View {
+        RemoteImage(url: URL?.none)
     }
 }

@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct CurrentUserProfileView: View {
+    
+    let user: User
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1),
     ]
+    
+    var projects: [Project] {
+        return Project.MOCK_POSTS.filter { $0.user?.username == user.username}
+    }
     
     var body: some View {
         NavigationStack {
@@ -53,10 +59,11 @@ struct CurrentUserProfileView: View {
                 }
                 //post grid view
                 
-                LazyVGrid(columns: gridItems, spacing: 1) {
-                    Image(systemName: "circle")
-                        .resizable()
-                        .scaledToFill()
+                LazyVStack( spacing: 1) {
+                    ForEach(projects) { project in
+                        ProjectListItem(project: project)
+                    }
+                    Divider()
                 }
             }
             .navigationTitle("Profile")
@@ -77,6 +84,6 @@ struct CurrentUserProfileView: View {
 
 struct CurrentUserProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentUserProfileView()
+        CurrentUserProfileView(user: User.MOCK_USERS[0])
     }
 }

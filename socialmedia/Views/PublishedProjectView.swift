@@ -24,6 +24,6 @@ struct PublishedProjectView: View {
 
 struct PublishedProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        PublishedProjectView(project: Project.init(title: "title", description: "description", characterDescriptions: "Character Description", isPublished: true, coverImageURL: URL?.none , author: "String"))
+        PublishedProjectView(project: Project.MOCK_POSTS[0])
     }
 }

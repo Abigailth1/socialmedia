@@ -57,6 +57,8 @@
 		2FD4339C2A6F599C0002EA25 /* PublishedProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4339B2A6F599C0002EA25 /* PublishedProjectView.swift */; };
 		2FD4339E2A6F59BA0002EA25 /* YourProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4339D2A6F59BA0002EA25 /* YourProjectView.swift */; };
 		2FD433A02A707EBA0002EA25 /* CurrentUserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4339F2A707EBA0002EA25 /* CurrentUserProfileView.swift */; };
+		2FD433A22A70D54F0002EA25 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD433A12A70D54F0002EA25 /* Project.swift */; };
+		2FD433A42A70E4780002EA25 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD433A32A70E4780002EA25 /* FeedCell.swift */; };
 		9E2B74AB2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
 		9E2B74AC2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
 		9E2B74AD2A60A1B500F4B33D /* socialmediaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */; };
@@ -143,6 +145,8 @@
 		2FD4339B2A6F599C0002EA25 /* PublishedProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishedProjectView.swift; sourceTree = "<group>"; };
 		2FD4339D2A6F59BA0002EA25 /* YourProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourProjectView.swift; sourceTree = "<group>"; };
 		2FD4339F2A707EBA0002EA25 /* CurrentUserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserProfileView.swift; sourceTree = "<group>"; };
+		2FD433A12A70D54F0002EA25 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		2FD433A32A70E4780002EA25 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		9E2B74AA2A60A1B500F4B33D /* socialmediaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socialmediaApp.swift; sourceTree = "<group>"; };
 		9E4E38C62A6A079500AC8015 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9E8EC6162A6F4A67002D803C /* CreateProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateProjectView.swift; path = "../Preview Content/CreateProjectView.swift"; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 		2F22A0222A67109E000324E0 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				2FD433A32A70E4780002EA25 /* FeedCell.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -363,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				2F8311872A65DD49002C7E77 /* User.swift */,
+				2FD433A12A70D54F0002EA25 /* Project.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -585,6 +591,7 @@
 				2F57EB712A6EE4B7008DE6C4 /* ProjectListItem.swift in Sources */,
 				2F57EB5F2A6EE122008DE6C4 /* EditProjectView.swift in Sources */,
 				2F57EB6F2A6EE470008DE6C4 /* ProjectListView.swift in Sources */,
+				2FD433A42A70E4780002EA25 /* FeedCell.swift in Sources */,
 				2F57EB572A6EE081008DE6C4 /* LoginView2.swift in Sources */,
 				2F57EB592A6EE0AB008DE6C4 /* CreateAccountView2.swift in Sources */,
 				2F57EB692A6EE225008DE6C4 /* EmployeeRowView.swift in Sources */,
@@ -625,6 +632,7 @@
 				2F22A02C2A679A68000324E0 /* TextFieldModifier.swift in Sources */,
 				2F22A0382A688960000324E0 /* RegisterViewModel.swift in Sources */,
 				2F8311852A633A2C002C7E77 /* AuthViewModel.swift in Sources */,
+				2FD433A22A70D54F0002EA25 /* Project.swift in Sources */,
 				2F57EB632A6EE1CA008DE6C4 /* ProfileStatView.swift in Sources */,
 				2F57EB752A6EE4EE008DE6C4 /* AddProjectView.swift in Sources */,
 				2F83117F2A633205002C7E77 /* DailyView.swift in Sources */,
